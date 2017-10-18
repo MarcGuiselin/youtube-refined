@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:300|Nunito+Sans');
+
+body,
+input:not([type='checkbox']),
+select {
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+body, html{
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: white;
+    box-sizing: border-box;
+    min-width: 450px;
+    min-height: 400px;
+    position: relative;
+}
+
+.newLine {
+    transition: color 150ms;
+    position: relative;
+    margin: .5em 0;
+    padding-left: 1.5em;
+}
+
+.newLine.centered {
+    text-align: center;
+}
+
+.emptyLine {
+    height: 1.2em;
+}
+
+
+
+#mainBody{
+    padding: 5px;
+    max-height: 350px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    visibility: hidden;
+}
+
+#topTitleBar {
+    background: #db4343;
+    padding: 1px 5em;
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+#bigLogo {
+    height: 4.5em;
+    position: absolute;
+    top: 50%;
+    margin-top: -2.25em;
+    left: .5em;
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3));
+}
+
+span.trademarkSymbol {
+    font-size: 50%;
+    padding-bottom: 10px;
+    position: relative;
+    top: -.8em;
+}
+
+span.trademarkSymbol:before {
+    content: 'TM';
+}
+
+#bottomBar{
+    background: #db4343;
+    padding: 1px 1em;
+    text-align: right;
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+#bottomBar h3{
+    margin: .5em;
+}
+
+
+#donateLink{
+    color: white;
+    position: absolute;
+    text-decoration: none;
+    left: 1em;
+    bottom: 0px;
+}
+#donateLink:hover{
+    text-decoration: underline;
+}
+
+
+
+
+/*----------------------------------------------------
+Modified version of Dylan Raga's (http://codepen.io/dylanraga) beautiful css animated checkboxes http://codepen.io/dylanraga/pen/Qwqbab/?editors=1100
+------------------------------------------------------*/
+
+input[type='checkbox'] {
+    height: 0;
+    width: 0;
+    position: absolute;
+}
+
+input[type='checkbox']+label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+input[type='checkbox']+label>span {
+    display: flex;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    margin-right: .5em;
+    width: 1em;
+    height: 1em;
+    background: transparent;
+    border: 2px solid #9E9E9E;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 250ms cubic-bezier(.4, .0, .23, 1), background-size 100ms;
+    font: 22px/1.4 sans-serif !important;
+}
+
+input[type='checkbox']+label:hover>span {
+    border: 2px solid #f47f7f;
+}
+
+input[type='checkbox']:checked+label>span {
+    border: .5em solid #f47f7f;
+    animation: shrink-bounce 200ms cubic-bezier(.4, .0, .23, 1);
+}
+
+input[type='checkbox']:checked+label>span:before {
+    content: '';
+    position: absolute;
+    top: .4em;
+    left: .2em;
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    transform: rotate(45deg);
+    transform-origin: 0% 100%;
+    animation: checkbox-check 125ms 250ms cubic-bezier(.4, .0, .23, 1) forwards;
+}
+
+@keyframes shrink-bounce {
+    0% {
+        transform: scale(1);
+    }
+    33% {
+        transform: scale(.8);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes checkbox-check {
+    0% {
+        width: 0;
+        height: 0;
+        border-color: white;
+        transform: translate3d(0, 0, 0) rotate(45deg);
+    }
+    33% {
+        width: .2em;
+        height: 0;
+        transform: translate3d(0, 0, 0) rotate(45deg);
+    }
+    100% {
+        width: .2em;
+        height: .5em;
+        border-color: white;
+        transform: translate3d(0, -.5em, 0) rotate(45deg);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*----------------------------------------------------
+Custom-made super pretty and awesome dropdown select replacement by Marc Guiselin copyright 2017: https://jsfiddle.net/MarcGuiselin/nws9juge/
+------------------------------------------------------*/
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    text-align: left;
+    min-width: 120px;
+    color: #333;
+    height: 27px;
+    font: 15px 'Lato', Arial, sans-serif;
+}
+
+.dropdown-text {
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    text-indent: 10px;
+    line-height: 26px;
+    border-bottom: 1px solid #d8d8d8;
+    white-space: pre;
+}
+
+.dropdown-text:after {
+    position: absolute;
+    right: 6px;
+    top: 12px;
+    content: '';
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 5px 4px 0 4px;
+    border-color: #555 transparent transparent transparent;
+}
+
+.dropdown-input {
+    font-size: 0;
+    outline: none !important;
+    z-index: 1;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    border: none;
+    padding: 0;
+    margin: 0 0 0 1px;
+    background: transparent;
+    text-indent: -10px;
+    height: 28px;
+    width: 100%;
+}
+
+.dropdown ul {
+    transition: all .2s ease;
+    list-style-type: none;
+    position: absolute;
+    top: 20px;
+    padding: 4px 0px 4px 0px;
+    margin: 0;
+    opacity: 0;
+    visibility: hidden;
+    text-indent: 10px;
+    line-height: 26px;
+    background: white;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    min-width: 70%;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    transform: scale(.8, .8);
+    z-index: 10;
+}
+
+.dropdown-input:focus~ul {
+    opacity: 1;
+    visibility: visible;
+    top: 32px;
+    transform: scale(1, 1);
+}
+
+.dropdown li {
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    padding-right: 10px;
+}
+
+.dropdown li:hover {
+    background: #e8e8e8;
+}
+
+.dropdown-input:hover~.dropdown-text {
+    background: #f2f2f2;
+}
+
+.dropdown-input:focus~.dropdown-text {
+    z-index: 2;
+}
+
+.dropdown-input:focus~.dropdown-text:after {
+    border-width: 0 4px 5px 4px;
+    border-color: transparent transparent #555 transparent;
+}
+
+.dropdown li:after {
+    content: '';
+    background: #f47f7f;
+    position: absolute;
+    width: 2px;
+    height: auto;
+    left: -1px;
+    top: 50%;
+    bottom: 50%;
+    transition: .2s;
+}
+
+.dropdown li:hover:after,
+.dropdown li.selected:after {
+    top: 0;
+    bottom: 0;
+}
+
+.enable-animation .dropdown-text:before {
+    content: '';
+    background: #f47f7f;
+    position: absolute;
+    right: 100%;
+    left: 0;
+    bottom: -1px;
+    width: auto;
+    height: 2px;
+    animation: flop .4s 1;
+}
+
+.dropdown-input:focus~.dropdown-text:before,
+.dropdown-input:hover~.dropdown-text:before {
+    animation: flip .4s 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes flip {
+    0% {
+        right: 100%;
+    }
+    100% {
+        right: 0;
+    }
+}
+
+@keyframes flop {
+    0% {
+        right: 0;
+        left: 0;
+    }
+    100% {
+        right: 0;
+        left: 100%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Thanks css tricks :)  css-tricks.com/snippets/css/css-triangle */
+
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #f47f7f;
+    transform: scaleX(.8);
+    margin: -8px 0px;
+}
+
+.newLine.centered .arrow-down {
+    position: relative;
+    left: 50%;
+    margin-left: -4px;
+}

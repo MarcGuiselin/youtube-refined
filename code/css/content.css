@@ -1,0 +1,58 @@
+/* hide time ago that shows on some videos since the extension will take care of it any way */
+
+#metadata-line.ytd-grid-video-renderer>.ytd-grid-video-renderer:not(:last-of-type):after,
+#metadata-line.ytd-video-meta-block>.ytd-video-meta-block:not(:last-of-type):after {
+    content: none !important;
+    margin: 0 !important;
+}
+
+#metadata-line.ytd-grid-video-renderer>.ytd-grid-video-renderer:last-of-type,
+#metadata-line.ytd-video-meta-block>.ytd-video-meta-block:last-of-type {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+/* adblocking hide ads */
+
+/* hide ad next to video */
+html.ytrAdblock ytd-player-legacy-desktop-watch-ads-renderer, #google_ads_frame1
+/* video ad renderer over video */
+html.ytrAdblock .video-ads, html.ytrAdblock .ad-container,
+/* yellow bars that mark position of ad in video*/
+html.ytrAdblock .ytp-ad-progress-list,
+/* promoted video suggestions */
+html.ytrAdblock ytd-compact-promoted-video-renderer{
+    display: none !important;
+    visibility: hidden !important;
+}
+
+
+
+/* hide comments section */
+
+/* actually hide comments */
+html.ytrHideComments #comments,
+/* hide show more/show less buttons */
+html.ytrHideComments ytd-watch #meta #more,
+html.ytrHideComments ytd-watch #meta #less{
+    display: none !important;
+}
+
+/* hide line below description*/
+html.ytrHideComments ytd-watch #meta ytd-video-secondary-info-renderer{
+    border-bottom: none;
+}
+
+/* force expand description */
+html.ytrHideComments ytd-watch #meta ytd-expander > #content.ytd-expander {
+    overflow: visible !important;
+    max-height: none !important;
+}

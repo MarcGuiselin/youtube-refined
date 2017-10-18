@@ -1,0 +1,60 @@
+{
+    "name": "YouTube™ Refined",
+    "version": "0.1.4",
+    "version_name": "1.4 beta",
+    "author": "Marc Guiselin",
+    "manifest_version": 2,
+    "offline_enabled": true,
+    "description": "Refine your Youtube experience!  Block ads, fix clickbaity video titles, show accurate video views, and more with Youtube™ Refined!",
+    "browser_action": {
+        "default_icon": {
+            "19": "icons/19.png",
+            "38": "icons/38.png"
+        },
+        "default_popup": "popup.html",
+        "default_title": "Youtube™ Refined"
+    },
+    "background": {
+        "scripts": [
+            "scripts/background.js"
+        ]
+    },
+    "icons": {
+        "16": "icons/16.png",
+        "19": "icons/19.png",
+        "24": "icons/38.png",
+        "32": "icons/38.png",
+        "38": "icons/38.png",
+        "48": "icons/48.png",
+        "64": "icons/128.png",
+        "96": "icons/128.png",
+        "128": "icons/128.png"
+    },
+    "content_scripts": [
+        {
+            "all_frames": true,
+            "js": [
+                "scripts/titleCaps.js",
+                "scripts/content.js"
+            ],
+            "matches": [
+                "*://www.youtube.com/*"
+            ],
+            "css": [
+                "css/content.css"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+    "permissions": [
+        "*://www.youtube.com/*",
+        "unlimitedStorage",
+        "storage",
+        "webRequest",
+        "webRequestBlocking"
+    ],
+    "minimum_chrome_version": "26",
+    "incognito": "spanning",
+    "web_accessible_resources": [],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

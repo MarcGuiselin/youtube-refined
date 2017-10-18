@@ -1,0 +1,120 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Popup</title>
+    <link rel="stylesheet" href="css/popup.css">
+</head>
+
+<body>
+    <div id='topTitleBar'>
+        <img id='bigLogo' src='images/white.svg' />
+        <h1>
+            YouTube
+            <span class='trademarkSymbol'></span> Refined
+        </h1>
+    </div>
+    <div id='mainBody'>
+        <h2 style="margin-top: 0;">General Settings</h2>
+        <div class='newLine'>
+            <input id='checkBox1' type='checkbox' v-model='options.adBlock' v-on:change='saveData' />
+            <label for='checkBox1'>
+                <span></span>
+                Block all ads on Youtube&nbsp;
+                <b>Changing will reload all youtube tabs!</b>
+            </label>
+        </div>
+        <div class='newLine'>
+            <input id='checkBox2' type='checkbox' v-model='options.hideComments' v-on:change='saveData' />
+            <label for='checkBox2'>
+                <span></span>
+                Hide the comments section
+            </label>
+        </div>
+        <h2>Video Views Settings</h2>
+        <div class='newLine'>
+            <input id='checkBox3' type='checkbox' v-model='options.replaceRFYTextWithViewCount' v-on:change='saveData' />
+            <label for='checkBox3'>
+                <span></span>
+                Replace "Recommended for you" text with view count
+            </label>
+        </div>
+        <div class='newLine'>
+            <input id='checkBox4' type='checkbox' v-model='options.exactVideoViewCount' v-on:change='saveData' />
+            <label for='checkBox4'>
+                <span></span>
+                Show exact video view count (2.4M views -> 2,424,234 views)
+            </label>
+        </div>
+        <div class='newLine'>
+            <input id='checkBox5' type='checkbox' v-model='options.showVideoAge' v-on:change='saveData' />
+            <label for='checkBox5'>
+                <span></span>
+                Show age of video next to view count
+            </label>
+        </div>
+        <h2>Title Autocorrection Settings</h2>
+        <div class='newLine'>
+            Capitalization:
+            <pretty-dropdown v-model='options.censoredTitle.capitalization' v-on:input='saveData' data='{"Do Nothing": 0, "Titlecase": 1, "Uppercase": 2}'
+            />
+        </div>
+        <div class='newLine'>
+            <input id='checkBox6' type='checkbox' v-model='options.censoredTitle.removeEmoji' v-on:change='saveData' />
+            <label for='checkBox6'>
+                <span></span>
+                Remove emoji and similar characters
+            </label>
+        </div>
+        <div class='newLine'>
+            <input id='checkBox7' type='checkbox' v-model='options.censoredTitle.removeRepeatingNonLetterChars' v-on:change='saveData'
+            />
+            <label for='checkBox7'>
+                <span></span>
+                Singularize repeating non-letter characters
+            </label>
+        </div>
+        <div class='newLine'>
+            <input id='checkBox8' type='checkbox' v-model='options.censoredTitle.removeShortTextContainedWithinElipses' v-on:change='saveData'
+            />
+            <label for='checkBox8'>
+                <span></span>
+                Remove short(and usually trivial) text contained within elipses
+            </label>
+        </div>
+        <div class='newLine'>
+            <input id='checkBox9' type='checkbox' v-model='options.censoredTitle.removeHashtags' v-on:change='saveData' />
+            <label for='checkBox9'>
+                <span></span>
+                Smart remove hashtags
+            </label>
+        </div>
+        <div class='newLine'>Example:</div>
+        <div class='centered newLine'>
+            <h3>{{exampleTitleToAutocorrect}}</h3>
+            <div class='arrow-down'></div>
+            <h3>{{exampleCorrectedTitle()}}</h3>
+        </div>
+        <br>
+        <h2>Upcoming Features</h2>
+        <div class='centered newLine' style="margin-bottom: 0;">
+            <h3>Many new features coming soon, including channel blocking, filter lists, thumbnail bluring and so much more!</h3>
+        </div>
+    </div>
+    <div id='bottomBar'>
+        <h3>
+            &copy; 2017 Marc Guiselin
+            </h1>
+            <a id="donateLink" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=3ZXHF95T8753C&amp;lc=US&amp;item_name=Youtube%20Refined&amp;no_note=1&amp;no_shipping=1&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted"
+                target="blank_">
+                <h3>&#9749; Buy the dev a drink :)</h3>
+            </a>
+    </div>
+
+    <script type='text/javascript' src='scripts/third party/vue.min.js'></script>
+
+    <script type='text/javascript' src='scripts/titleCaps.js'></script>
+    <script type='text/javascript' src='scripts/popup.js'></script>
+</body>
+
+</html>
