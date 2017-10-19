@@ -232,7 +232,7 @@ function scanVideoElementGroups(settingsChanged) {
 
                 //correct video titles
                 if ($title) {
-                    if (!ytrData.originalTitle)
+                    if (!ytrData.originalTitle || group.rescanAnyways)
                         ytrData.originalTitle = group.getVideoTitle ? group.getVideoTitle.call($parent) : $title.getAttribute("title") || $title.textContent.trim();
 
                     if (ytrData.originalTitle) {
