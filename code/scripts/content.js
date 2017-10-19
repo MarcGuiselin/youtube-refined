@@ -40,8 +40,8 @@ const groups = Object.freeze([
         }
     },
 
-    { //large vertically listed video suggestions on channel/user home pages and also on the youtube trending page. check out https://i.imgur.com/XHTfpjY.png and https://www.youtube.com/channel/UC7A_dLnSAjl7uROCdoNyjzg
-        matches: new RegExp("\\/(channel|user)\\/.+|\\/feed\\/trending.*", "i"),
+    { //large vertically listed video suggestions on channel/user home pages, the trending page, and home page. check out https://i.imgur.com/XHTfpjY.png and https://www.youtube.com/channel/UC7A_dLnSAjl7uROCdoNyjzg
+        matches: null,
 
         query: "ytd-video-renderer",
         titleQuery: "#video-title",
