@@ -13,13 +13,6 @@
 
 
 
-
-
-
-
-
-
-
 /* adblocking hide ads */
 
 /* hide ad next to video */
@@ -28,8 +21,12 @@ html.ytrAdblock ytd-player-legacy-desktop-watch-ads-renderer, #google_ads_frame1
 html.ytrAdblock .video-ads, html.ytrAdblock .ad-container,
 /* yellow bars that mark position of ad in video*/
 html.ytrAdblock .ytp-ad-progress-list,
+/* sponsored shop for bar under video */
+html.ytrAdblock #pla-shelf,
 /* promoted video suggestions */
-html.ytrAdblock ytd-compact-promoted-video-renderer{
+html.ytrAdblock ytd-compact-promoted-video-renderer,
+/* hide video ad on the top of the homepage */
+html.ytrAdblock #masthead-ad{
     display: none !important;
     visibility: hidden !important;
 }

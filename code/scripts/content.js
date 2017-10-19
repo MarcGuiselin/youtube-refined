@@ -28,9 +28,8 @@ const groups = Object.freeze([
         }
     },
 
-
-    { //video suggestions listed in a grid on channel home pages and videos page. check out https://www.youtube.com/channel/UC_ViSsVg_3JUDyLS3E2Un5g and
-        matches: new RegExp("\\/(channel|user)\\/.+", "i"),
+    { //video suggestions listed in a grid on channel home pages and videos page. check out https://www.youtube.com/channel/UC_ViSsVg_3JUDyLS3E2Un5g and https://www.youtube.com/
+        matches: null,
 
         query: "ytd-grid-video-renderer",
         titleQuery: "#video-title",
@@ -41,7 +40,6 @@ const groups = Object.freeze([
         }
     },
 
-
     { //large vertically listed video suggestions on channel/user home pages and also on the youtube trending page. check out https://i.imgur.com/XHTfpjY.png and https://www.youtube.com/channel/UC7A_dLnSAjl7uROCdoNyjzg
         matches: new RegExp("\\/(channel|user)\\/.+|\\/feed\\/trending.*", "i"),
 
@@ -49,19 +47,29 @@ const groups = Object.freeze([
         titleQuery: "#video-title",
         viewCountQuery: "#metadata-line span",
         getVideoId: function () {
-            var match = constants.regex.videoIdRegexMatch.exec(this.querySelector("a").getAttribute("href"));
+            var match = constants.regex.videoIdRegexMatch.exec(this.querySelector("#video-title").getAttribute("href"));
             return match ? match[2] : null;
         }
     },
 
-
-    /*{ //currently watching video on /watch pages
-        matches: new RegExp("^.*\/watch.*$", "i"),
+    { //currently watching video on /watch pages
+        matches: new RegExp("\\/watch.*", "i"),
 
         query: "#top",
         titleQuery: "h1.title",
         getVideoId: function () {
-            return constants.regex.videoIdRegexMatch.exec(location.search)[2];
+            var match = constants.regex.videoIdRegexMatch.exec(location.search);
+            return match && match.length ? match[2] : null;
+        },
+        getVideoTitle: function () {
+            return this.querySelector(".ytp-title .ytp-title-link").textContent;
+        },
+
+        rescanAnyways: true,//title loads a bit after the page, so this is required
+        additionalTasks: function ($title) {
+            //also autocorrect title of page
+            if ($title && $title.textContent)
+                document.title = $title.textContent + " - YouTube";
         }
     },
 
@@ -71,9 +79,22 @@ const groups = Object.freeze([
         query: "ytd-channel-video-player-renderer",
         titleQuery: "#title a",
         getVideoId: function () {
-            return constants.regex.videoIdRegexMatch.exec(document.querySelector("#title a").getAttribute("href"))[2];
+            var match = constants.regex.videoIdRegexMatch.exec(document.querySelector("#title a").getAttribute("href"));
+            return match && match.length ? match[2] : null;
+        },
+        /*getVideoTitle: function () {
+            //return this.querySelector("#title").textContent;
+            return "sadddddddddddddddddd";
+        },*/
+
+        rescanAnyways: true,//title and video might load at different times, so this is required
+        additionalTasks: function ($title) {
+            //fix the second title on top of the video
+            var el = this.querySelector(".ytp-title a.ytp-title-link");
+            if ($title && $title.textContent && el && el.textContent)
+                el.textContent = $title.textContent;
         }
-    },*/
+    }
 ]);
 
 
@@ -131,8 +152,6 @@ function prettyViews(n) {
 })();
 
 
-
-
 /// ---------------------------------------------------------------------------------------------------
 /// ----------- scanVideoElementGroups() finds and modifies groups of content appropriately -----------
 /// ---------------------------------------------------------------------------------------------------
@@ -160,8 +179,8 @@ function scanVideoElementGroups(settingsChanged) {
                 var videoId = group.getVideoId ? group.getVideoId.call($parent) : null,
                     ytrData = $parent.ytrData || {};
 
-                //don't re-apply settings to already modified videos when settings havn't changed
-                if (!settingsChanged && ytrData.videoId == videoId)
+                //don't re-apply settings to already modified videos when settings havn't changed.  rescanAnyways bypasses this optimization
+                if (!settingsChanged && !group.rescanAnyways && ytrData.videoId == videoId)
                     continue;
 
 
@@ -176,6 +195,7 @@ function scanVideoElementGroups(settingsChanged) {
                 if (ytrData.videoId != videoId) {
                     ytrData = { videoId: videoId };
                     $parent.ytrData = ytrData;
+                    //console.log(group.query, $parent, $title, $viewCount);
                 }
 
 
@@ -189,26 +209,22 @@ function scanVideoElementGroups(settingsChanged) {
                             $parent.querySelector("#video-title").getAttribute("aria-label")
                         );
 
-                        try {
+                        if (info) {
                             ytrData.timeAgo = info[1];
                             ytrData.exactCount = info[2];
                             ytrData.prettyCount = prettyViews(ytrData.exactCount);
                             ytrData.isRecommended = $viewCount.textContent.indexOf("view") == -1;
-                        } catch (e) {
-                            alert("info parse error");
-                            console.log(e)
-                            console.log($viewCount)
-                            console.log($parent.querySelector("#video-title").getAttribute("aria-label"))
                         }
                     }
 
-
-                    if (!options.replaceRFYTextWithViewCount && ytrData.isRecommended) {
-                        $viewCount.textContent = "Recommended for you";
-                    } else {
-                        $viewCount.textContent =
-                            (options.exactVideoViewCount ? ytrData.exactCount : ytrData.prettyCount) +
-                            (options.showVideoAge ? " \u2022 " + ytrData.timeAgo : "");
+                    if (ytrData.prettyCount) {
+                        if (!options.replaceRFYTextWithViewCount && ytrData.isRecommended) {
+                            $viewCount.textContent = "Recommended for you";
+                        } else {
+                            $viewCount.textContent =
+                                (options.exactVideoViewCount ? ytrData.exactCount : ytrData.prettyCount) +
+                                (options.showVideoAge ? " \u2022 " + ytrData.timeAgo : "");
+                        }
                     }
                 }
 
@@ -217,42 +233,47 @@ function scanVideoElementGroups(settingsChanged) {
                 //correct video titles
                 if ($title) {
                     if (!ytrData.originalTitle)
-                        ytrData.originalTitle = $title.getAttribute("title") || $title.textContent.trim();
+                        ytrData.originalTitle = group.getVideoTitle ? group.getVideoTitle.call($parent) : $title.getAttribute("title") || $title.textContent.trim();
 
-                    let title = ytrData.originalTitle;
+                    if (ytrData.originalTitle) {
+                        let title = ytrData.originalTitle;
 
-                    //remove emoji
-                    if (options.censoredTitle.removeEmoji)
-                        title = title.replace(constants.regex.matchEmoji, " ");
+                        //remove emoji
+                        if (options.censoredTitle.removeEmoji)
+                            title = title.replace(constants.regex.matchEmoji, " ");
 
-                    //remove text contained within elipses
-                    if (options.censoredTitle.removeShortTextContainedWithinElipses) {
-                        let newTitle = title.replace(constants.regex.matchElipses, " ");
-                        if (newTitle.length > title.length / 3) //if the new title wasn't shortened too considerably, then apply changes to it.
-                            title = newTitle;
+                        //remove text contained within elipses
+                        if (options.censoredTitle.removeShortTextContainedWithinElipses) {
+                            let newTitle = title.replace(constants.regex.matchElipses, " ");
+                            if (newTitle.length > title.length / 3) //if the new title wasn't shortened too considerably, then apply changes to it.
+                                title = newTitle;
+                        }
+
+                        //remove hashtags
+                        if (options.censoredTitle.removeHashtags)
+                            title = title.replace(constants.regex.matchHashtags, " ");
+
+                        //remove repeating non-letter characters
+                        if (options.censoredTitle.removeRepeatingNonLetterChars)
+                            title = title.replace(constants.regex.dotdotdot, '\u2026').replace(constants.regex.matchRepeatingNonLetterChars, function (s) {
+                                return s.charAt(0);
+                            });
+
+                        //capitalize titles correctly according to censoredTitle settings
+                        if (options.censoredTitle.capitalization == 1) {
+                            title = title.titleCap();
+                        } else if (options.censoredTitle.capitalization == 2) {
+                            title = title.titleCapSentences();
+                        }
+
+                        $title.textContent = title;
                     }
-
-                    //remove hashtags
-                    if (options.censoredTitle.removeHashtags)
-                        title = title.replace(constants.regex.matchHashtags, " ");
-
-                    //remove repeating non-letter characters
-                    if (options.censoredTitle.removeRepeatingNonLetterChars)
-                        title = title.replace(constants.regex.dotdotdot, '\u2026').replace(constants.regex.matchRepeatingNonLetterChars, function (s) {
-                            return s.charAt(0);
-                        });
-
-                    //capitalize titles correctly according to censoredTitle settings
-                    if (options.censoredTitle.capitalization == 1) {
-                        title = title.titleCap();
-                    } else if (options.censoredTitle.capitalization == 2) {
-                        title = title.titleCapSentences();
-                    }
-
-                    $title.textContent = title;
-                    //$title.textContent = title;
-                    //$title.innerHTML = title;
                 }
+
+
+                //run any additional tasks that group may have
+                if (group.additionalTasks)
+                    group.additionalTasks.call($parent, $title);
             }
         }
     }
@@ -273,13 +294,13 @@ function runAdBlock() {
             ad.parentElement.removeChild(ad);
 
 
-    //the window.ytplayer.config.args variable contains properties describing the behaviour of ads.
-    //this function inserts code that resets the properties
+    //this function inserts code that block ads
     var ab = document.createElement('script');
     ab.id = 'ytrAdblockerScript';
     ab.text = `
         //Youtube Refined AdBlocker Script
         //Copyright 2017 Marc Guiselin
+
         var justBlocked = false;
 
         //for the older version of youtube
@@ -362,82 +383,32 @@ function runAdBlock() {
                 return true;
             }
         });
+
+        //overwites the default XMLHttpRequest function so that a custom open function can block requests to advertising sites like doubleclick.net
+        var httpr = XMLHttpRequest;
+        XMLHttpRequest = window.XMLHttpRequest = function(){
+            var req = new httpr();
+            req.originalOpen = req.open;
+            req.open = function(method, url){
+                if(url && (url.includes("doubleclick.net") || url.includes("researchnow.com"))){
+                    //console.log("blocked: ", url);
+                    arguments[1] = "";
+                }
+                req.originalOpen(...arguments);
+            }
+            return req;
+        };
+
+        //some special ads still make it through. this interval checks for a non youtube video in the main video element and skips it
+        setInterval(function(){
+            var v = document.querySelector("video");
+            if(v && v.src && v.src.indexOf("blob:") != 0){
+                v.style.visibility = "hidden";
+                v.currentTime = 10000;
+            }else if(v){
+                v.style.visibility = "visible";
+            }
+        }, 200);
     `;
     document.documentElement.appendChild(ab);
 }
-
-
-
-
-
-
-
-/*
-Different codes
-
-
-
-setInterval(function(){
-    if(!document.documentElement.classList.contains("ytrAdblock") && window.ytplayer && window.ytplayer.config && window.ytplayer.config.args){
-        var value = window.ytplayer.config.args;
-        value.ad_tag=0;
-        value.ad_preroll=0;
-        value.ad_device=0;
-        value.ad_module=0;
-        value.ad3_module=0;
-        value.ad_logging_flag=0;
-        value.dclk=0;
-        value.ad_slots='';
-        value.adSlots='';
-        value.afv_ad_tag_restricted_to_instream='';
-        value.afv_ad_tag='';
-        value.freewheel_ad_tag='';
-        value.vmap='';
-        value.fexp='';
-
-        value.allow_html5_ads="0";
-        value.ppv_remarketing_url = "";
-    }
-}, 25);
-
-
-
-
-
-
-
-
-console.log("i, the script, was run")
-window.ytplayer = new Proxy({}, {
-    set: function(target, name, value) {
-        console.log("this magical function was called!");
-        if (name === "config" && value && value) {
-            var vv = ((value.vmap || "")
-                    .match(/breakType=/g) || [])
-                .length;
-            setTimeout(function() {
-                window.postMessage({
-                    t: "cntv",
-                    v: vv
-                }, "*")
-            }, 2500);
-            value.ad_tag=0;
-            value.ad_preroll=0;
-            value.ad_device=0;
-            value.ad_module=0;
-            value.ad3_module=0;
-            value.ad_logging_flag=0;
-            value.dclk=0;
-            value.ad_slots='';
-            value.adSlots='';
-            value.afv_ad_tag_restricted_to_instream='';
-            value.afv_ad_tag='';
-            value.freewheel_ad_tag='';
-            value.vmap='';
-            value.fexp='';
-        }
-        target[name] = value;
-        return true;
-    }
-});
-*/

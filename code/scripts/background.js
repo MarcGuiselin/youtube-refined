@@ -37,6 +37,7 @@ chrome.webRequest.onBeforeRequest.addListener(function (info) {
         urls: [
             "*://www.youtube.com/api/stats/qoe?*",
             "*://www.youtube.com/api/stats/ads?*",
+            //"*://www.youtube.com/api/stats/atr?*",
             "*://www.youtube.com/get_midroll_info?*",
             "*://www.youtube.com/get_video_info?*",
             "*://www.youtube.com/pagead/*",
@@ -46,7 +47,7 @@ chrome.webRequest.onBeforeRequest.addListener(function (info) {
     ['blocking']
 );
 
-//Other urls blocked by adblock:
+//Other urls blocked by adblock. unfortunately ytr can't block these because it only has permissions to block youtube urls
 //https://securepubads.g.doubleclick.net/pcs/view?
 //https://googleads.g.doubleclick.net/pagead/viewthroughconversion/971134070/?
 //https://googleads.g.doubleclick.net/pagead/id
