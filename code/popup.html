@@ -31,6 +31,11 @@
                 Hide the comments section
             </label>
         </div>
+        <div class='newLine'>
+            Ratings preview:
+            <pretty-dropdown v-model='options.ratingsPreviewMode' v-on:input='saveData' data='{"None": 0, "Colored Box": 1, "Modern Bar": 2, "Colored Bar": 3}'
+            />
+        </div>
         <h2>Video Views Settings</h2>
         <div class='newLine'>
             <input id='checkBox3' type='checkbox' v-model='options.replaceRFYTextWithViewCount' v-on:change='saveData' />
@@ -53,6 +58,13 @@
                 Show age of video next to view count
             </label>
         </div>
+        <div class='newLine'>
+            <input id='checkBox6' type='checkbox' v-model='options.exactLikeDislikeCount' v-on:change='saveData' />
+            <label for='checkBox6'>
+                <span></span>
+                Show exact like/dislike count under videos (21K likes -> 21,345 likes)
+            </label>
+        </div>
         <h2>Title Autocorrection Settings</h2>
         <div class='newLine'>
             Capitalization:
@@ -60,31 +72,31 @@
             />
         </div>
         <div class='newLine'>
-            <input id='checkBox6' type='checkbox' v-model='options.censoredTitle.removeEmoji' v-on:change='saveData' />
-            <label for='checkBox6'>
+            <input id='checkBox7' type='checkbox' v-model='options.censoredTitle.removeEmoji' v-on:change='saveData' />
+            <label for='checkBox7'>
                 <span></span>
                 Remove emoji and similar characters
             </label>
         </div>
         <div class='newLine'>
-            <input id='checkBox7' type='checkbox' v-model='options.censoredTitle.removeRepeatingNonLetterChars' v-on:change='saveData'
+            <input id='checkBox8' type='checkbox' v-model='options.censoredTitle.removeRepeatingNonLetterChars' v-on:change='saveData'
             />
-            <label for='checkBox7'>
+            <label for='checkBox8'>
                 <span></span>
                 Singularize repeating non-letter characters
             </label>
         </div>
         <div class='newLine'>
-            <input id='checkBox8' type='checkbox' v-model='options.censoredTitle.removeShortTextContainedWithinElipses' v-on:change='saveData'
+            <input id='checkBox9' type='checkbox' v-model='options.censoredTitle.removeShortTextContainedWithinElipses' v-on:change='saveData'
             />
-            <label for='checkBox8'>
+            <label for='checkBox9'>
                 <span></span>
                 Remove short(and usually trivial) text contained within elipses
             </label>
         </div>
         <div class='newLine'>
-            <input id='checkBox9' type='checkbox' v-model='options.censoredTitle.removeHashtags' v-on:change='saveData' />
-            <label for='checkBox9'>
+            <input id='checkBox10' type='checkbox' v-model='options.censoredTitle.removeHashtags' v-on:change='saveData' />
+            <label for='checkBox10'>
                 <span></span>
                 Smart remove hashtags
             </label>
@@ -104,11 +116,11 @@
     <div id='bottomBar'>
         <h3>
             &copy; 2017 Marc Guiselin
-            </h1>
-            <a id="donateLink" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=3ZXHF95T8753C&amp;lc=US&amp;item_name=Youtube%20Refined&amp;no_note=1&amp;no_shipping=1&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted"
-                target="blank_">
-                <h3>&#9749; Buy the dev a drink :)</h3>
-            </a>
+        </h3>
+        <a id="donateLink" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=3ZXHF95T8753C&amp;lc=US&amp;item_name=Youtube%20Refined&amp;no_note=1&amp;no_shipping=1&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted"
+            target="blank_">
+            <h3>&#9749; Buy the dev a drink :)</h3>
+        </a>
     </div>
 
     <script type='text/javascript' src='scripts/third party/vue.min.js'></script>

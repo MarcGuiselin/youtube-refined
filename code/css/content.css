@@ -53,3 +53,95 @@ html.ytrHideComments ytd-watch #meta ytd-expander > #content.ytd-expander {
     overflow: visible !important;
     max-height: none !important;
 }
+
+
+
+/* ratings previewer */
+
+.ytr-ratings-previewer{
+    display: none;
+}
+/* mode 1 */
+html.ytr-ratings-preview-mode-1 .ytr-ratings-previewer[ranking]{
+    display: inline-flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 4px;
+    background: black;
+    opacity: .8;
+    padding: 2px 4px;
+    border-radius: 2px;
+    letter-spacing: .5px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.2rem;
+    align-items: center;
+    color: white;
+}
+html.ytr-ratings-preview-mode-1 .ytr-ratings-previewer[ranking='0']{
+    opacity: 1;
+    background: #b31d1d !important;
+}
+html.ytr-ratings-preview-mode-1 .ytr-ratings-previewer[ranking='1']{
+    opacity: 1;
+    background: #b39a1d !important;
+}
+html.ytr-ratings-preview-mode-1 .ytr-ratings-previewer[ranking='2']{
+    opacity: 1;
+    background: #2ab31d !important;
+}
+
+/* mode 2-3 */
+html.ytr-ratings-preview-mode-2 .ytr-ratings-previewer,
+html.ytr-ratings-preview-mode-3 .ytr-ratings-previewer{
+    display: block;
+    height: 4px;
+    width: 100%;
+    background: #cccccc;
+    z-index: 10;
+    top: 0;
+    position: absolute;
+    border-bottom: 1px solid white;
+}
+html.ytr-ratings-preview-mode-2 .ytr-ratings-previewer>div,
+html.ytr-ratings-preview-mode-3 .ytr-ratings-previewer>div{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    transition: .5s width;
+    background: #2693e6;
+    color: transparent;
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 25px;
+    white-space: nowrap;
+}
+html.ytr-ratings-preview-mode-2 .ytr-ratings-previewer>div::before,
+html.ytr-ratings-preview-mode-3 .ytr-ratings-previewer>div::before{
+    content: ' ';
+}
+html.ytr-ratings-preview-mode-2 ytd-thumbnail:hover .ytr-ratings-previewer>div,
+html.ytr-ratings-preview-mode-3 ytd-thumbnail:hover .ytr-ratings-previewer>div{
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 1px 1px 0px black, -1px 1px 0px black, -1px -1px 0px black, 1px -1px 0px black;
+}
+html.ytr-ratings-preview-mode-3 .ytr-ratings-previewer[ranking='0']>div{
+    background: #b31d1d !important;
+}
+html.ytr-ratings-preview-mode-3 .ytr-ratings-previewer[ranking='1']>div{
+    background: #b39a1d !important;
+}
+html.ytr-ratings-preview-mode-3 .ytr-ratings-previewer[ranking='2']>div{
+    background: #2ab31d !important;
+}
+
+
+
+/* show entire youtube video title
+#video-title{
+    max-height: fit-content !important;
+}
+*/

@@ -15,7 +15,9 @@ var options = {
     hideComments: false,
     replaceRFYTextWithViewCount: true,
     exactVideoViewCount: true,
+    exactLikeDislikeCount: true,
     showVideoAge: true,
+    ratingsPreviewMode: 4,//0: nothing, 1: colored box, 3: modern bar, 4: colored bar
     censoredTitle: { //what to do for censored titles
         capitalization: 1, //0: nothing, 1: capitalize, 2: lowercase
         removeEmoji: false, //remove emojii, html entities and similar non-common characters
@@ -31,15 +33,15 @@ var options = {
 //blocking ads is as simple as blocking the same urls adblock does
 //youtube plays the video by default if the ads don't load, so no need for complex scripts!
 chrome.webRequest.onBeforeRequest.addListener(function (info) {
-    if (options.adBlock && info.parentFrameId == -1)
+    if (options.adBlock)
         return { cancel: true };
 }, {
         urls: [
-            "*://www.youtube.com/api/stats/qoe?*",
+            //"*://www.youtube.com/api/stats/qoe?*",
             "*://www.youtube.com/api/stats/ads?*",
             //"*://www.youtube.com/api/stats/atr?*",
             "*://www.youtube.com/get_midroll_info?*",
-            "*://www.youtube.com/get_video_info?*",
+            //"*://www.youtube.com/get_video_info?*",
             "*://www.youtube.com/pagead/*",
             "*://www.youtube.com/yts/jsbin/*/www-pagead-id.js"
         ]

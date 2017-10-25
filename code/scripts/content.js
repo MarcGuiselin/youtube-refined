@@ -11,7 +11,8 @@ const constants = Object.freeze({
         matchHashtags: new RegExp("\\s*#[^\\s#\\d][^\\s#)(]{2,20}?(?=\\s|$|\\)|\\]|\\.)", "g"),
         dotdotdot: new RegExp("\\.\\.\\.", "g"),
         viewInfoParse: new RegExp("(\\d+\\s+\\w+\\s+ago).+?([\\d,]+\\s+views?)\\s*$", "i"),
-        videoIdRegexMatch: new RegExp("(v=)([\\w\\-]{8,14})")
+        videoIdRegexMatch: new RegExp("(v=)([\\w\\-]{8,14})"),
+        replaceOldRatingsPreviewMode: new RegExp("\\s*(ytr-ratings-preview-mode-\\d+)|$", "i")
     }
 });
 const groups = Object.freeze([
@@ -70,6 +71,16 @@ const groups = Object.freeze([
             //also autocorrect title of page
             if ($title && $title.textContent)
                 document.title = $title.textContent + " - YouTube";
+
+            //add actual like/dislike count below video if enabled
+            var likeButtons = this.querySelectorAll("#top-level-buttons #text");
+            for (var likeButton of likeButtons) {
+                if (likeButton.hasAttribute("aria-label")) {
+                    var count = /[\d,]*/.exec(likeButton.getAttribute("aria-label"))[0];
+                    if (count)
+                        likeButton.textContent = options.exactLikeDislikeCount ? count : prettyLikes(count);
+                }
+            }
         }
     },
 
@@ -110,15 +121,117 @@ function prettyViews(n) {
         return "no views";
     else if (n == 1)
         return "1 view";
-    else if (n < 900)
+    else if (n < 999)
         return n + " views";
-    else if (n < 900000)
-        return Math.max(1, Math.round(n / 100) / 10) + "K views";
-    else if (n < 900000000)
+    else if (n < 990000)
+        return Math.max(1, Math.round(n / 1000)) + "K views";//k on youtube are never decimals
+    else if (n < 990000000)
         return Math.max(1, Math.round(n / 100000) / 10) + "M views";
     else
         return Math.max(1, Math.round(n / 100000000) / 10) + "B views";
 }
+
+function prettyLikes(n) {
+    n = parseInt(n.replace(/\D/g, ""));
+
+    if (n < 0)
+        return "none";
+    else if (n == 1)
+        return "1";
+    else if (n < 999)
+        return n;
+    else if (n < 990000)
+        return Math.max(1, Math.round(n / 1000)) + "K";//k on youtube are never decimals
+    else if (n < 990000000)
+        return Math.max(1, Math.round(n / 100000) / 10) + "M";
+    else
+        return Math.max(1, Math.round(n / 100000000) / 10) + "B";
+}
+
+
+//the ratings preview module
+//fetches video like/disike count and fills rating previews above thumbnails with data
+(function () {
+    var API_ID = "AIzaSyBAJG2nNJdeIRURRWs3FoOnWpHa_2LnMok",
+        URL = "https://www.googleapis.com/youtube/v3/videos?part=statistics&fields=items(id,statistics(likeCount,dislikeCount))&key=" + API_ID + "&id=",
+        WAITTIME = 1000,
+
+        requestedVideoIds = [],
+        videoDataCache = {},
+        grabDataSoonTimer,
+
+        grabData = function () {
+            if (requestedVideoIds.length > 0) {
+                var ids = requestedVideoIds.splice(0, 50);
+
+
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.open("GET", URL + ids.join(","));
+                xmlHttp.onreadystatechange = function () {
+                    if (xmlHttp.readyState == 4 && xmlHttp.status == 200 && xmlHttp.responseText) {
+                        for (var item of JSON.parse(xmlHttp.responseText).items) {
+                            var ite = {
+                                id: item.id,
+                                likes: item.statistics ? parseInt(item.statistics.likeCount) : 0,
+                                dislikes: item.statistics ? parseInt(item.statistics.dislikeCount) : 0
+                            };
+
+                            videoDataCache[item.id] = ite;
+                            populateRatingsPreview(ite);
+                        }
+                    }
+                };
+                xmlHttp.send();
+
+                if (requestedVideoIds.length > 0)
+                    grabDataSoon();
+            }
+        },
+        grabDataSoon = function () {
+            if (grabDataSoonTimer)
+                clearTimeout(grabDataSoonTimer);
+            grabDataSoonTimer = setTimeout(grabData, WAITTIME);
+        },
+        populateRatingsPreview = function (item) {
+            for (let $previewRatings of document.querySelectorAll(".ytr-ratings-previewer[video-id='" + item.id + "']")) {
+                var $innerDiv = $previewRatings.firstElementChild;
+
+                if ($previewRatings && $innerDiv) {
+                    if (item.likes + item.dislikes > 0) {
+                        var rating = item.likes / (item.likes + item.dislikes);
+                        if (rating > 0.86)
+                            $previewRatings.setAttribute("ranking", "2");
+                        else if (rating > 0.65)
+                            $previewRatings.setAttribute("ranking", "1");
+                        else
+                            $previewRatings.setAttribute("ranking", "0");
+
+                        $innerDiv.textContent = Math.round(rating * 100) + "%";
+                        $innerDiv.style.width = Math.max(12, (1 - Math.sin(Math.min(2, rating + 1.012) * 1.57079632679)) * 100) + "%";
+                    } else {
+                        $previewRatings.setAttribute("ranking", "0");
+                        $innerDiv.textContent = "?";
+                        $innerDiv.style.width = "0%";
+                    }
+                }
+            }
+        };
+
+    this.ratingsPreviewPopulate = function (videoId) {
+        var item = videoDataCache[videoId];
+        if (item) {
+            populateRatingsPreview(item);
+        } else {
+            if (requestedVideoIds.indexOf(videoId) == -1)
+                requestedVideoIds.push(videoId);
+
+            if (requestedVideoIds.length >= 50)
+                grabData();
+            else
+                grabDataSoon();
+        }
+    };
+})();
 
 
 //run everything
@@ -165,6 +278,10 @@ function scanVideoElementGroups(settingsChanged) {
     else
         document.documentElement.classList.remove("ytrHideComments");
 
+    //set ratingsPreviewMode for css
+    document.documentElement.className =
+        document.documentElement.className.replace(constants.regex.replaceOldRatingsPreviewMode, " ytr-ratings-preview-mode-" + options.ratingsPreviewMode);
+
     //for each match group
     for (let group of groups) {
         //check if the group should run on this url
@@ -185,7 +302,8 @@ function scanVideoElementGroups(settingsChanged) {
 
 
                 var $title = group.titleQuery ? $parent.querySelector(group.titleQuery) : null,
-                    $viewCount = group.viewCountQuery ? $parent.querySelector(group.viewCountQuery) : null;
+                    $viewCount = group.viewCountQuery ? $parent.querySelector(group.viewCountQuery) : null,
+                    $thumbnail = $parent.querySelector("ytd-thumbnail");
 
                 //if title is empty when it shouldn't be, don't modify video yet
                 if ($title && !$title.textContent.trim())
@@ -268,6 +386,25 @@ function scanVideoElementGroups(settingsChanged) {
 
                         $title.textContent = title;
                     }
+                }
+
+
+
+                //add ratings preview bar and asks the ratings preview module to fill it with data
+                if (options.ratingsPreviewMode != 0 && $thumbnail && !ytrData.previewRatings) {
+                    ytrData.previewRatings = true;
+
+                    var $previewRatings = $thumbnail.querySelector(".ytr-ratings-previewer");
+                    if (!$previewRatings) {
+                        $previewRatings = document.createElement("div");
+                        $previewRatings.classList.add("ytr-ratings-previewer");
+                        $previewRatings.appendChild(document.createElement("div"));
+                        $thumbnail.appendChild($previewRatings);
+                    }
+
+                    $previewRatings.setAttribute("video-id", videoId);
+
+                    ratingsPreviewPopulate(videoId);
                 }
 
 
