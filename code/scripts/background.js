@@ -37,11 +37,11 @@ chrome.webRequest.onBeforeRequest.addListener(function (info) {
         return { cancel: true };
 }, {
         urls: [
-            //"*://www.youtube.com/api/stats/qoe?*",
+            "*://www.youtube.com/api/stats/qoe?*",
             "*://www.youtube.com/api/stats/ads?*",
-            //"*://www.youtube.com/api/stats/atr?*",
+            "*://www.youtube.com/api/stats/atr?*",
             "*://www.youtube.com/get_midroll_info?*",
-            //"*://www.youtube.com/get_video_info?*",
+            "*://www.youtube.com/get_video_info?*",
             "*://www.youtube.com/pagead/*",
             "*://www.youtube.com/yts/jsbin/*/www-pagead-id.js"
         ]

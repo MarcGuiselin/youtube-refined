@@ -22,6 +22,7 @@ const groups = Object.freeze([
         //         regular video                 video in playlist
         query: "ytd-compact-video-renderer, ytd-playlist-panel-video-renderer",
         titleQuery: "#video-title",
+        thumbnailQuery: "ytd-thumbnail",
         viewCountQuery: "#metadata-line",
         getVideoId: function () {
             var match = constants.regex.videoIdRegexMatch.exec(this.querySelector("a").getAttribute("href"));
@@ -34,6 +35,7 @@ const groups = Object.freeze([
 
         query: "ytd-grid-video-renderer",
         titleQuery: "#video-title",
+        thumbnailQuery: "ytd-thumbnail",
         viewCountQuery: "#metadata-line span",
         getVideoId: function () {
             var match = constants.regex.videoIdRegexMatch.exec(this.querySelector("a").getAttribute("href"));
@@ -46,6 +48,7 @@ const groups = Object.freeze([
 
         query: "ytd-video-renderer",
         titleQuery: "#video-title",
+        thumbnailQuery: "ytd-thumbnail",
         viewCountQuery: "#metadata-line span",
         getVideoId: function () {
             var match = constants.regex.videoIdRegexMatch.exec(this.querySelector("#video-title").getAttribute("href"));
@@ -90,13 +93,9 @@ const groups = Object.freeze([
         query: "ytd-channel-video-player-renderer",
         titleQuery: "#title a",
         getVideoId: function () {
-            var match = constants.regex.videoIdRegexMatch.exec(document.querySelector("#title a").getAttribute("href"));
+            var match = constants.regex.videoIdRegexMatch.exec(this.querySelector("#title a").getAttribute("href"));
             return match && match.length ? match[2] : null;
         },
-        /*getVideoTitle: function () {
-            //return this.querySelector("#title").textContent;
-            return "sadddddddddddddddddd";
-        },*/
 
         rescanAnyways: true,//title and video might load at different times, so this is required
         additionalTasks: function ($title) {
@@ -104,6 +103,67 @@ const groups = Object.freeze([
             var el = this.querySelector(".ytp-title a.ytp-title-link");
             if ($title && $title.textContent && el && el.textContent)
                 el.textContent = $title.textContent;
+        }
+    },
+
+    { //video suggestions shown at end of video if autoplay is disabled
+        matches: null,
+
+        query: ".ytp-videowall-still",
+        titleQuery: ".ytp-videowall-still-info-title",
+        thumbnailQuery: ".ytp-videowall-still-image",
+        //viewCountQuery: ".ytp-videowall-still-info-author", //unfortunately view count can't be fixed
+        getVideoId: function () {
+            var match = constants.regex.videoIdRegexMatch.exec(this.getAttribute("href"));
+            return match && match.length ? match[2] : null;
+        },
+        getVideoTitle: function () {
+            return this.getAttribute("aria-label");
+        }
+
+        /*additionalTasks: function () {
+            var $viewCount = this.querySelector(".ytp-videowall-still-info-author"),
+                ytrData = this.ytrData;
+
+            //if view count data hasn't been grabbed before
+            if (!ytrData.prettyCount) {
+                //grab exact video view count from a string stored in an attribute.
+                let info = constants.regex.viewInfoParse.exec(
+                    this.getAttribute("aria-label")//aria label is actual in parent
+                );
+
+                if (info) {
+                    ytrData.timeAgo = info[1];
+                    ytrData.exactCount = info[2];
+                    ytrData.prettyCount = prettyViews(info[2]);
+
+                    //channel name is shown in front of view count (ex: name • 10K views), so this must be saved to be re-added later
+                    let channelName = $viewCount.textContent.match(/^(.*)\s\u2022/);
+                    ytrData.authorName = channelName.length == 2 ? channelName[1] : "";
+                }
+            }
+
+            if (ytrData.prettyCount) {
+                $viewCount.textContent =
+                    (ytrData.authorName ? ytrData.authorName + " \u2022 " : "") +
+                    (options.exactVideoViewCount ? ytrData.exactCount : ytrData.prettyCount) +
+                    (options.showVideoAge ? " \u2022 " + ytrData.timeAgo : "");
+            }
+        }*/
+    },
+
+    { //matches in-video suggested video boxes
+        matches: null,
+
+        query: ".html5-video-player .ytp-ce-video",
+        titleQuery: ".ytp-ce-video-title",
+        thumbnailQuery: ".ytp-ce-covering-image",
+        getVideoId: function () {
+            var $a = this.querySelector("a.ytp-ce-covering-overlay");
+            if (!$a)
+                return null;
+            var match = constants.regex.videoIdRegexMatch.exec($a.getAttribute("href"));
+            return match && match.length ? match[2] : null;
         }
     }
 ]);
@@ -154,10 +214,9 @@ function prettyLikes(n) {
 (function () {
     var API_ID = "AIzaSyBAJG2nNJdeIRURRWs3FoOnWpHa_2LnMok",
         URL = "https://www.googleapis.com/youtube/v3/videos?part=statistics&fields=items(id,statistics(likeCount,dislikeCount))&key=" + API_ID + "&id=",
-        WAITTIME = 1000,
+        WAITTIME = 800,
 
         requestedVideoIds = [],
-        videoDataCache = {},
         grabDataSoonTimer,
 
         grabData = function () {
@@ -169,16 +228,30 @@ function prettyLikes(n) {
                 xmlHttp.open("GET", URL + ids.join(","));
                 xmlHttp.onreadystatechange = function () {
                     if (xmlHttp.readyState == 4 && xmlHttp.status == 200 && xmlHttp.responseText) {
-                        for (var item of JSON.parse(xmlHttp.responseText).items) {
-                            var ite = {
-                                id: item.id,
-                                likes: item.statistics ? parseInt(item.statistics.likeCount) : 0,
-                                dislikes: item.statistics ? parseInt(item.statistics.dislikeCount) : 0
-                            };
+                        chrome.storage.local.get("videoLikeDislikeCache", function (res) {
+                            var cache = res.videoLikeDislikeCache || {},
+                                now = Math.round(Date.now() / 1000 / 60);//in minutes
 
-                            videoDataCache[item.id] = ite;
-                            populateRatingsPreview(ite);
-                        }
+                            //remove old cached videos
+                            for (var key of Object.keys(cache))
+                                if (now - cache[key].time > (cache[key].likes + cache[key].dislikes < 40 ? 2 : 60))//cache lasts 60 minutes unless video has very few likes/dislikes; then it is 2
+                                    delete cache[key];
+
+                            //add new data to cache
+                            for (var item of JSON.parse(xmlHttp.responseText).items) {
+                                var ite = {
+                                    time: now,
+                                    id: item.id,
+                                    likes: item.statistics ? parseInt(item.statistics.likeCount) : 0,
+                                    dislikes: item.statistics ? parseInt(item.statistics.dislikeCount) : 0
+                                };
+
+                                cache[item.id] = ite;
+                                populateRatingsPreview(ite);
+                            }
+
+                            chrome.storage.local.set({ videoLikeDislikeCache: cache });
+                        });
                     }
                 };
                 xmlHttp.send();
@@ -218,18 +291,20 @@ function prettyLikes(n) {
         };
 
     this.ratingsPreviewPopulate = function (videoId) {
-        var item = videoDataCache[videoId];
-        if (item) {
-            populateRatingsPreview(item);
-        } else {
-            if (requestedVideoIds.indexOf(videoId) == -1)
-                requestedVideoIds.push(videoId);
+        chrome.storage.local.get("videoLikeDislikeCache", function (res) {
+            var item = (res.videoLikeDislikeCache || {})[videoId];
+            if (item) {
+                setInterval(() => populateRatingsPreview(item), WAITTIME);
+            } else {
+                if (requestedVideoIds.indexOf(videoId) == -1)
+                    requestedVideoIds.push(videoId);
 
-            if (requestedVideoIds.length >= 50)
-                grabData();
-            else
-                grabDataSoon();
-        }
+                if (requestedVideoIds.length >= 50)
+                    grabData();
+                else
+                    grabDataSoon();
+            }
+        });
     };
 })();
 
@@ -303,7 +378,7 @@ function scanVideoElementGroups(settingsChanged) {
 
                 var $title = group.titleQuery ? $parent.querySelector(group.titleQuery) : null,
                     $viewCount = group.viewCountQuery ? $parent.querySelector(group.viewCountQuery) : null,
-                    $thumbnail = $parent.querySelector("ytd-thumbnail");
+                    $thumbnail = group.thumbnailQuery ? $parent.querySelector(group.thumbnailQuery) : null;
 
                 //if title is empty when it shouldn't be, don't modify video yet
                 if ($title && !$title.textContent.trim())
@@ -330,7 +405,7 @@ function scanVideoElementGroups(settingsChanged) {
                         if (info) {
                             ytrData.timeAgo = info[1];
                             ytrData.exactCount = info[2];
-                            ytrData.prettyCount = prettyViews(ytrData.exactCount);
+                            ytrData.prettyCount = prettyViews(info[2]);
                             ytrData.isRecommended = $viewCount.textContent.indexOf("view") == -1;
                         }
                     }
@@ -446,7 +521,6 @@ function runAdBlock() {
 
                 //prevent infinite loop
                 if(!justBlocked){
-                    //console.log("adblocked1!!!!!")
                     justBlocked = true;
 
                     if(!window.ytplayer)
@@ -492,7 +566,6 @@ function runAdBlock() {
 
                 //prevent infinite loop
                 if(!justBlocked){
-                    //console.log("adblocked2!!!!!")
                     justBlocked = true;
 
                     //remove data from some mighty suspicious variables
@@ -506,9 +579,11 @@ function runAdBlock() {
 
                         //this should block all youtube surveys
                         if(window.yt.config_.openPopupConfig){
-                            var o = window.yt.config_.openPopupConfig;
-                            for(var key in o)
-                                o[key] = false;
+                            var o = window.yt.config_.openPopupConfig.supportedPopups;
+                            if(o)
+                                for(var key in o)
+                                    if(key.toLowerCase().includes("survey"))
+                                        o[key] = false;
                         }
                     }
 
@@ -536,7 +611,7 @@ function runAdBlock() {
             return req;
         };
 
-        //some special ads still make it through. this interval checks for a non youtube video in the main video element and skips it
+        //some special ads still make it through sometimes. this interval checks for a non youtube video in the main video element and force skips it
         setInterval(function(){
             var v = document.querySelector("video");
             if(v && v.src && v.src.indexOf("blob:") != 0){
