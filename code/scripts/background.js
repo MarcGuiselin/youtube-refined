@@ -17,7 +17,7 @@ var options = {
     exactVideoViewCount: true,
     exactLikeDislikeCount: true,
     showVideoAge: true,
-    ratingsPreviewMode: 4,//0: nothing, 1: colored box, 3: modern bar, 4: colored bar
+    ratingsPreviewMode: 3,//0: nothing, 1: colored box, 2: modern bar, 3: colored bar
     censoredTitle: { //what to do for censored titles
         capitalization: 1, //0: nothing, 1: capitalize, 2: lowercase
         removeEmoji: false, //remove emojii, html entities and similar non-common characters
