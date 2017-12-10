@@ -1,0 +1,39 @@
+1.9 Beta:
+    - Fixed Need to reset width, color, and text on rating preview on new videos, because when elements are recycled, the video will show the old stats for a bit and then swithc to the new video’s stats. Try scrolling on same link as above
+    - Fixed Stats shouldn’t show for videos with incredibly low like/dislike counts.
+    - Show likes/dislikes stats (using title) when hover over like/dislike bar
+    - ratings preview can't be highlighted and hover mouse cursor is now "help"
+    - added utils.js
+
+
+
+Themes
+Stats
+    stats since date written on top of page
+    today (show bar representing day with colored out potions representing watchtime)
+    average watchtime
+        - daily average (bar show colored out portions that are darker for times where videos are most commonly watched)
+        - weekly average (show average watchtime for each day of week)
+    total watchtime
+        - Total time watched youtube videos
+        - Total videos watched
+        ~ horiz bar graph of time view 
+        - week (show average watchtime for each day of week)
+        - month ()
+    favorite channels watchtime
+        ~ pick between all time, week, day 
+        - shows donut chart of youtube channels by watch time
+        ~ when donut chart group is hovered over, the equivalent data group is highlighted in the table under it
+    most rewatched videos
+    misc:
+        Video suggestions blocked
+        Comments made
+        Comments deleted
+        Comments liked
+
+data = {
+    todayTimes: [],
+    channels: 
+}
+
+

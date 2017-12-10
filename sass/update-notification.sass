@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:300|Nunito+Sans:700,300')
+
+body, html, #all
+    padding: 0
+    margin: 0
+    background: transparent
+    overflow: visible
+
+$header-width: 500px
+$header-height: 70px
+$header-bg: #DB4343
+
+#body
+    font-size: 20px
+    font-family: 'Nunito Sans', sans-serif
+
+h1, h2, h3, h4, h5, h6
+    margin: .4em 0
+    font-weight: 300
+
+.center
+    text-align: center
+
+#howToGif
+    position: relative
+    left: 50%
+    transform: translate(-50%, 0)
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.4)
+    margin: .7em 0
+    padding-top: 4px
+
+.centerParagraph
+    text-align: left
+    width: fit-content
+    max-width: $header-width
+    position: relative
+    left: 50%
+    transform: translate(-50%, 0)
+    img
+        height: 1em
+        display: inline-block
+        transform: translateY(.2em)
+
+
+#all
+    padding-top: $header-height / 2
+    position: absolute
+    top: $header-height / 2
+    left: 0
+    right: 0
+    bottom: 0
+    overflow-y: auto
+    overflow-x: hidden
+    background: white
+
+#updates
+    list-style: none
+    margin-left: 0
+    padding-left: 0
+    li h3:before
+        content: "\25CF"
+        padding-right: .5em
+    li.bugfixes h3:before
+        content: "+"
+    li
+        margin: .5em 0
+        &>*
+            margin: 0
+        h5
+            margin-left: 3em
+            color: #757575
+
+#closePage
+    position: fixed
+    z-index: 20
+    top: 0
+    right: 0
+    width: $header-height / 2
+    height: $header-height / 2
+    cursor: pointer
+    &:before, &:after
+        background: $header-bg
+        display: block
+        content: ""
+        width: 100%
+        height: 20%
+        position: absolute
+        top: 50%
+        left: 50%
+        transform-origin: 50% 50%
+        transform: translate(-50%, -50%) rotate(45deg)
+    &:before
+        transform: translate(-50%, -50%) rotate(-45deg)
+
+#topTitleBar
+    z-index: 10
+    position: fixed
+    top: 0
+    left: 50%
+    transform: translate(-50%, 0)
+    text-align: center
+    height: $header-height
+    line-height: $header-height
+    width: $header-width
+    padding: 0 15px
+    background: $header-bg
+    color: white
+    font-family: 'Nunito', sans-serif
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3)
+    font-size: 30px

@@ -1,0 +1,334 @@
+//----------------------------------------------------
+//----File that applies variables to style youtube----
+//----------------------------------------------------
+
+//off text in restrict mode changing menu (click 3 circle icon, then click restrict mode)
+//text color at bottom of settings submenu menu (click 3 circle icon)
+//category and license text under video description
+//close add text button
+//pinned comment text color
+//?
+//times next to lines in transcript
+//pinned comment icon
+//description text next to videos on trending page
+//timestamps in video transcript
+//desc text under a promoted item on the home page
+//show ad button at the top of home page
+//Text next to toggle. can be found on dark theme toggle menu
+//promoted ad video desc text
+//youtube movie but ad desc text
+.caption.ytd-account-settings,
+paper-item.ytd-account-settings,
+#title.ytd-metadata-row-renderer,
+#collapse-ad.ytd-video-masthead-ad-renderer,
+#label.ytd-pinned-comment-badge-renderer,
+#autoplay.ytd-compact-autoplay-renderer,
+#index.ytd-playlist-panel-video-renderer,
+yt-icon.ytd-pinned-comment-badge-renderer,
+#description-text.ytd-video-renderer,
+.cue-group-start-offset.ytd-transcript-body-renderer,
+#subtitle.ytd-compact-promoted-item-renderer,
+#expand-ad.ytd-video-masthead-ad-renderer,
+#caption.ytd-toggle-item-renderer,
+#description-text.ytd-promoted-video-renderer,
+#description-text.ytd-movie-renderer, .movie-metadata-list.ytd-movie-renderer
+    color: $txt-color-3 !important
+
+//title above a promoted playlist on a home channel
+#title.ytd-channel-featured-content-renderer
+    color: $txt-color-1 !important
+
+//support more than just color in part of header on channel pages
+#tabs-inner-container.ytd-c4-tabbed-header-renderer
+    background: var(--yt-lightsource-section1-color) !important
+
+//blue paper buttons
+ytd-button-renderer.style-primary[is-paper-button]
+    background-color: $paper-toggle-checked !important
+
+//yt red exclusive badge txt
+.badge-style-type-red.ytd-badge-supported-renderer
+    color: $yt-red-exclusive-txt !important
+
+//loading bar
+yt-page-navigation-progress
+    background: $page-load-progress-bg !important
+    #progress
+        background: $page-load-progress !important
+
+
+//paper dropdown allow applications of stuff besides just colors
+ytd-modal-with-title-and-button-renderer 
+    background: var(--yt-dialog-background)
+
+//channel header allow applications of stuff besides just colors
+#channel-header.ytd-c4-tabbed-header-renderer
+    background: var(--yt-lightsource-section1-color)
+
+//make sure 3 bar button next to youtube icon is right color
+#guide-icon.ytd-app
+    fill: $header-icons-color !important
+
+//try to fix browse channel icon color
+ytd-guide-entry-renderer #img[src*="add_channel_guide"]
+    filter:     brightness(lightness($txt-color-3) / .8) !important
+    opacity:    alpha($txt-color-3) !important
+
+//playlist editing page left-side menu
+ytd-playlist-sidebar-renderer
+    --yt-sidebar-background:            $playlist-edit-page-left-sidebar-bg
+
+//dropdowns in create new playlist submenu (find by clicking "add to" under video and click create new playlist)
+paper-input-container
+    #labelAndInputContainer label,
+        color: $txt-color-4 !important
+    .label-is-floating input::-webkit-input-placeholder
+        color: $txt-color-3 !important
+    .underline div
+        background: $txt-color-3 !important
+
+//hover over option in dropdown like ones in the report menu
+paper-listbox
+    --paper-item-selected_-_background-color:       $paper-dropdown-option-hover-bg !important
+
+//radio buttons color
+#radioContainer
+    --paper-radio-button-unchecked-color:           $general-icon-color !important
+    --paper-radio-button-checked-color:             $general-icon-color !important
+
+//numbers next to videos in playlist
+ytd-playlist-panel-video-renderer[selected] #index.ytd-playlist-panel-video-renderer
+    color: $general-icon-color !important
+
+//checkbox borders color fix
+#checkbox.paper-checkbox
+    --paper-checkbox-unchecked-color: $general-icon-color !important
+
+//live now badge
+.badge-style-type-live-now.ytd-badge-supported-renderer
+    background: transparent !important
+    color: $live-now-badge !important
+    border: 1px solid $live-now-badge !important
+
+//subscribe buttons
+paper-button[subscribed].ytd-subscribe-button-renderer
+    background-color:   $subscribe-btn-subbed !important
+ytd-subscribe-button-renderer:not([button-style]) paper-button:not([subscribed])
+    background-color:   $subscribe-btn-unsubbed !important
+
+
+//youtube playbutton logo in top-left
+#logo-icon-container
+    g.ytd-topbar-logo-renderer path
+        fill: $header-playbutton-logo-fill !important
+    g.ytd-topbar-logo-renderer polygon
+        fill: $header-playbutton-logo-center-fill !important
+    #youtube-paths path
+        fill: $header-playbutton-txt !important
+
+
+// header and searchbar
+#masthead
+    --yt-swatch-textbox-bg:         $header-bg !important
+    --yt-swatch-primary-darker:     $header-bg !important
+    --yt-swatch-primary:            $header-bg !important
+    --yt-swatch-important-text:     white !important//$header-sign-in-txt
+    --yt-swatch-text:               $header-icons-color !important
+    --yt-swatch-input-text:         $header-icons-color !important
+    --yt-swatch-logo-override:      $header-icons-color !important
+    --iron-icon-fill-color:         $header-icons-color !important
+
+    --yt-searchbox-background:                          $searchbox-bg !important
+    --yt-searchbox-text-color:                          $searchbox-txt-color !important
+    //--ytd-searchbox-legacy-border-shadow-color:         $searchbox-inner-shadow !important
+    //--ytd-searchbox-legacy-border-color:                $searchbox-primary-outline !important
+    //--ytd-searchbox-legacy-button-border-color:         $searchbox-primary-outline !important
+    //--ytd-searchbox-legacy-button-color:                $searchbox-primary-outline !important
+    --ytd-searchbox-legacy-button-icon-color:           $searchbox-submit-icon-color !important
+    //--ytd-searchbox-legacy-button-focus-color:          $searchbox-submit-hover-bg-color !important
+    //--ytd-searchbox-legacy-button-hover-color:          $searchbox-submit-hover-bg-color !important
+    //--ytd-searchbox-legacy-button-hover-border-color:   $searchbox-submit-hover-border-color !important
+
+    ytd-searchbox #container.ytd-searchbox
+        border: 1px solid transparent !important
+
+    ytd-searchbox[has-focus] #container.ytd-searchbox
+        border: 1px solid $searchbox-hover-outline-color !important
+
+    ytd-button-renderer.style-brand #text
+        color: $header-sign-in-txt !important
+
+    #search-icon-legacy svg
+        fill: $searchbox-submit-icon-color !important
+
+//searchbar "Search" text color
+#search::-webkit-input-placeholder
+    color: $searchbox-placeholder-txt-color !important
+
+//paper spinner is grey by default.  set the loader segments to be solid color, and then give the whole spinners a bit of opacity
+paper-spinner
+    opacity: alpha($paper-spinner-rgba)
+    .paper-spinner 
+        border-color: rgb(red($paper-spinner-rgba), green($paper-spinner-rgba), blue($paper-spinner-rgba)) !important
+
+//links in the description and comments
+.description.ytd-video-secondary-info-renderer yt-formatted-string.ytd-video-secondary-info-renderer,
+#content-text.ytd-comment-renderer
+    --yt-endpoint-color: $link-color !important
+
+//show more videos button
+yt-next-continuation.ytd-watch-next-secondary-results-renderer
+    --paper-button_-_background-color:  $show-more-videos-btn-bg !important
+    --paper-button_-_color:             $show-more-videos-btn-txt !important
+
+// ?
+app-drawer #footer .ytd-guide-renderer > a
+    color: $app-drawer-footer-txt !important
+
+//ratings preview bar under video
+ytd-sentiment-bar-renderer #container
+    background: $sentiment-bar-dislikes !important
+    #like-bar
+        background: $sentiment-bar-likes !important
+
+//paper tooltips
+#tooltip
+    background: $paper-tooltip-bg !important
+    color:      $paper-tooltip-txt !important
+
+//because a yt developer spelled the variable name incorrectly
+ytd-menu-service-item-renderer:hover,
+ytd-menu-navigation-item-renderer:hover
+    background-color:  var(--yt-menu-hover-background-color) !important
+
+//show ad button
+//Recommended channel text next to channel names in horizontal-list-renderes like on the home page
+#expand-ad.yt-masthead-ad-renderer, 
+#title-annotation.ytd-shelf-renderer
+    color: $txt-color-2 !important
+
+//watch later button should remain white
+#thumbnail svg.yt-icon
+    fill: white !important
+
+//gold ad badge next to video
+#ad-badge.ytd-compact-promoted-video-renderer,
+.badge-style-type-ad.ytd-badge-supported-renderer
+    background: $ad-badge-bg !important
+
+//everything else
+html *:not([style-scope]):not(.style-scope)
+    --yt-primary-color:                         $txt-color-1 !important
+    --yt-primary-text-color:                    $txt-color-1 !important
+    --yt-secondary-text-color:                  $txt-color-2 !important
+    --yt-hovered-text-color:                    $txt-color-2-hover !important
+
+    --yt-placeholder-text-color:                $txt-color-2 !important
+
+    --yt-metadata-color:                        $txt-color-3 !important
+    --yt-featured-channel-title-text-color:     $txt-color-3 !important
+
+    --yt-app-background:                        $bg !important
+    --yt-main-app-background:                   $bg !important
+    --yt-main-app-background-tmp:               $bg !important
+    --ytd-ad-badge-text-color:                  $bg !important
+
+    --yt-dialog-background:                     $alt-menu-bg !important
+
+    --yt-border-color:                          $primary-group-seperator-line-color !important
+    --yt-paper-button-ink-color:                $unsubscribe-confirm-btn-txt !important
+    --yt-brand-paper-button-color:              $unsubscribe-confirm-btn-txt !important
+    --yt-icon-color:                            $txt-color-3 !important
+    --yt-expand-color:                          $expand-desc-btn-txt-color !important
+    --yt-channel-owner:                         $channel-owner-name-txt-color !important
+    --yt-endpoint-color:                        $txt-color-3 !important
+    --yt-icon-hover-color:                      $txt-color-1 !important
+    --yt-button-text-color:                     $txt-color-4 !important
+    --ytd-comment-text-color:                   $comment-txt !important
+    --ytd-comment-metadata-text-color:          $comment-time-ago-txt !important
+    --yt-endpoint-hover-color:                  $comment-time-ago-txt-hover !important
+    --paper-menu-background-color:              $paper-dropdown-bg !important
+    --yt-menu-hover-background-color:           $paper-dropdown-option-hover-bg !important
+    --yt-menu-hover-backgound-color:            $paper-dropdown-option-hover-bg !important//miss spelling by yt developer
+
+    --ytd-video-publish-date-color:             $video-publish-date-txt !important
+
+    --yt-guide-entry-hover-background-color:    $app-drawer-button-hover-bg !important
+    --yt-brand-color:                           $txt-color-1 !important
+    --yt-copyright-text:                        $app-drawer-footer-txt !important
+    --yt-guide-background:                      $app-drawer-bg !important
+    --iron-icon-fill-color:                     $general-icon-color !important
+    --yt-swatch-text:                           $general-icon-color !important
+    --yt-icon-active-color:                     $general-icon-color !important
+
+    --ytd-badge-icon-color:                     $channel-verified-icon !important
+    --ytd-badge-background:                     $new-video-badge-bg !important
+    --ytd-simple-badge-color:                   $new-video-badge-txt !important
+
+    --yt-channel-header-background:             $channel-header-color !important
+
+    --paper-dialog-background-color:            $alt-menu-bg !important//bg color of promotional popups like the "Try YouTube TV for free"
+
+    --yt-simple-menu-header-background:         $simple-menu-header-bg !important//color of header of menu that opens when you click on account icon in top-right
+
+    --yt-playlist-background-header:            $playlist-header-bg !important
+    --yt-playlist-background-item:              $playlist-bg !important
+    --yt-playlist-title-text:                   $txt-color-1 !important
+    --yt-playlist-message-text:                 $txt-color-1 !important
+    --ytd-collection-badge-color:               $txt-color-1 !important
+
+    --yt-transcript-background:                     $transcript-bg !important
+    --ytd-transcript-toolbar-background-color:      $transcript-header-bg !important
+    --ytd-transcript-cue-hover-background-color:    $transcript-header-bg !important
+    --ytd-transcript-toolbar-text:                  $transcript-title-txt !important
+
+    --ytd-shopping-product-info:                $txt-color-1 !important
+    --yt-shopping-product-info:                 $txt-color-1 !important
+
+    --yt-menu-focus-background-color:           $paper-dropdown-option-hover-bg !important
+
+    --ytd-toggle-color:                         $paper-toggle-checked !important
+
+
+    //--yt-disabled-text-color: green !important
+    //--yt-commentbox-border-inactive: green !important
+    //--yt-commentbox-border-active: green !important
+    //--yt-primary-disabled-button-text-color: green !important
+    //--yt-paper-radio-button-checked-color: green !important
+    //--yt-icon-disabled-color: green !important
+    //--yt-comment-metadata-text-color: green !important
+    //--yt-backstage-metadata-text-color: green !important
+    //--yt-backstage-video-link-background-color: green !important
+    //--yt-backstage-image-alert-color: green !important
+    //--yt-backstage-cancel-background-color: green !important
+    //--yt-backstage-cancel-color: green !important
+    //--yt-offer-background-color: green !important
+    //--yt-moderation-panel-background: green !important
+    //--yt-moderation-panel-hover: green !important
+    //--yt-moderation-panel-comment-text: green !important
+    //--yt-moderation-panel-comment-metadata-text: green !important
+    //--yt-moderation-icon-color: green !important
+    //--yt-moderation-icon-hover-color: green !important
+    //--yt-moderation-panel-likely-spam-divider: green !important
+
+    /* display */
+    //--yt-button-payment-text-color: green !important
+    //--yt-video-publish-date-color: green !important
+    //--yt-vat-notice-text: green !important
+    //--yt-survey-button-color: green !important
+
+    //--yt-thumbnail-placeholder-color: green !important
+    //--yt-formatted-string-deemphasize-color: green !important
+    //--yt-badge-background: green !important
+    //--yt-badge-disabled-color: green !important
+    //--yt-collection-badge-color: green !important
+    //--yt-owner-badge-color: green !important
+    //--yt-simple-badge-color: green !important
+    //--yt-ad-badge-text-color: green !important
+
+    //--yt-item-section-header-color: green !important
+    //--yt-watch-card-secondary-text-color: green !important
+    //--yt-watch-card-album-header-background: green !important
+    //--yt-comment-text-color: green !important
+
+    //--yt-playlist-sidebar-background: green !important

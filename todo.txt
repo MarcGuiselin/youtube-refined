@@ -1,0 +1,65 @@
+lazytube - use controller to navigate youtube
+
+pause/play videos playing in other tabs.  do bar on bottom kinda like this extension:
+    https://i.imgur.com/WslFEj1.png
+    https://chrome.google.com/webstore/detail/youtube-pro-new-layout-su/nghbohceegafefgfbbkkpbdiodckkgdd
+    https://lh3.googleusercontent.com/JNzr3G2Vx704JVypuBNR-38OODFqtg2OFtGr9Vwa8YwXtz1JWf5eg_umjpfDyLHP3l1sKFsShQ=w640-h400-e365
+
+show video as you scroll down
+
+block youtube tracking
+
+update notification
+
+pause video on page visibily change (visibility change event)
+
+titlecase
+    l.a => L.A   n.y.c. => N.Y.C.
+
+remove (MUST WATCH) [not fake] (not clickbait) (footage) (Cringe Warning) (ALMOST DIED) (official video)
+    you never even noticed   you never even seen   you ever seen   you ever saw     so satisfying
+    amazing video!  awesome video!  must watch!
+    oddly satisfying      so satisfying
+
+Youtube Refined just updated!
+  
+replace clickbait with cute dog/cat
+
+
+
+
+fix:
+    click reply under comment. reply button green
+
+
+
+
+
+
+usable youtube keys:
+    my key - AIzaSyBAJG2nNJdeIRURRWs3FoOnWpHa_2LnMok
+    found request in youtube page.  either from api or imbedded ad though ytr's adblock was enabled - AIzaSyA-dlBUjVQeuc4a6ZN4RkNUYDFddrVLxrA
+
+
+
+Donate 3 dollars or more to activate pro features
+I'd love to donate andf get pro, but i'm broke :(
+  That's fine, if you leave a 5 star review on the the chrome web store, and tweet about... you can get ytr pro for free :)
+I already donated
+  Please input the email address you used for your donation.
+  
+Review YTR on the chrome web store :)
+(once clicked, say thank you permanently)
+  
+Don't show me this again (Pro only)
+
+Thanks for using YTR - Marc
+
+Rate 5 stars on the chrome web store
+
+
+
+
+
+
+When enable pro only feature, countdown on top-left of page counts down until pro settings are reset.

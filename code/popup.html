@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Popup</title>
     <link rel="stylesheet" href="css/popup.css">
+    <link rel="stylesheet" href="css/common/vue-components.css">
 </head>
 
 <body>
@@ -17,89 +18,68 @@
     <div id='mainBody'>
         <h2 style="margin-top: 0;">General Settings</h2>
         <div class='newLine'>
-            <input id='checkBox1' type='checkbox' v-model='options.adBlock' v-on:change='saveData' />
-            <label for='checkBox1'>
-                <span></span>
-                Block all ads on Youtube&nbsp;
-                <b>Changing will reload all youtube tabs!</b>
-            </label>
+            <pretty-checkbox v-model='options.adBlock' v-on:input='saveData'>
+                Block all ads on Youtube&nbsp;<b>Changing will reload all youtube tabs!</b>
+            </pretty-checkbox>
         </div>
         <div class='newLine'>
-            <input id='checkBox2' type='checkbox' v-model='options.hideComments' v-on:change='saveData' />
-            <label for='checkBox2'>
-                <span></span>
+            <pretty-checkbox v-model='options.hideComments' v-on:input='saveData'>
                 Hide the comments section
-            </label>
+            </pretty-checkbox>
         </div>
         <div class='newLine'>
             Ratings preview (video likes/dislikes):
-            <pretty-dropdown v-model='options.ratingsPreviewMode' v-on:input='saveData' data='{"None": 0, "Colored Box": 1, "Modern Bar": 2, "Colored Bar": 3}'
-            />
+            <pretty-dropdown v-model='options.ratingsPreviewMode' v-on:input='saveData' data='{"None": 0, "Colored Box": 1, "Modern Bar": 2, "Colored Bar": 3}'/>
+        </div>
+        <div class='newLine'>
+            Youtube Theme:
+            <pretty-dropdown v-model='options.youtubeTheme' v-on:input='saveData' data='{"Default White": "", "Vader Dark": "dark"}'/><!--"Sunset Fade": "fade"-->
         </div>
         <h2>Video Views Settings</h2>
         <div class='newLine'>
-            <input id='checkBox3' type='checkbox' v-model='options.replaceRFYTextWithViewCount' v-on:change='saveData' />
-            <label for='checkBox3'>
-                <span></span>
+            <pretty-checkbox v-model='options.replaceRFYTextWithViewCount' v-on:input='saveData'>
                 Replace "Recommended for you" text with view count
-            </label>
+            </pretty-checkbox>
         </div>
         <div class='newLine'>
-            <input id='checkBox4' type='checkbox' v-model='options.exactVideoViewCount' v-on:change='saveData' />
-            <label for='checkBox4'>
-                <span></span>
+            <pretty-checkbox v-model='options.exactVideoViewCount' v-on:input='saveData'>
                 Show exact video view count (2.4M views -> 2,424,234 views)
-            </label>
+            </pretty-checkbox>
         </div>
         <div class='newLine'>
-            <input id='checkBox5' type='checkbox' v-model='options.showVideoAge' v-on:change='saveData' />
-            <label for='checkBox5'>
-                <span></span>
+            <pretty-checkbox v-model='options.showVideoAge' v-on:input='saveData'>
                 Show age of video next to view count
-            </label>
+            </pretty-checkbox>
         </div>
         <div class='newLine'>
-            <input id='checkBox6' type='checkbox' v-model='options.exactLikeDislikeCount' v-on:change='saveData' />
-            <label for='checkBox6'>
-                <span></span>
+            <pretty-checkbox v-model='options.exactLikeDislikeCount' v-on:input='saveData'>
                 Show exact like/dislike count under videos (21K likes -> 21,345 likes)
-            </label>
+            </pretty-checkbox>
         </div>
         <h2>Title Autocorrection Settings</h2>
         <div class='newLine'>
             Capitalization:
-            <pretty-dropdown v-model='options.censoredTitle.capitalization' v-on:input='saveData' data='{"Do Nothing": 0, "Titlecase": 1, "Uppercase": 2}'
-            />
+            <pretty-dropdown v-model='options.censoredTitle.capitalization' v-on:input='saveData' data='{"Do Nothing": 0, "Titlecase": 1, "Uppercase": 2}'/>
         </div>
         <div class='newLine'>
-            <input id='checkBox7' type='checkbox' v-model='options.censoredTitle.removeEmoji' v-on:change='saveData' />
-            <label for='checkBox7'>
-                <span></span>
+            <pretty-checkbox v-model='options.censoredTitle.removeEmoji' v-on:input='saveData'>
                 Remove emoji and similar characters
-            </label>
+            </pretty-checkbox>
         </div>
         <div class='newLine'>
-            <input id='checkBox8' type='checkbox' v-model='options.censoredTitle.removeRepeatingNonLetterChars' v-on:change='saveData'
-            />
-            <label for='checkBox8'>
-                <span></span>
+            <pretty-checkbox v-model='options.censoredTitle.removeRepeatingNonLetterChars' v-on:input='saveData'>
                 Singularize repeating non-letter characters
-            </label>
+            </pretty-checkbox>
         </div>
         <div class='newLine'>
-            <input id='checkBox9' type='checkbox' v-model='options.censoredTitle.removeShortTextContainedWithinElipses' v-on:change='saveData'
-            />
-            <label for='checkBox9'>
-                <span></span>
+            <pretty-checkbox v-model='options.censoredTitle.removeShortTextContainedWithinElipses' v-on:input='saveData'>
                 Remove short(and usually trivial) text contained within elipses
-            </label>
+            </pretty-checkbox>
         </div>
         <div class='newLine'>
-            <input id='checkBox10' type='checkbox' v-model='options.censoredTitle.removeHashtags' v-on:change='saveData' />
-            <label for='checkBox10'>
-                <span></span>
+            <pretty-checkbox v-model='options.censoredTitle.removeHashtags' v-on:input='saveData'>
                 Smart remove hashtags
-            </label>
+            </pretty-checkbox>
         </div>
         <div class='newLine'>Example:</div>
         <div class='centered newLine'>
@@ -125,7 +105,9 @@
 
     <script type='text/javascript' src='scripts/third party/vue.min.js'></script>
 
-    <script type='text/javascript' src='scripts/titleCaps.js'></script>
+    <script type='text/javascript' src='scripts/common/vue-components.js'></script>
+    <script type='text/javascript' src='scripts/common/title-caps.js'></script>
+
     <script type='text/javascript' src='scripts/popup.js'></script>
 </body>
 

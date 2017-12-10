@@ -1,59 +1,3 @@
-
-
-
-// Vue js pretty dropdown by Marc Guiselin 2017 (jsfiddle.net/MarcGuiselin/nws9juge/)
-// Usage: <pretty-dropdown v-model='filterUnit.hideAction' data='{option1: value1, option2: value2, etc}'/>
-// Just an awesome-looking <select> replacement dropdown menu
-Vue.component('pretty-dropdown', {
-    template: `
-		<div class='dropdown' v-on:mouseover='enableAnimation'>
-			<input class='dropdown-input' type='text'/>
-			<div class='dropdown-text'>&nbsp;</div>
-			<ul>
-				<li v-for='(val, key) in JSON.parse(data)' v-bind:class='{selected: value == val}' v-on:mousedown='updateVModel(val)'>{{key}}</li>
-			</ul>
-		</div>
-	`,
-    props: {
-        value: {
-            type: [String, Number, Boolean, Symbol],
-            required: true
-        },
-        data: {
-            type: String,
-            required: true
-        }
-    },
-    mounted: function () {
-        //set textContent manually because setting it with vue causes the css animation on it to stutter
-        this.dropdownText = this.$el.getElementsByClassName('dropdown-text')[0];
-        this.dropdownText.textContent = this.getKeyForValue(this.value) + '      ';
-    },
-    watch: {
-        value: function (val) {
-            this.dropdownText.textContent = this.getKeyForValue(val) + '      ';
-        }
-    },
-    methods: {
-        enableAnimation: function () {
-            this.$el.classList.add('enable-animation');
-        },
-        getKeyForValue: function (value) {
-            var dataParsed = JSON.parse(this.data);
-            for (let key in dataParsed)
-                if (dataParsed[key] == value)
-                    return key;
-            return value;
-        },
-        updateVModel: function (val) {
-            this.$emit('input', val);
-        }
-    }
-});
-
-
-
-
 chrome.storage.local.get("options", function(res) {
     window.mainVue = new Vue({
         el: '#mainBody',
@@ -64,6 +8,12 @@ chrome.storage.local.get("options", function(res) {
         },
         mounted: function(){
             this.$el.style.visibility = "visible";
+
+            //whenever options are changed, update options
+            chrome.storage.onChanged.addListener(function (changes) {
+                if (changes && changes.options && changes.options.newValue)
+                    this.options = changes.options.newValue;
+            }.bind(this));
         },
         methods: {
             saveData: function () {

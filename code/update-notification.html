@@ -1,0 +1,84 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Popup</title>
+    <link rel="stylesheet" href="css/update-notification.css">
+    <link rel="stylesheet" href="css/common/vue-components.css">
+</head>
+
+<body>
+    <div id="all">
+        <div id="topTitleBar" v-if="firstShow"> Successfully installed </div>
+        <div id="topTitleBar" v-else> Youtube Refined just updated :) </div>
+
+        <div id="closePage" v-on:click="exit"></div>
+
+        <div id="body" v-if="firstShow">
+            <h3 class="centerParagraph">Hey, 👋 this is Marc, the programmer 👨‍💻 behind Youtube Refined, and I just wanted to thank you for installing my extension!</h3>
+            <h3 class="centerParagraph">To get started, click on the icon <img src="icons/38.png"/> in the upper right corner of chrome:</h3>
+            <img id="howToGif" src="images/popupIconHowTo.gif"/>
+            <h3 class="center">Help spread the word:</h3>
+            <h5 class="center">
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A//chrome.google.com/webstore/detail/youtube-refined/bhbammekghlcjhbiekoldhpfgelblcni" target="_blank"><pretty-button>Share on Facebook</pretty-button></a>
+                <a href="https://twitter.com/intent/tweet?text=Browsing%20a%20better%20YouTube%20with%20less%20distractions!%20https%3A//chrome.google.com/webstore/detail/youtube-refined/bhbammekghlcjhbiekoldhpfgelblcni" target="_blank"><pretty-button>Tweet</pretty-button></a>
+                <a href="https://chrome.google.com/webstore/detail/youtube-refined/bhbammekghlcjhbiekoldhpfgelblcni/reviews" target="_blank"><pretty-button>Leave a Review</pretty-button></a>
+            </h5>
+            <!--<h2 class="center">-</h2>
+            <h4 class="center">
+                <pretty-button v-on:click="exit">Alrighty! Sounds good</pretty-button>
+            </h4>-->
+        </div>
+        <div id="body" v-else>
+            <h1 class="center">What's New</h1>
+            <ul id="updates" class="centerParagraph">
+                <li v-for="update in updates">
+                    <h3>{{update.text}}</h3>
+                    <h5 v-for="t in update.subtexts">{{t}}</h5>
+                </li>
+                <li class="bugfixes" v-if="bugsFixed">
+                    <h3>&#128295; Over {{bugsFixed}} bugfixes/small improvements</h3>
+                    <h5 v-if="thanks">Thanks {{thanks}} for reporting issues.</h5>
+                </li>
+            </ul>
+            <h2 class="center">-</h2>
+            <h4 class="center">
+                <pretty-button v-on:click="exit">Ok, thanks for letting me know</pretty-button>
+            </h4>
+            <!--<h1 class="center">Get YTR Pro</h1>
+            <h3 class="centerParagraph">Donate 2 dollars or more to support development &#x1F468;&#x200D;&#x1F4BB; and unlock extra themes, hidden options, and deeper statistics (Coming soon).</h3>
+            <h2 class="center">Buy the developer a</h2>
+            <h2 class="center"><a href="#">I already donated</a></h2>
+            <h3 class="center"><a href="#">I'd like to get pro by helping out some other way</a></h3>
+            <h3 class="center">
+                <pretty-checkbox v-model="options.notifications.showUpdate" v-bind:disabled="!options.proUnlocked" v-on:input="saveData">
+                    Show me update notifications<b>&nbsp;Change with Pro</b>
+                </pretty-checkbox>
+            </h3>-->
+        </div>
+<!--
+            <div class="centered newLine">
+                Donate 3 dollars or more to activate pro features
+                I'd love to donate andf get pro, but i'm broke :(
+                That"s fine, if you leave a 5 star review on the the chrome web store, and tweet about... you can get ytr pro for free :)
+                I already donated
+                Please input the email address you used for your donation.
+                
+                Review YTR on the chrome web store :)
+                (once clicked, say thank you permanently)
+                
+                Don"t show me this again (Pro only)
+                
+                Thanks for using YTR - Marc
+                
+                Rate 5 stars on the chrome web store
+            </div>
+-->
+    </div>
+
+    <script type="text/javascript" src="scripts/third party/vue.min.js"></script>
+    <script type="text/javascript" src="scripts/common/vue-components.js"></script>
+    <script type="text/javascript" src="scripts/common/update-notes.js"></script>
+
+    <script type="text/javascript" src="scripts/update-notification.js"></script>
+</body>
+</html>

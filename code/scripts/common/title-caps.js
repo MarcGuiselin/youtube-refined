@@ -24,6 +24,7 @@
         firstLetterOfSentence = new RegExp("(vs)?(^\\s*\\w|[^\\w\\s,&%#-'\\.]\\s*\\w|\\.\\s+\\w|-\\s+\\w)", "gi"), //match the first letter of sentences
         beginningPunct = new RegExp("^[!\"#$%&''()*+,./:;<=>?@[\\\\\\]^`{|}~]*"), //match punctuation at the beginning of a word
         endingPunct = new RegExp("[!\"#$%&'()*+,./:;<=>?@[\\\\\\]^`{|}~]*$"), //match punctuation at the end of a word
+        removeCharacters = new RegExp("\uFE0F", "g"),//removes an invisble emoji character that breaks text capitalization
         allwaysLower = new RegExp("^(" +
             //english:
             "a|out|up|buy|yet|when|till|that|than|so|once|nor|with|upon|past|over|onto|off|near|like|into|from|down|you|an|and|as|at|but|by|en|for|if|in|of|on|or|the|to|v\.?|via|vs\.?|" +
@@ -72,6 +73,7 @@
     //check and replace all words, then uppercase first letter of all sentences
     String.prototype.titleCap = function() {
         return this
+            .replace(removeCharacters, "")
             .replace(anyWord, anywordReplacer)
             .replace(firstLetterOfSentence, firstLetterOfSentenceReplacer)
             .replace(finalUpper, uppercase);
@@ -80,6 +82,7 @@
     //lowercase everything, then uppercase first character of all sentences
     String.prototype.titleCapSentences = function() {
         return this
+            .replace(removeCharacters, "")
             .toLowerCase()
             .replace(firstLetterOfSentence, firstLetterOfSentenceReplacer)
             .replace(finalUpper, uppercase);

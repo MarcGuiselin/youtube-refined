@@ -1,0 +1,10 @@
+{
+  "name": "youtube-refined-chrome-extension",
+  "description": "A chrome extension to improve youtube.  #",
+  "version": "0.0.1",
+  "devDependencies": {
+    "grunt": "latest",
+    "grunt-contrib-sass": "latest",
+    "grunt-contrib-watch": "latest"
+  }
+}

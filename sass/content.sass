@@ -1,0 +1,234 @@
+/* hide time ago that shows on some videos since the extension will take care of it any way */
+#metadata-line.ytd-grid-video-renderer>.ytd-grid-video-renderer:not(:last-of-type):after,
+#metadata-line.ytd-video-meta-block>.ytd-video-meta-block:not(:last-of-type):after
+    content: none !important
+    margin: 0 !important
+
+#metadata-line.ytd-grid-video-renderer>.ytd-grid-video-renderer:last-of-type,
+#metadata-line.ytd-video-meta-block>.ytd-video-meta-block:last-of-type
+    display: none
+
+
+/* adblocking hide ads */
+// hide ad next to video
+// hide video ad renderer over video
+// hide yellow bars that mark position of ad in video
+// hide sponsored shop for bar under video
+// hide promoted video suggestions
+// hide video ad on the top of the homepage
+html.ytrAdblock ytd-player-legacy-desktop-watch-ads-renderer, #google_ads_frame1
+html.ytrAdblock .video-ads, html.ytrAdblock .ad-container,
+html.ytrAdblock .ytp-ad-progress-list,
+html.ytrAdblock #pla-shelf,
+html.ytrAdblock ytd-compact-promoted-video-renderer,
+html.ytrAdblock #masthead-ad 
+    display: none !important
+
+
+/* hide comments section */
+
+// actually hide comments
+// hide show more/show less buttons
+html.ytrHideComments #comments,
+html.ytrHideComments ytd-watch #meta #more, html.ytrHideComments ytd-watch #meta #less
+    display: none !important
+
+
+/* hide line below description */
+html.ytrHideComments ytd-watch #meta ytd-video-secondary-info-renderer
+    border-bottom: none
+
+
+/* force expand description */
+html.ytrHideComments ytd-watch #meta ytd-expander>#content.ytd-expander
+    overflow: visible !important
+    max-height: none !important
+
+
+/* ratings previewer */
+.ytr-ratings-previewer 
+    display: none
+    user-select: none
+    cursor: help
+
+/* mode 1 */
+html.ytr-ratings-preview-mode-1 
+    .ytr-ratings-previewer[ranking]
+        display: inline-flex
+        position: absolute
+        bottom: 0
+        left: 0
+        margin: 4px
+        background: black
+        opacity: .8
+        padding: 2px 4px
+        border-radius: 2px
+        letter-spacing: .5px
+        font-size: 1.2rem
+        font-weight: 500
+        line-height: 1.2rem
+        align-items: center
+        color: white
+    .ytr-ratings-previewer[ranking='0']
+        opacity: 1
+        background: #b31d1d !important
+    .ytr-ratings-previewer[ranking='1']
+        opacity: 1
+        background: #b39a1d !important
+    .ytr-ratings-previewer[ranking='2']
+        opacity: 1
+        background: #2ab31d !important
+
+
+/* mode 2-3 */
+html.ytr-ratings-preview-mode-2, html.ytr-ratings-preview-mode-3
+    .ytr-ratings-previewer
+        display: block
+        height: 4px
+        width: 100%
+        background: #cccccc
+        z-index: 10
+        top: 0
+        position: absolute
+        border-bottom: 1px solid white
+
+    .ytr-ratings-previewer>div
+        position: absolute
+        top: 0
+        left: 0
+        bottom: 0
+        width: 0
+        transition: .5s width
+        background: #2693e6
+        color: transparent
+        font-size: 12px
+        font-family: Arial, Helvetica, sans-serif
+        line-height: 25px
+        white-space: nowrap
+
+    .ytr-ratings-previewer>div::before
+        content: '\002009'
+    
+    ytd-thumbnail:hover .ytr-ratings-previewer>div,
+    .ytp-videowall-still:hover .ytr-ratings-previewer>div,
+    .ytp-ce-video:hover .ytr-ratings-previewer>div
+        color: rgba(255, 255, 255, 1)
+        text-shadow: 1px 1px 0px black, -1px 1px 0px black, -1px -1px 0px black, 1px -1px 0px black
+
+html.ytr-ratings-preview-mode-3
+    .ytr-ratings-previewer[ranking='0']>div
+        background: #b31d1d !important
+    .ytr-ratings-previewer[ranking='1']>div
+        background: #b39a1d !important
+    .ytr-ratings-previewer[ranking='2']>div
+        background: #2ab31d !important
+
+
+// show entire youtube video title #video-title  max-height: fit-content !important
+
+
+/* Center searchbar and improve the way it looks */
+#masthead-container
+    #container.ytd-masthead
+        height: 64px
+    ytd-searchbox.ytd-masthead
+        justify-content: center !important
+    #search-form.ytd-searchbox
+        height: 38px
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08)
+        transition: box-shadow .2s var(--standard-curve)
+    [has-focus] #search-form.ytd-searchbox
+        box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.08)
+    #container.ytd-searchbox,
+    #search-icon-legacy.ytd-searchbox
+        background: var(--yt-searchbox-background) !important
+        border: none !important
+        border-radius: 0 !important
+        box-shadow: none !important
+    ytd-searchbox input
+        margin-left: 8px
+
+
+/* Hide Restore old youtube button */
+ytd-account-settings>paper-item:last-of-type
+    display: none !important
+
+
+/* Hide dark theme toggle button */
+//ytd-toggle-theme-compact-link-renderer
+//   display: none !important
+ytd-toggle-theme-compact-link-renderer
+    pointer-events: none
+    user-select: none
+    font-size: 1%
+    #secondary-icon
+        display:    none
+    #label
+        color:      transparent
+    #label::before
+        content:    "Use YouTube Refined to change theme"
+        color:      var(--yt-compact-link-color, var(--yt-primary-color))
+
+
+//make likes/dislikes bar wider and more visible under video
+ytd-sentiment-bar-renderer
+    width: 100% !important
+
+
+//basic notification like the one used to warn user ytr won't work with the old youtube
+#ytr-basic-notification
+    background: white
+    color: #666
+    border: 1px solid rgba(0,0,0,.2)
+    padding: 10px
+    width: 240px
+    position: fixed
+    bottom: 10px
+    right: 10px
+    transition: .2s
+    transform: translate()
+    opacity: 1
+    &.close
+        transform: translate3d(0, 20%, 0)
+        opacity: 0
+        pointer-events: none
+    h3
+        line-height: 0
+        margin: .5em 0 1em 0
+    .ytr-dont-remind
+        float: right
+    .ytr-close-button
+        font-size: 200%
+        line-height: .65em
+        cursor: pointer
+        position: absolute
+        top: 2px
+        right: 2px
+
+
+//update notification iframe
+#ytr-update-notification
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background: rgba(0, 0, 0, 0.2)
+    z-index: 1000000
+    & > iframe
+        //background: white
+        //box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4)
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+        width: 800px
+        height: 550px
+        max-height: 90%
+        max-width: 100%
+html.ytr-blur-no-scroll
+    body
+        overflow-y: hidden !important
+    ytd-app
+        filter: blur(8px)
+    

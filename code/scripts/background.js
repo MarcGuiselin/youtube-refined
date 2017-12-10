@@ -5,7 +5,7 @@ copyright 2017 Marc Guiselin
 //define constants
 const constants = Object.freeze({
     regex: {
-        matchYoutubeUrl: new RegExp('^(https?\\:\\/\\/)?(www\\.)?youtube\\.\\w{2,4}\\/.+$', 'i'),
+        matchYoutubeUrl: new RegExp('^(https?\\:\\/\\/)?(www\\.)?youtube\\.com.+$', 'i'),
     }
 });
 
@@ -18,12 +18,28 @@ var options = {
     exactLikeDislikeCount: true,
     showVideoAge: true,
     ratingsPreviewMode: 3,//0: nothing, 1: colored box, 2: modern bar, 3: colored bar
+    youtubeTheme: "",
     censoredTitle: { //what to do for censored titles
         capitalization: 1, //0: nothing, 1: capitalize, 2: lowercase
         removeEmoji: false, //remove emojii, html entities and similar non-common characters
         removeRepeatingNonLetterChars: false, //remove repeating non-letter characters.  example: '?? !!!!' -> '? !'
         removeShortTextContainedWithinElipses: false,
         removeHashtags: false
+    },
+    proUnlocked: false,
+    promo: {
+        triggerShowUpdate: false,//extension just updated, so show the update notification
+        lastUpdateShowedNotification: "initial"//the last version of ytr when an update was shown
+        
+        //proUnlockedMethod: 0, //0: nothing, 1: donated, 2: confirmed email, 3: unlocked by performing tasks
+        //leftChromeStoreReview: false,
+        //leftFacebookPost: false,
+        //leftTweet: false,
+        //leftLinkedin: false
+    },
+    notifications: {
+        warnOldYoutube: true,
+        showUpdate: true //show update notification when ytr is updated
     }
 };
 
@@ -33,7 +49,8 @@ var options = {
 //blocking ads is as simple as blocking the same urls adblock does
 //youtube plays the video by default if the ads don't load, so no need for complex scripts!
 chrome.webRequest.onBeforeRequest.addListener(function (info) {
-    if (options.adBlock)
+    //only block when adblock is enabled and the video isn't in an iframe imbedded on a web site
+    if (options.adBlock && info.parentFrameId == -1)
         return { cancel: true };
 }, {
         urls: [
@@ -75,22 +92,45 @@ chrome.storage.onChanged.addListener(function (changes) {
 
 //on install
 chrome.runtime.onInstalled.addListener(function (details) {
-    if (details.reason == "install") {
+    setTimeout(function () {
+        if (details.reason == "install") {
 
-        //insert script into every tab right on start
-        setTimeout(function () {
+            //trigger first show install message
+            options.promo.triggerShowUpdate = true;
+            options.promo.lastUpdateShowedNotification = "";
+            chrome.storage.local.set({options: options});
+
             chrome.tabs.query({}, function (tabs) {
+                //insert scripts into every tab right on start
                 for (let tab of tabs) {
-                    if (constants.regex.matchYoutubeUrl.test(tab.url)) {
-                        chrome.tabs.insertCSS(tab.id, { file: "css/content.css" });
-                        chrome.tabs.executeScript(tab.id, { file: "scripts/titleCaps.js" }, function () {
-                            chrome.tabs.executeScript(tab.id, { file: "scripts/content.js" });
-                        });
+                    if (tab.url && constants.regex.matchYoutubeUrl.test(tab.url)) {
+                        let id = tab.id;
+                        chrome.tabs.insertCSS(id, { file: "css/content.css" });
+                        chrome.tabs.executeScript(id, { file: "scripts/common/utils.js" }, () =>
+                            chrome.tabs.executeScript(id, { file: "scripts/common/title-caps.js" }, () =>
+                                chrome.tabs.executeScript(id, { file: "scripts/content.js" })
+                            )
+                        );
                     }
                 }
+
+                //open youtube homepage to show install message
+                chrome.tabs.create({ url: "https://www.youtube.com/" });
             });
-        }, 500);
-    }
+
+        }else if(details.reason == "update"){
+
+            //only show update notification if there are new updates to show and if user didn't disable showing the notification
+            if(updateNotes[updateNotes.length - 1].version != options.promo.lastUpdateShowedNotification && options.notifications.showUpdate){
+                setTimeout(function () {
+                    options.promo.triggerShowUpdate = true;
+                    if(!options.promo.lastUpdateShowedNotification)
+                        options.promo.lastUpdateShowedNotification = "initial";
+                    chrome.storage.local.set({options: options});
+                }, 4 * 60 * 1000);
+            }
+        }
+    }, 1000);
 });
 
 
