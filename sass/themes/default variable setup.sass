@@ -15,8 +15,8 @@
 // youtube red
 
 //classic colors
-$red:                                   red
-$blue:                                  rgb(38, 147, 230)
+$accent-primary:                        red//red
+$accent-secondary:                      red//rgb(38, 147, 230)
 
 
 // general
@@ -27,27 +27,30 @@ $txt-color-2-hover:                     red//rgb(193, 193, 193)
 $txt-color-3:                           red//rgb(136, 136, 136)
 $txt-color-4:                           red//rgb(145, 145, 145)
 $primary-group-seperator-line-color:    red//rgb(46,  46,  46)
-$link-color:                            red//$blue
+$link-color:                            red//$accent-secondary
 $general-icon-color:                    $txt-color-3
 
 //yt icons
-$header-playbutton-logo-fill:           red//$red
+$header-playbutton-logo-fill:           red//$accent-primary
 $header-playbutton-logo-center-fill:    red//white
 $header-playbutton-txt:                 red//white
 
+
 // buttons
 $subscribe-btn-subbed:                  red//rgb(238, 238, 238)
-$subscribe-btn-unsubbed:                red//$red
-$unsubscribe-confirm-btn-txt:           red//$red
+$subscribe-btn-subbed-txt:              red//rgba(black, .7)
+$subscribe-btn-unsubbed:                red//$accent-primary
+$subscribe-btn-unsubbed-txt:            red//white
+$unsubscribe-confirm-btn-txt:           red//$accent-primary
 
 // header
 $header-bg:                             red//rgb(32,32,32)
 $header-icons-color:                    red//white
-$header-sign-in-txt:                    red//$red
+$header-sign-in-txt:                    red//$accent-primary
 
 // searchbox
 $searchbox-bg:                          red//rgb(17, 17, 17)
-$searchbox-hover-outline-color:         red//$blue
+$searchbox-hover-outline-color:         red//$accent-secondary
 $searchbox-txt-color:                   red//rgb(205, 205, 205)
 $searchbox-placeholder-txt-color:       $txt-color-3
 $searchbox-submit-icon-color:           red//white
@@ -84,14 +87,36 @@ $ad-badge-bg:                           red//hsl(46.8, 79.3%, 52.7%)
 $live-now-badge:                        red//hsl(3, 81.8%, 49.6%)
 $new-video-badge-bg:                    red//rgb(36,  36,  36)
 $new-video-badge-txt:                   red//rgb(167, 167, 167)
-$yt-red-exclusive-txt:                  red//$red
+$yt-red-exclusive-txt:                  red//$accent-primary
+
+//live chat
+$live-bg: red//#191919
+$live-icon-active: red//white
+$live-scrollbar-bg: red//black
+$live-scrollbar-handle-bg: red//#333
+$live-sub-panel-bg: red//#3e3e3e
+
+$emoji-picker-search-bg: red//#444
+$emoji-picker-search-color: red//white
+
+//YT Chat/Messages window
+$chat-bubble-other-border-color:        red//rgba(255, 255, 255, .2)
+$chat-bubble-other-bg-color:            red//transparent
+$chat-bubble-self-border-color:         red//rgba(255, 255, 255, .2)
+$chat-bubble-self-bg-color:             red//#282828
+
+// ytd-rich-metadata-renderer text box things under description.  https://i.imgur.com/d6PU7zd.png  https://www.youtube.com/watch?v=PsaWKVO-gS4
+$spec-feed-bg: red//rgb(10, 10, 10)
+$spec-feed-primary: red//white
+$spec-feed-secondary: red//rgb(170, 170, 170)
+
 
 //misc
 $paper-spinner-rgba:                    red//rgb(136, 136, 136)
 
-$paper-toggle-checked:                  red//$blue //autoplay toggle color when checked. color also applies to some buttons
+$paper-toggle-checked:                  red//$accent-secondary //autoplay toggle color when checked. color also applies to some buttons
 
-$sentiment-bar-likes:                   red//$blue
+$sentiment-bar-likes:                   red//$accent-secondary
 $sentiment-bar-dislikes:                red//rgb(64,  64,  64)
 
 $paper-tooltip-bg:                      red//rgb(89,  89,  89)
@@ -110,10 +135,12 @@ $transcript-title-txt:                  $txt-color-1
 
 $playlist-edit-page-left-sidebar-bg:    red//rgb(28,  28,  28)   //https://www.youtube.com/playlist
 
-$page-load-progress:                    red//$red
+$page-load-progress:                    red//$accent-primary
 $page-load-progress-bg:                 red//rgb(224, 224, 224)
 
+$share-video-url-textbox-bg:            red//rgb(28, 28, 28) // in the "share video" menu
 
+$paper-checkbox-color:                  red//rgb(136, 136, 136) // in the "share video" -> "embed" menu
 
 
 @import 'default variable applier'

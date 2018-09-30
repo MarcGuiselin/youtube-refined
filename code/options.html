@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Options - Youtube Refined</title>
+    <link rel="stylesheet" href="css/options.css">
+    <link rel="stylesheet" href="css/common/vue-components.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+</head>
+
+<body>
+    <div class="header left">YouTube Refined &#xA9; <span id="copyright-year">2018</span> Marc Guiselin</div>
+    <div class="header right" id="version-name">Beta 1.100</div>
+    <div id="menu">
+        <div id="title-bar"><img src="images/white.svg">Settings - Youtube Refined</div>
+        <div id="navigation">
+            <div id="marker"></div>
+            <a href="#" 				v-bind:class="{selected: openMenu == 0}">Home</a>
+            <a href="#help" 		    v-bind:class="{selected: openMenu == 1}">Getting Started</a>
+            <!--<a href="#quicksetup" 		v-bind:class="{selected: openMenu == 2}">Quick Setup</a>-->
+            <a></a>
+            <a href="#general" 			v-bind:class="{selected: openMenu == 3}">General Settings</a>
+            <a href="#stats"			v-bind:class="{selected: openMenu == 4}">Stats</a>
+            <a></a>
+            <a>Filter Settings</a>
+            <a href="#filters" 			v-bind:class="{selected: openMenu == 5}" class="pad">My Filters</a>
+            <!--<a href="#curated" 			v-bind:class="{selected: openMenu == 6}" class="pad">Curated Filters</a>-->
+            <a href="#autocorrect" 		v-bind:class="{selected: openMenu == 7}" class="pad">Autocorrection Settings</a>
+            <a></a>
+            <a href="#updates" 			v-bind:class="{selected: openMenu == 8}">Updates</a>
+            <a href="#unlock" 			v-bind:class="{selected: openMenu == 9}">Unlock Additional Features</a>
+            <a href="#share" 			v-bind:class="{selected: openMenu == 10}">Share</a>
+            <a href="#donate"           v-bind:class="{selected: openMenu == 11}">Donate</a>
+        </div>
+        <div id="separator"></div>
+        <div id="content" v-bind:key="openMenu">
+<!-- Home -->
+            <template v-if="openMenu == 0">
+                <h1>Home</h1>
+                <p>
+                    Greetings &#x1F44B; and welcome to the options page of Youtube Refined, a Chrome extension meant to refine/customize Youtube suggestions exactly the way you want.
+                </p>
+                <p>
+                    If you haven't yet, I highly suggest you look through the <a href="#general">General Settings</a>.  Some other more complex aspects of this extension are explained in the <a href="#help">Getting Started</a> page.
+                </p>
+            </template>
+<!-- Getting started -->
+			<template v-else-if="openMenu == 1">
+                <h1>Getting Started</h1>
+                <p>By no means do you have to read this whole guide to use this extension &#x1F642;, but please look over the details and pictures below to have some idea of the features of this extension.</p>
+                <h2>The quick context menu</h2>
+                <p>
+                    A little button will appear in various places on YouTube that allows you to quickly do things like block channels.
+                </p>
+                <p>
+                    <b>Note that if the video is matched by a filter you created, there will be no option to block or unblock the channel or video.</b>
+                </p>
+                <div class="new-line">
+                    <gif-player preview="https://imgur.com/NEzK3Gn.png" gif="https://imgur.com/Ri0GbuG.gif"></gif-player>
+                </div>
+                <h2>Filter Settings</h2>
+                <div class="new-line">
+                    <h3>What is a filter?</h3>
+                    <p>
+                        A filter is a group of <span class="tag ch">&nbsp;channels</span>, <span class="tag vi">&nbsp;videos</span>, and <span class="tag sg">&nbsp;search tags</span> (ex: <span class="tag sg"><i>Video Title</i><span class="comparator">Starts With</span>Hello</span>) that share filter settings.
+                    </p>
+                    <p>
+                        Every video on youtube will be matched to one of your filters based off of it's channel name, video title, and video id.  Videos that don't match of any of your filters will match the <a href="#filter-0">default filter</a>.
+                    </p>
+                    <h3>What are filter settings?</h3>
+                    <p>
+                        Each filter has settings which apply to every youtube video that matches any of that filter's tags.
+                        With these settings, for example, you can blur video thumbnails from videos from some channels
+                        and you could prevent some other channel's videos from showing up altogether, effectively blocking them.
+                    </p>
+                    <div class="new-line">
+                        <gif-player preview="https://i.imgur.com/mEJ4Ccc.png" gif="https://i.imgur.com/PjsYOwU.gif"></gif-player>
+                    </div>
+                    <h3>Adding a channel to a filter</h3>
+                    <p>
+                        Click on the tag editor then click "Add new tag".  Click "Channel Name", then click "Equals", finally start typing the channel name and clicking on the one you would like to block.
+                    </p>
+                    <div class="new-line">
+                        <gif-player preview="https://i.imgur.com/1EDHIf1.png" gif="https://i.imgur.com/jxET3aI.gif"></gif-player>
+                    </div>
+                    <h3>More complex filters</h3>
+                    <p>
+                        Tags can do a lot more than just targetting specific channel names.  For example the tag <span class="tag sg"><i>Channel Name</i><span class="comparator">Contains</span>News</span> could be used to target many news channels since their channel name contains "News".
+                    </p>
+                    <h3>What are autocorrection settings?</h3>
+                    <p>
+                        Youtube refined includes a complex text processing algorithm that can de-annoyify annoying video titles.  Remove hashtags, properly titlecase titles (so no more all-caps titles), and remove emoji characters with these settings.
+                    </p>
+                    <p>
+                        <b>Remember that titles will only be autorrected if the filter it matches specifies that video titles should be autocorrected.</b>
+                    </p>
+                    <h3>Grouped Filters (Advanced)</h3>
+                    <p>
+                        To allow you to more precisely tune up what video filters match, you can group tags together.  Click on the <span class="tag group"><span class="plus">+</span></span> in the tag editor to create a new grouped tag.  To match a grouped tag a video must match all of its individual tags.  For example the following grouped tag
+                        <span class="tag group"><span class="tag ch">&nbsp;Voluminous Vlogs</span><span class="and">&nbsp;AND&nbsp;</span><span class="tag sg"><i>Video Title</i><span class="comparator">Contains</span>gameplay</span></span>
+                        might be used to match "gameplay" videos from the channel "Voluminous Vlogs".
+                    </p>
+                    <h3>Filter order (Advanced)</h3>
+                    <p>
+                        Filter order matters meaning that first a video will first try to match your default filter, then blocked, then your other filters in order.  The first filter that it matches will be the one it, well, matches.  You can drag filters up and down using the handle bars to the left of each filter.
+                    </p>
+                    <p>
+                        <b>The default filter and blocked filters cannot be reordered, and so will always be first.</b>
+                    </p>
+                    <div class="new-line">
+                        <gif-player preview="https://i.imgur.com/iFBpiXQ.png" gif="https://i.imgur.com/PMC1H81.gif"></gif-player>
+                    </div>
+                </div>
+                <!--
+                    <h1>Getting Started</h1>
+                    <p>
+                        Youtube refined has two main features: Filter settings and Suggestion settings.
+                    </p>
+                    <p>
+                        Filter settings allow you to block or allow videos from some channels and customize how those video's information should show.  Suggestion settings allow you to get customized video suggestions from your favorite channels.
+                    </p>
+                    <h2>The quick context menu</h2>
+                    <div class="new-line">
+                        <h3>What is it?</h3>
+                        <p>
+                            The quick context menu is a little button that appears over video thumbnails, next to channel images, and in various other places that allows you to quickly contextually alter Youtube Refined's settings.
+                            Clicking on it will provide you with some actions you can perform such as adding or removing that channel to the 'block' filter, temporarily showing or playing a blocked video, or accessing that video's filter settings.
+                        </p>
+                    </div>
+                    <h2>Filter Settings</h2>
+                    <div class="new-line">
+                        <h3>What is a filter?</h3>
+                        <p>
+                            A filter is a group of <span class="tagPreview ch">channels</span>, <span class="tagPreview vi">videos</span>, and <span class="tagPreview st">search tags</span> (ex: <span class="tagPreview st">video title contains 'x'</span>, <span class="tagPreview st">video has more than 'x' views</span>, etc) that share filter settings.
+                        </p>
+                        <p>
+                            Every video that doesn't match of one of your filters will match the <a href="#filter-0">default filter</a>.
+                        </p>
+                        <h3>What are filter settings?</h3>
+                        <p>
+                            Each filter has settings which apply to every youtube video that matches any of that filter's tags.
+                            With these settings, for example, you can blur video thumbnails from videos from some channels
+                            and you could prevent some other channel's videos from showing up altogether, effectively blocking them.
+                        </p>
+                        <p>
+                            You can change these settings <a href="#filters">here</a>.
+                        </p>
+                        <h3>What are censor settings?</h3>
+                        <p>
+                            The <a href="#censor">censor settings</a> page is where you can customize how videos or thumbnails are censored.
+                            For example you can tweak the blur intensity of blurred videos or create customized thumbnails that will always show for certain channels.
+                        </p>
+                        <h3>What are autocorrection settings?</h3>
+                        <p>
+                            Youtube refined includes a complex text processing algorithm that can de-annoyify annoying video titles (<a href="http://images.complex.com/complex/images/c_fill,g_center,w_1200/fl_lossy,pg_1,q_auto/dc9llkt6q4ckaautms8o/clickbait" target="_blank">This is what I mean</a>).  Remove hashtags, properly titlecase titles (so no more all-caps titles), and remove emoji characters with these settings.
+                        </p>
+                        <p>
+                            IMPORTANT: Remember that titles will only be autorrected if in that video's filter setting specifies that it's title should be autocorrected.
+                        </p>
+                        <h3>How do I add a channel or video to a filter?</h3>
+                        <p>
+                            Either use the quick context menu mentioned above, or go to the <a href="#filters">Edit filters</a> page, click on the tag editor, click the plus arrow to add a new tab, type in your video title or channel, and click/use the arrow and enter keys to select the item you want from the search results.
+                        </p>
+                    </div>
+                    <h2>Kid Mode</h2>
+                    <div class="new-line">
+                        <p>
+                            Story time: Over last summer one of my buddies at work asked me to babysit his kids so he could go on a date with his wife.
+                            Being the kind guy I am, I accepted even though I absolutely hate children.
+                            Fortunately both kids turned out to be more interested in their computer screens than with bothering me.
+                            When I checked on the youngest who was eating some snacks at the dinner table I was absolutely shocked by what this 9 year old kid was watching on youtube.
+                            When I got back home I did a bit of research, and my findings were beyond awful.
+                            Cringey elsa and spiderman parody videos making crude poop jokes, animated attrocities worst than teletubbies teaching kids colors, videos of kids making huge messes.
+                            Videos with tens of millions of views, all kids.
+                            This is a huge problem, and youtube actively pushes this kind of content to video suggestions trying to keep kids watching videos to generate ad revenue.
+                            Youtube doesn't care about the safety of our kids, so I added this feature to help parents keep their kids safe.
+                        </p>
+                        <h3>What does it do?</h3>
+                        <p>
+                            When enabled <a href="#kidmode">Kid Mode</a> does a variety of things to keep your kids safe on youtube like blocking innapropriate channels. It isn't foolproof, but it should block mostly everything innapropriate.
+                        </p>
+                        <h3>How do I enable it?</h3>
+                        <p>
+                            Go to the <a href="#kidmode">Kid Mode</a> page and click the big enable button on the top of the page.
+                        </p>
+                    </div>
+                -->
+            </template>
+<!-- Quick Setup -->
+            <template v-else-if="openMenu == 2">
+                <h1>Quick Setup</h1>
+                <p>Black or white theme?</p>
+                <p>What look on youtube do you like?</p>
+                <p>Customize how video icons should look like</p>
+            </template>
+<!-- General Settings -->
+			<template v-else-if="openMenu == 3">
+                <h1>General Settings</h1>
+                <div class="new-line">
+                    Youtube Theme:
+                    <pretty-dropdown v-model="options.youtubeTheme" v-on:input="saveOptionChange('Youtube Theme', ['dark', 'fade'].indexOf(options.youtubeTheme) + 1)" data='{"Default White": "", "Vader Dark": "dark", "Sunset Fade (New!)": "fade"}'></pretty-dropdown>
+                </div>
+                <div class="new-line">
+                    <img v-bind:src="'images/' + (options.youtubeTheme || 'default') + ' theme preview.png'" height="100" width="197"/>
+                </div>
+                <div class="new-line">
+                    <pretty-checkbox v-model="options.adBlock" v-on:input="saveOptionChange('Ad Block', options.adBlock)">
+                        Block all ads on Youtube&nbsp;<b>Changing will reload all youtube tabs!</b>
+                    </pretty-checkbox>
+                </div>
+                <div class="new-line">
+                    <pretty-checkbox v-model="options.hideComments" v-on:input="saveOptionChange('Hide Comments', options.hideComments)">
+                        Hide the comments section
+                    </pretty-checkbox>
+                </div>
+                <!--<div class="new-line">
+                    Extension Dark theme:
+                    <pretty-dropdown v-model="options.extensionTheme" v-on:input="saveData" data='{"Disabled": "", "Enabled": "dark"}'/></pretty-dropdown>
+                </div>-->
+                <h2>Video appearance</h2>
+                <div class="new-line">
+                    <pretty-checkbox v-model="options.replaceRFYTextWithViewCount" v-on:input="saveOptionChange('Replace RFY Text With View Count', options.replaceRFYTextWithViewCount)">
+                        Replace "Recommended for you" label with view count
+                    </pretty-checkbox>
+                </div>
+                <div class="new-line">
+                    <pretty-checkbox v-model="options.exactVideoViewCount" v-on:input="saveOptionChange('Exact Video View Count', options.exactVideoViewCount)">
+                        Show exact video view count
+                    </pretty-checkbox>
+                </div>
+                <div class="new-line">
+                    <pretty-checkbox v-model="options.showVideoAge" v-on:input="saveOptionChange('Show Video Age', options.showVideoAge)">
+                        Show age of video next to view count
+                    </pretty-checkbox>
+                </div>
+                <div class="new-line">
+                    <div class="youtube-video-suggestion-preview">
+                        <div class="_subgroup">
+                            <div class="_thumbnail"></div>
+                            <div class="_meta">
+                                <div class="_title">Video Title</div>
+                                <div class="_channel">Channel Name</div>
+                                <div class="_views highlighted">{{options.replaceRFYTextWithViewCount ? viewPreviewText("1,450 views", "1K views", "5 hours ago") : "Recommended for You"}}</div>
+                            </div>
+                        </div>
+                        <div class="_subgroup">
+                            <div class="_thumbnail"></div>
+                            <div class="_meta">
+                                <div class="_title">Video Title</div>
+                                <div class="_channel">Channel Name</div>
+                                <div class="_views highlighted">{{viewPreviewText("2,424,234 views", "2.4M views", "8 months ago")}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="new-line">
+                    Ratings preview:
+                    <pretty-dropdown v-model="options.ratingsPreviewMode" v-on:input="saveOptionChange('Ratings Preview Mode', options.ratingsPreviewMode)" data='{"None": 0, "Colored Box": 1, "Modern Bar": 2, "Colored Bar": 3}'></pretty-dropdown>
+                </div>
+                <p>The ratings preview bar/box shows you the amount of likes to dislikes a video has. Hover your cursor over it for precise like/dislike info.</p>
+                <div class="new-line">
+                    <div class="youtube-video-suggestion-preview">
+                        <div class="_thumbnail">
+                            <div class="ratings-preview-mode-previewer" v-bind:type="options.ratingsPreviewMode" title="Likes:      Number&#013;Dislikes: Number&#013;Ratio:     Percentage"></div>
+                        </div>
+                        <div class="_meta">
+                            <div class="_title">Video Title</div>
+                            <div class="_channel">Channel Name</div>
+                            <div class="_views">{{viewPreviewText("146,472 views", "146K views", "2 weeks ago")}}</div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+<!-- Stats -->
+			<template v-else-if="openMenu == 4">
+                <h1>Stats</h1>
+                <p>Below are statistics to help you better understand what channels and for how long you watch on YouTube.  Only you can see these stats.  They are stored locally and arn't shared with 3rd parties.  Regardless, you can disable their collection and clear your stats by unchecking the checkbox below.</p>
+                <p v-if="options.enableStats">In addition, feel free to download and analyze the data collected by the extension. Time is in seconds.</p>
+                <div class="new-line">
+                    <pretty-checkbox v-model="enableStatsTemp" v-on:input="updateEnableStats">
+                        Enable stats
+                    </pretty-checkbox>
+                    <pretty-button @click="saveStatsAsCSV" v-if="options.enableStats">Download stats as csv</pretty-button>
+                    <span v-if="options.enableStats">Stats collected since {{processedStats.startedCollectingOn}}</span>
+                </div>
+                <template v-if="options.enableStats">
+                    <div v-if="!options.promo.proUnlocked" class="new-line">
+                        <pretty-checkbox :value="false" :disabled="true">
+                            Expanded stats (View comprehensive weekly/monthly averages)&nbsp;<a href="#donate"><b>Enable by Donating</b></a>
+                        </pretty-checkbox>
+                    </div>
+                    <div class="new-line">
+                        Stats collected since {{processedStats.startedCollectingOn}}
+                    </div>
+                    <div class="stats-summary">
+                        <div class="time">
+                            <h1 class="centered">Watch Time</h1>
+                            <h2 class="centered under-title">{{prettyTime(processedStats.totalWatchTime)}} total</h2>
+                            <div class="separator"></div>
+                            <h2 class="time-period" v-if="options.promo.proUnlocked">Daily</h2>
+                            <div class="summary-group">
+                                <div class="avg">
+                                    <h2 class="main">{{processedStats.dailyAvgTText}} avg</h2>
+                                    <h4 class="subsub">SD = {{processedStats.dailyTStDevText}}</h4>
+                                    <div class="chart">
+                                        <svg viewBox="0 0 300 100">
+                                            <path class="fill" :d="processedStats.dailyTPlot.dfill" fill="url(#red-graph-gradient)"/>
+                                            <path class="plot" :d="processedStats.dailyTPlot.dplot"/>
+                                            <circle :cx="processedStats.dailyTPlot.cx" :cy="processedStats.dailyTPlot.cy" r="4"/>
+                                            <defs>
+                                                <linearGradient id="red-graph-gradient" x1="0" y1="0" x2="0" y2="1" >
+                                                    <stop offset="0" style="stop-opacity:.4"/>
+                                                    <stop offset="0.3" style="stop-opacity:0.2"/>
+                                                    <stop offset="1" style="stop-opacity:0"/>
+                                                </linearGradient>
+                                            </defs>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="recent">
+                                    <h2 class="main">{{processedStats.todayTText}} today</h2>
+                                    <h4 class="sub" v-for="text in processedStats.todayTPercentagesText" :class="{negativeStat: text.startsWith('-'), positiveStat: text.startsWith('+')}">{{text}}</h4>
+                                    <h2 class="main">{{processedStats.yesterdayTText}} yesterday</h2>
+                                </div>
+                            </div>
+                            <h2 class="time-period" v-if="options.promo.proUnlocked">Weekly</h2>
+                            <div class="summary-group" v-if="options.promo.proUnlocked">
+                                <div class="avg">
+                                    <h2 class="main">{{processedStats.weeklyAvgTText}} avg</h2>
+                                    <div class="chart">
+                                        <svg viewBox="0 0 300 100">
+                                            <path class="fill" :d="processedStats.weeklyTPlot.dfill" fill="url(#red-graph-gradient)"/>
+                                            <path class="plot" :d="processedStats.weeklyTPlot.dplot"/>
+                                            <circle :cx="processedStats.weeklyTPlot.cx" :cy="processedStats.weeklyTPlot.cy" r="4"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="recent">
+                                    <h2 class="main">{{processedStats.thisWeekTText}} this week</h2>
+                                    <h4 class="sub" v-for="text in processedStats.thisWeekTPercentagesText" :class="{negativeStat: text.startsWith('-'), positiveStat: text.startsWith('+')}">{{text}}</h4>
+                                    <h2 class="main">{{processedStats.lastWeekTText}} last week</h2>
+                                </div>
+                            </div>
+                            <h2 class="time-period" v-if="options.promo.proUnlocked">Monthly</h2>
+                            <div class="summary-group" v-if="options.promo.proUnlocked">
+                                <div class="avg">
+                                    <h2 class="main">{{processedStats.monthlyAvgTText}} avg</h2>
+                                    <div class="chart">
+                                        <svg viewBox="0 0 300 100">
+                                            <path class="fill" :d="processedStats.monthlyTPlot.dfill" fill="url(#red-graph-gradient)"/>
+                                            <path class="plot" :d="processedStats.monthlyTPlot.dplot"/>
+                                            <circle :cx="processedStats.monthlyTPlot.cx" :cy="processedStats.monthlyTPlot.cy" r="4"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="recent">
+                                    <h2 class="main">{{processedStats.thisMonthTText}} this month</h2>
+                                    <h4 class="sub" v-for="text in processedStats.thisMonthTPercentagesText" :class="{negativeStat: text.startsWith('-'), positiveStat: text.startsWith('+')}">{{text}}</h4>
+                                    <h2 class="main">{{processedStats.lastMonthTText}} last month</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="views">
+                            <h1 class="centered">Video Views</h1>
+                            <h2 class="centered under-title">{{processedStats.totalViews}} views total</h2>
+                            <div class="separator"></div>
+                            <h2 class="time-period" v-if="options.promo.proUnlocked">Daily</h2>
+                            <div class="summary-group">
+                                <div class="avg">
+                                    <h2 class="main">{{processedStats.dailyAvgVText}} avg</h2>
+                                    <h4 class="subsub">SD = {{processedStats.dailyVStDevText}}</h4>
+                                    <div class="chart">
+                                        <svg viewBox="0 0 300 100">
+                                            <path class="fill" :d="processedStats.dailyVPlot.dfill" fill="url(#blue-graph-gradient)"/>
+                                            <path class="plot" :d="processedStats.dailyVPlot.dplot"/>
+                                            <circle :cx="processedStats.dailyVPlot.cx" :cy="processedStats.dailyVPlot.cy" r="4"/>
+                                            <defs>
+                                                <linearGradient id="blue-graph-gradient" x1="0" y1="0" x2="0" y2="1" >
+                                                    <stop offset="0" style="stop-opacity:.4"/>
+                                                    <stop offset="0.3" style="stop-opacity:0.2"/>
+                                                    <stop offset="1" style="stop-opacity:0"/>
+                                                </linearGradient>
+                                            </defs>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="recent">
+                                    <h2 class="main">{{processedStats.todayVText}} today</h2>
+                                    <h4 class="sub" v-for="text in processedStats.todayVPercentagesText" :class="{negativeStat: text.startsWith('-'), positiveStat: text.startsWith('+')}">{{text}}</h4>
+                                    <h2 class="main">{{processedStats.yesterdayVText}} yesterday</h2>
+                                </div>
+                            </div>
+                            <h2 class="time-period" v-if="options.promo.proUnlocked">Weekly</h2>
+                            <div class="summary-group" v-if="options.promo.proUnlocked">
+                                <div class="avg">
+                                    <h2 class="main">{{processedStats.weeklyAvgVText}} avg</h2>
+                                    <div class="chart">
+                                        <svg viewBox="0 0 300 100">
+                                            <path class="fill" :d="processedStats.weeklyVPlot.dfill" fill="url(#blue-graph-gradient)"/>
+                                            <path class="plot" :d="processedStats.weeklyVPlot.dplot"/>
+                                            <circle :cx="processedStats.weeklyVPlot.cx" :cy="processedStats.weeklyVPlot.cy" r="4"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="recent">
+                                    <h2 class="main">{{processedStats.thisWeekVText}} this week</h2>
+                                    <h4 class="sub" v-for="text in processedStats.thisWeekVPercentagesText" :class="{negativeStat: text.startsWith('-'), positiveStat: text.startsWith('+')}">{{text}}</h4>
+                                    <h2 class="main">{{processedStats.lastWeekVText}} last week</h2>
+                                </div>
+                            </div>
+                            <h2 class="time-period" v-if="options.promo.proUnlocked">Monthly</h2>
+                            <div class="summary-group" v-if="options.promo.proUnlocked">
+                                <div class="avg">
+                                    <h2 class="main">{{processedStats.monthlyAvgVText}} avg</h2>
+                                    <div class="chart">
+                                        <svg viewBox="0 0 300 100">
+                                            <path class="fill" :d="processedStats.monthlyVPlot.dfill" fill="url(#blue-graph-gradient)"/>
+                                            <path class="plot" :d="processedStats.monthlyVPlot.dplot"/>
+                                            <circle :cx="processedStats.monthlyVPlot.cx" :cy="processedStats.monthlyVPlot.cy" r="4"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="recent">
+                                    <h2 class="main">{{processedStats.thisMonthVText}} this month</h2>
+                                    <h4 class="sub" v-for="text in processedStats.thisMonthVPercentagesText" :class="{negativeStat: text.startsWith('-'), positiveStat: text.startsWith('+')}">{{text}}</h4>
+                                    <h2 class="main">{{processedStats.lastMonthVText}} last month</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <h2>Daily stats</h2>
+                    <div id="daily-stats-canvas-container">
+                        <div class="arrow left"  title="Older" v-on:click="dailyStatsMonthOffset--"></div>
+                        <div class="arrow right" title="Newer" v-on:click="dailyStatsMonthOffset++" v-show="dailyStatsMonthOffset < 0"></div>
+                        <canvas width="2000" v-draw-daily-stats-canvas></canvas>
+                    </div>
+                    <br/>
+                    <h2>
+                        Favorite youtube channels of
+                        <pretty-dropdown v-model="faveChannelsViewMode" v-on:input="updateFaveChannels(true)" data='{"All Time": 0, "This Month (Last 30 days)": 1, "This week (Last 7 days)": 2, "Today": 3}'></pretty-dropdown>
+                        sorting them by
+                        <pretty-dropdown v-model="faveChannelsSortMode" v-on:input="updateFaveChannels(true)" data='{"Watch Time": 0, "Views": 1, "Likes": 2, "Dislikes": 3}'></pretty-dropdown>
+                    </h2>
+                    <div class="new-line" id="global-stats">
+                        <canvas id="global-stats-pie-chart" width="350" height="350" v-draw-fave-channels-pie-chart></canvas>
+                        <div id="global-stats-table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Channel Name</th>
+                                        <th class="can-sort-by" v-bind:class="{'sorting-by': faveChannelsSortMode == 0}" @click="faveChannelSortClick(0)">Watch Time</th>
+                                        <th class="can-sort-by" v-bind:class="{'sorting-by': faveChannelsSortMode == 1}" @click="faveChannelSortClick(1)">Videos Watched</th>
+                                        <th class="can-sort-by" v-bind:class="{'sorting-by': faveChannelsSortMode == 2}" @click="faveChannelSortClick(2)">Likes</th>
+                                        <th class="can-sort-by" v-bind:class="{'sorting-by': faveChannelsSortMode == 3}" @click="faveChannelSortClick(3)">Dislikes</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="firstTenChannels">
+                                    <tr v-for="(channel, index) in processedStats.faveChannelsTable.slice(0, 10)"  v-bind:class="{'hovered': index == indexHoverGlobalStats}">
+                                        <td>{{index + 1}}</td>
+                                        <td><a v-bind:href="'https://www.youtube.com/channel/' + channel.id" target="_blank">{{processedStats.channelNames[channel.id]}}</a></td>
+                                        <td>{{prettyTime(channel.time)}}</td>
+                                        <td>{{channel.views}}</td>
+                                        <td>{{channel.likes}}</td>
+                                        <td>{{channel.dislikes}}</td>
+                                    </tr>
+                                    <tr v-for="n in Math.max(0, 10 - processedStats.faveChannelsTableLength)">
+                                        <td></td><td></td><td></td><td></td><td></td><td></td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-if="faveChannelsTableShowMore && processedStats.faveChannelsTableLength > 10" v-bind:class="{'hovered-other': indexHoverGlobalStats == 'other'}">
+                                    <tr v-for="(channel, index) in processedStats.faveChannelsTable.slice(10, options.promo.proUnlocked ? 500 : 25)">
+                                        <td>{{index + 11}}</td>
+                                        <td><a v-bind:href="'https://www.youtube.com/channel/' + channel.id" target="_blank">{{processedStats.channelNames[channel.id]}}</a></td>
+                                        <td>{{prettyTime(channel.time)}}</td>
+                                        <td>{{channel.views}}</td>
+                                        <td>{{channel.likes}}</td>
+                                        <td>{{channel.dislikes}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <a class="show-more-or-less" v-if="processedStats.faveChannelsTableLength > 10" v-on:click="faveChannelsTableShowMore = !faveChannelsTableShowMore">
+                                {{faveChannelsTableShowMore ? "Show Less" : "Show More"}}
+                            </a>
+                            <div class="centered" v-if="faveChannelsTableShowMore && !options.promo.proUnlocked && processedStats.faveChannelsTableLength > 25">
+                                <a href="#donate"><pretty-button>Show more by donating</pretty-button></a>
+                            </div>
+                            <div class="empty-table-overlay" v-if="processedStats.faveChannelsTableLength == 0">
+                                Nothing Yet &#xAF;\_( &#x361;&#xB0; &#x35C;&#x296; &#x361;&#xB0;)_/&#xAF;
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </template>
+<!-- My Filters -->
+			<template v-else-if="openMenu == 5">
+                <h1>My Filters</h1>
+                <p>Filters are your way of managing what you see and don't see on youtube.</p>
+                <p>Bothered by annoying thumbnails?  Blur them.  Annoyed by certain content creators?  Block them.  BOTHERED BY ALL CAP TITLES?  Autocorrect them.</p>
+                <p>Read about Youtube Refined's filters and taglists here: <a href="#help">Getting Started</a></p>
+                <div id="filter-container" v-bind:class="{dragging: filterDragging.dragging, 'dragging-file-over': draggingFileOverCount > 0}" v-on:drop="loadFilterFromFile" v-on:dragover="$event.preventDefault()" v-on:dragenter="draggingFileOverCount += 1" v-on:dragleave="draggingFileOverCount = Math.max(0, draggingFileOverCount - 1);">
+                    <h2>Filters</h2>
+                    <div class="new-line">
+                        <h3>{{overallFilterDescriptor}}</h3>
+
+                        <pretty-button v-on:click="addNewFilter" v-on:click="gevent('Add New Filter')">+ Add new filter</pretty-button>
+                        <pretty-button v-on:click="document.getElementById('load-filter-file-input').click()">Load filter from file</pretty-button>
+                        <input v-on:change="loadFilterFromFile" id="load-filter-file-input" type="file" multiple accept=".ytrf" hidden/>
+
+                        <ul class="filter-warnings" v-if="filterWarnings.length">
+                            <h4>{{filterWarnings.length}} Warning{{filterWarnings.length == 1 ? "" : "s"}}:</h4>
+                            <li v-for="warn in filterWarnings">
+                                <a v-bind:href="'#filter-' + warn.id">
+                                    <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                                        <path fill="currentColor" d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"></path>
+                                    </svg>
+                                    <template v-if="warn.problematicTag">
+                                        Tag
+                                        <div class="tag" v-bind:class="warn.problematicTag.getDisplayMode()">
+                                            <template v-if="warn.problematicTag.isError()">
+                                                Error: {{warn.problematicTag.getErrorMsg()}}
+                                            </template><template v-else-if="warn.problematicTag.isSearchGroup()">
+                                                <i>{{warn.problematicTag.getPrettyType()}}</i><span class="comparator">{{warn.problematicTag.getPrettyComparator()}}</span>{{warn.problematicTag.value}}
+                                            </template><template v-else>
+                                                {{warn.problematicTag.value}}
+                                            </template>
+                                        </div>
+                                        in filter &ldquo;{{warn.name}}&rdquo; {{warn.text}}
+                                    </template>
+                                    <template v-else>
+                                        Filter &ldquo;{{warn.name}}&rdquo; {{warn.text}}
+                                    </template>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="gap"></div>
+                    <div id="dragging-filter-animate"></div>
+                    <div v-for="(filter, id) in options.filters" v-bind:class="{draggable: id != 0 && id != 1}" v-bind:id="'filter-' + id" v-bind:key="filter.uniqueId" class="filter">
+                        <div class="handlebar" title="Drag up and down to reorder" v-on:mousedown="startDraggingHandle"><div></div></div>
+                        <div class="separator"></div>
+                        <div class="content">
+                            <div class="title-line">
+                                <span v-if="id == 0 || id == 1" class="title">{{filter.name || "Filter " + (id - 1)}}</span>
+                                <pretty-input v-else v-model="filter.name" v-bind:placeholder="'Filter ' + (id - 1)" maxlength=35 v-on:input="saveData" autoresize="true" title="Click to change filter name"></pretty-input>
+                                <pretty-checkbox v-if="id != 0" v-model="filter.enabled" v-on:input="saveData">Enabled</pretty-checkbox>
+                                <pretty-button v-if="id != 0 && id != 1" v-on:click="askRemoveFilter(id)">Delete Filter</pretty-button>
+                                <pretty-button v-on:click="saveFilterToFile(id)">Save Filter to file</pretty-button>
+                            </div>
+                            <div class="new-line" v-if="filter.desc">
+                                <b>Description:</b> {{filter.desc}}
+                            </div>
+                            <div class="new-line">
+                                <b>Details:</b> {{filterDescriptorText(id)}}
+                            </div>
+                            <template v-if="filter.enabled">
+                                <h3>Tags</h3>
+                                <div class="new-line">
+                                    <tag-list-editor v-model="parsedFilters[id]" v-bind:name="filter.name || 'Filter ' + (id - 1)" v-on:input="saveData" v-bind:advanced-edit-mode="true"></tag-list-editor>
+                                </div>
+                                <h3>Options</h3>
+                                <div v-if="id != 0" class="new-line">
+                                    Hide:
+                                    <pretty-dropdown v-model="filter.hideAllContent" v-on:input="saveData" data='{"Don’t hide": false, "Hide all content": true}'></pretty-dropdown>
+                                </div>
+                                <template v-if="!filter.hideAllContent">
+                                    <div class="new-line">
+                                        Thumbnail:
+                                        <pretty-dropdown v-model="filter.thumbnailAction" v-on:input="saveData" data='{"Do Nothing": 0, "Blur Thumbnail": 1, "Remove Thumbnail": 2}'></pretty-dropdown>
+                                    </div>
+                                    <div class="new-line">
+                                        Title:
+                                        <pretty-dropdown v-model="filter.titleAction" v-on:input="saveData" data='{"Leave title as is": 0, "Autocorrect video title": 1, "Replace With": 2, "Remove": 3}'></pretty-dropdown>
+                                        <pretty-input v-if="filter.titleAction == 2" v-model="filter.titleReplaceText" placeholder="Replace with" v-on:input="saveData"></pretty-input>
+                                    </div>
+                                    <div class="new-line">
+                                        Channel Name (Not working yet. Coming next update):
+                                        <pretty-dropdown v-model="filter.channelNameAction" v-on:input="saveData" data='{"Do Nothing": 0, "Replace With": 1, "Remove": 2}'></pretty-dropdown>
+                                        <pretty-input v-if="filter.channelNameAction == 1" v-model="filter.channelNameReplaceText" placeholder="Replace with" v-on:input="saveData"></pretty-input>
+                                    </div>
+                                </template>
+                                <div class="new-line">
+                                    <div class="youtube-video-suggestion-preview">
+                                        <div class="_video-removed" v-if="filter.hideAllContent">Video Removed</div>
+                                        <template v-else>
+                                            <div class="_thumbnail" v-bind:class="{blured: filter.thumbnailAction == 1, blocked: filter.thumbnailAction == 2}"></div>
+                                            <div class="_meta">
+                                                <div class="_title" v-bind:class="{highlighted: filter.titleAction != 0}">{{filteredVideoPreviewTitle(filter)}}</div>
+                                                <div class="_channel" v-bind:class="{highlighted: filter.channelNameAction != 0}">{{filteredVideoPreviewChannelName(filter)}}</div>
+                                                <div class="_views">{{viewPreviewText("146,472 views", "146K views", "2 weeks ago")}}</div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                                <div v-if="id != 0" class="new-line">
+                                    <pretty-checkbox v-model="filter.blockVideos" v-on:input="saveData">
+                                        Block Videos (Prevent videos from playing)
+                                    </pretty-checkbox>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </template>
+<!-- Curated Filters -->
+			<template v-else-if="openMenu == 6">
+                <h2>&#128679;Uhh, hey.  you found this page.  still a work in progress...</h2>
+                <h1>Curated Filters</h1>
+                <p>Chose from a prime selection of custom filters including ones that target everything from fake movie trailers to conspiracy theory videos.</p>
+                <p>Read about Youtube Refined's filters here: <a href="#help">Getting Started</a></p>
+                <div class="gap"></div>
+                <p>These filters can be updated on a day to day basis, so Youtube Refined will notify you when they need to be updated.</p>
+                <p>Automatic filter updating will automatically update the filters whenever a newer version exists. <b>Automating updating puts more load on my servers, so it's use is reserved for paid users only.</b></p>
+                <div class="new-line">
+                    <pretty-checkbox v-model="options.autoUpdateCuratedFilters" v-on:input="saveData" v-bind:disabled="!options.promo.proUnlocked">
+                        Automatically update curated filters when they update
+                    </pretty-checkbox>
+                </div>
+                <div class="new-line" v-if="!options.autoUpdateCuratedFilters">
+                    <pretty-checkbox v-model="options.notifications.showUpdateCuratedFilters" v-on:input="saveData">
+                        Notify me when filters have updates
+                    </pretty-checkbox>
+                </div>
+                <p><b>I try my best to not be biased or make mistakes when making these, but please keep in mind that these filters might be a bit biased and miss a few videos.</b> Please email me if you think I've made a mistake.</p>
+                <h2>Filters</h2>
+                <div class="new-line">
+                    show update filter notification, auto update filters
+                </div>
+                <div class="new-line">
+                    pick from
+                </div>
+            </template>
+<!-- Autocorrection Settings -->
+			<template v-else-if="openMenu == 7">
+                <h1>Autocorrection Settings</h1>
+                <div class="new-line">
+                    Capitalization:
+                    <pretty-dropdown v-model="options.censoredTitle.capitalization" v-on:input="saveOptionChange('Capitalization', options.censoredTitle.capitalization)" data='{"Do Nothing": 0, "Titlecase": 1, "Uppercase": 2}'></pretty-dropdown>
+                </div>
+                <div class="new-line">
+                    <pretty-checkbox v-model="options.censoredTitle.removeEmoji" v-on:input="saveOptionChange('Remove Emoji', options.censoredTitle.removeEmoji)">
+                        Remove symbols and emoji
+                    </pretty-checkbox>
+                </div>
+                <div class="new-line">
+                    <pretty-checkbox v-model="options.censoredTitle.removeRepeatingNonLetterChars" v-on:input="saveOptionChange('Remove Repeating Non Letter Chars', options.censoredTitle.removeRepeatingNonLetterChars)">
+                        Remove repeating punctuation
+                    </pretty-checkbox>
+                </div>
+                <div class="new-line">
+                    <pretty-checkbox v-model="options.censoredTitle.removeShortTextContainedWithinElipses" v-on:input="saveOptionChange('Remove Short Text Contained Within Elipses', options.censoredTitle.removeShortTextContainedWithinElipses)">
+                        Remove short(and usually trivial) text in elipses
+                    </pretty-checkbox>
+                </div>
+                <div class="new-line">
+                    <pretty-checkbox v-model="options.censoredTitle.removeHashtags" v-on:input="saveOptionChange('Remove Hashtags', options.censoredTitle.removeHashtags)">
+                        Remove hashtags
+                    </pretty-checkbox>
+                </div>
+                <div class="new-line">
+                    <div class="preview-box centered">
+                        <div>Vlog #26: I'm just having THE WORST possible day!!!! &#x1F616;&#x1F631; #hashtag *MUST WATCH!*</div>
+                        <div class="arrow-down"></div>
+                        <div style="height: 1.375em;">{{exampleCorrectedTitle()}}</div>
+                    </div>
+                </div>
+                <h2>Word Replacement</h2>
+                <p>Will replace all instances of the word with the replacement word.  <b>Case insensitive.</b></p>
+                <br/>
+                <div class="new-line no-select" v-for="(item, index) in wordReplace">
+                    <div class="remove-row-x" title="Remove" v-bind:class="{hide: index == wordReplace.length - 1}" v-on:click="wordReplaceRemove(index)">&Cross;</div>
+                    <pretty-input v-model="item.w" placeholder="Word" v-on:input="wordReplaceUpdate"></pretty-input>
+                    <div class="arrow-left"></div>
+                    <pretty-input v-model="item.r" placeholder="Replace with" v-on:input="wordReplaceUpdate"></pretty-input>
+                </div>
+                <br/>
+                <br/>
+                <h2>Advanced</h2>
+                <div class="new-line">
+                    <pretty-checkbox v-model="options.censoredTitle.wordReplaceUseRegex">
+                        Use regular expressions for word replacement
+                    </pretty-checkbox>
+                </div>
+            </template>
+<!-- Updates -->
+            <template v-else-if="openMenu == 8">
+                <h1>Updates</h1>
+                <h2>Settings</h2>
+                <p>
+                    <a href="https://chrome.google.com/webstore/detail/youtube-refined/bhbammekghlcjhbiekoldhpfgelblcni/support">Report a bug or problem</a>
+                </p>
+                <p>
+                    <a href="https://chrome.google.com/webstore/detail/youtube-refined/bhbammekghlcjhbiekoldhpfgelblcni/support">Suggest a new feature or addition</a>
+                </p>
+                <div class="new-line">
+                    <pretty-checkbox v-model="options.notifications.showUpdate" v-on:input="saveOptionChange('Show Update', options.notifications.showUpdate)" v-bind:disabled="!options.promo.proUnlocked">
+                        Show the update notification after every update&nbsp;<a v-if="!options.promo.proUnlocked" href="#donate"><b>Change by Donating</b></a>
+                    </pretty-checkbox>
+                </div>
+                <h2>Update Notes</h2>
+                <div class="centered">
+                    <div id="update-notes">
+                        <template v-for="update in updates">
+                            <h2>{{update.version}}</h2>
+                            <ul>
+                                <li v-for="change in update.changes">
+                                    <h3 class="icon">{{change[0]}}</h3>
+                                    <div class="changes">
+                                        <h3>{{change[1]}}</h3>
+                                        <h5 v-for="t in change.slice(2)">{{t}}</h5>
+                                    </div>
+                                </li>
+                                <li v-if="update.bugsFixed">
+                                    <h3 class="icon">&#128295;</h3>
+                                    <div class="changes">
+                                        <h3>Over {{update.bugsFixed}} bugfixes/small improvements</h3>
+                                        <h5 v-if="update.thanks">Thanks {{update.thanks}} for reporting some issues.</h5>
+                                    </div>
+                                </li>
+                            </ul>
+                        </template>
+                    </div>
+                </div>
+            </template>
+<!-- Donate -->
+            <template v-else-if="openMenu == 9 || openMenu == 11">
+                <h1>Donate and Unlock Additional Features</h1>
+                <div style="min-height: 190px;">
+                    <div class="new-line">
+                        <img src="images/marc.png" class="float-left" height="190" width="160" width="110">
+                    </div>
+                    <p>Hello.  My name is Marc, and I'm the developer behind this extension.  I made this extension because I had a problem with manipulative strategies employed by people on Youtube.  I wanted to give people, organizations, and schools control over what they see on the site.</p>
+                    <p>Obviously this extension hasn't made itself.  I've spent thousands of hours on this project; not making a dime in the process.</p>
+                    <p>Besides just supporting me, donating also helps pay for the steadily growing server and additional costs that come with keeping this extension up and running.</p>
+                    <p>By donating you can also give you and your friends/family members access to the additional features listed below.</p>
+                    <p>So if you can donate, please do.  I would very much appreciate it.  But if you can't, that's ok.  <a href="#share">You can still unlock these extra features for free.</a></p>
+                </div>
+                <h2 v-if="options.promo.proUnlocked">Additional Features (Unlocked)</h2>
+                <h2 v-else>Additional Features</h2>
+                <ul class="rounded-list">
+                    <li><span></span>Expanded statistics</li>
+                    <li><span></span>Special youtube themes (coming soon)</li>
+                    <li><span></span>Automatic curated filter updating (coming soon)</li>
+                    <li><span></span>Disable the update notification</li>
+                    <li><span></span>And access to all future additional features</li>
+                </ul>
+                <h2>Unlock Additional Features</h2>
+                <template v-if="options.promo.proUnlocked">
+                    <div v-if="options.promo.freeUnlock" class="new-line">
+                        Thanks for sharing the extension! &#x1F601; The extra features are unlocked for you. You can <a href="https://youtuberefined.com/donate" v-on:click="gevent('Donate Again Click')">donate</a> to unlock other emails.
+                    </div>
+                    <div v-else class="new-line">
+                        Thanks for donating! &#x1F601; The extra features are unlocked for you. You can <a href="https://youtuberefined.com/donate" v-on:click="gevent('Donate Again Click')">donate</a> again and unlock other emails if you'd like.
+                    </div>
+                </template>
+                <template v-else>
+                    <div class="new-line">
+                        <a href="https://youtuberefined.com/donate" v-on:click="gevent('Donate Click')"><pretty-button>Donate and unlock additional features</pretty-button></a>
+                    </div>
+                    <div class="new-line">
+                        <a href="#share">I can't donate but I still want to get these additional features</a>
+                    </div>
+                    <div class="new-line">
+                        <a v-if="checkingProUnlock" href>Checking...</a>
+                        <a v-else-if="options.promo.email" href v-on:click="checkProEmail">I ({{options.promo.email}}) have already donated or someone unlocked my email</a>
+                        <a v-else href v-on:click="alreadyUnlockedButNoEmail">I have already donated or someone unlocked my email</a>
+                    </div>
+                </template>
+                <h2>Parent? School?</h2>
+                <p>Youtube refined gives you the tools as a school or a parent to tailor and gain insight into what your students or kids see on YouTube.</p>
+                <div class="new-line">
+                    <a href="https://youtuberefined.com/family" v-on:click="gevent('YTR for Family Click')">&#x1F46A; Youtube Refined for Family</a>
+                </div>
+                <div class="new-line">
+                    <a href="https://youtuberefined.com/education" v-on:click="gevent('YTR for Education Click')">&#x1F3EB; Youtube Refined for Education</a>
+                </div>
+            </template>
+<!-- Share -->
+            <template v-if="openMenu == 10">
+                <h1>Share and Unlock Additional Features</h1>
+                <p>I think Youtube Refined could be something good, and the time I've put into this project speaks for that.</p>
+                <p>Even though people donating keeps this extension updating and my website up, I decided to allow people to unlock all of YTR's features for free by helping this extension grow.</p>
+                <p>You can help by clicking the links below. <b>Completing 2 or more will unlock the additional features without having to donate.</b></h1>
+                <ul class="share-list">
+                    <li :class="freeUnlockClass('leftFacebookPost')"
+                        ><a href="#share" v-on:click="freeUnlockClickSendMessage('clicked-facebook-share')" v-on:click="gevent('Facebook Share')"
+                            ><span></span><i class="checking">(Checking) </i>Share YTR on Facebook</a></li>
+                    <li :class="freeUnlockClass('leftTweet')"
+                        ><a href="#share" v-on:click="freeUnlockClickSendMessage('clicked-twitter-share')" v-on:click="gevent('Twitter Share')"
+                            ><span></span><i class="checking">(Checking) </i>Share YTR on Twitter (Feel free to change up the tweet &#x1F642;)</a></li>
+                    <li :class="freeUnlockClass('leftLinkedinPost')"
+                        ><a href="#share" v-on:click="freeUnlockClickSendMessage('clicked-linkedin-share')" v-on:click="gevent('Linkedin Share')"
+                            ><span></span><i class="checking">(Checking) </i>Share YTR on Linkedin</a></li>
+                    <li :class="freeUnlockClass('leftChromeStoreReview')"
+                        ><a href="https://chrome.google.com/webstore/detail/youtube-refined/bhbammekghlcjhbiekoldhpfgelblcni/reviews" target="_blank" v-on:click="storeReviewClickUnlock" v-on:click="gevent('Leave Store Review')"
+                            ><span></span><i class="checking">(Checking) </i>Leave a Chrome Web store review</a></li>
+                </ul>
+                <div v-if="canFreeUnlock() && !options.promo.proUnlocked" class="new-line">
+                    <pretty-button v-on:click="freeUnlock()" v-on:click="gevent('Free Unlock')">Unlock additional features</pretty-button>
+                </div>
+                <p v-if="options.promo.freeUnlock">Extra features unlocked. Thanks for helping share the extension! &#x1F601;</p>
+            </template>
+<!-- End of menus -->
+        </div>
+<!-- User prompt -->
+        <template>
+            <div id="prompt-user" v-if="promptShowing" v-on:click="promptClickButton(-1)">
+                <div class="modal" v-on:click="$event.stopPropagation()">
+                    <div class="title">{{promptTitle}}</div>
+                    <div class="content">
+                        <div class="text" v-html="promptText"></div>
+                        <div class="actions">
+                            <pretty-button v-for="(button, index) in promptButtons" v-on:click="promptClickButton(index)" v-bind:grey="index != 0">{{button}}</pretty-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <script type="text/javascript" src="scripts/third party/vue.min.js"></script>
+    <script type="text/javascript" src="scripts/third party/moment.min.js"></script>
+    <script type="text/javascript" src="scripts/third party/charts.min.js"></script>
+    <script type="text/javascript" src="scripts/third party/charts.piecelabel.min.js"></script>
+
+    <script type="text/javascript" src="scripts/common/update-notes.js"></script>
+    <script type="text/javascript" src="scripts/common/vue-components.js"></script>
+    <script type="text/javascript" src="scripts/common/tags.js"></script>
+
+    <script type="text/javascript" src="scripts/options.js"></script>
+</body>
+
+</html>

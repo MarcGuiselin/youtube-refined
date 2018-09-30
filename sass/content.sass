@@ -9,6 +9,7 @@
     display: none
 
 
+
 /* adblocking hide ads */
 // hide ad next to video
 // hide video ad renderer over video
@@ -16,33 +17,35 @@
 // hide sponsored shop for bar under video
 // hide promoted video suggestions
 // hide video ad on the top of the homepage
-html.ytrAdblock ytd-player-legacy-desktop-watch-ads-renderer, #google_ads_frame1
-html.ytrAdblock .video-ads, html.ytrAdblock .ad-container,
-html.ytrAdblock .ytp-ad-progress-list,
-html.ytrAdblock #pla-shelf,
-html.ytrAdblock ytd-compact-promoted-video-renderer,
-html.ytrAdblock #masthead-ad 
-    display: none !important
+html.ytrAdblock
+    ytd-player-legacy-desktop-watch-ads-renderer, #google_ads_frame1,
+    .video-ads, .ad-container,
+    .ytp-ad-progress-list,
+    #pla-shelf,
+    ytd-compact-promoted-video-renderer,
+    #masthead-ad 
+        display: none !important
+
 
 
 /* hide comments section */
+html.ytrHideComments
+    ytd-watch, ytd-watch-flexy
+        // actually hide comments
+        // hide show more/show less buttons
+        #comments, ytd-comments,
+        #meta #more, #meta #less
+            display: none !important
+            
+        //hide line below description
+        #meta ytd-video-secondary-info-renderer
+            border-bottom: none
 
-// actually hide comments
-// hide show more/show less buttons
-html.ytrHideComments #comments,
-html.ytrHideComments ytd-watch #meta #more, html.ytrHideComments ytd-watch #meta #less
-    display: none !important
+        //force expand description
+        #meta ytd-expander > #content.ytd-expander
+            overflow: visible !important
+            max-height: none !important
 
-
-/* hide line below description */
-html.ytrHideComments ytd-watch #meta ytd-video-secondary-info-renderer
-    border-bottom: none
-
-
-/* force expand description */
-html.ytrHideComments ytd-watch #meta ytd-expander>#content.ytd-expander
-    overflow: visible !important
-    max-height: none !important
 
 
 /* ratings previewer */
@@ -51,7 +54,7 @@ html.ytrHideComments ytd-watch #meta ytd-expander>#content.ytd-expander
     user-select: none
     cursor: help
 
-/* mode 1 */
+// mode 1
 html.ytr-ratings-preview-mode-1 
     .ytr-ratings-previewer[ranking]
         display: inline-flex
@@ -79,12 +82,11 @@ html.ytr-ratings-preview-mode-1
         opacity: 1
         background: #2ab31d !important
 
-
-/* mode 2-3 */
+// mode 2-3
 html.ytr-ratings-preview-mode-2, html.ytr-ratings-preview-mode-3
     .ytr-ratings-previewer
         display: block
-        height: 4px
+        height: 3px
         width: 100%
         background: #cccccc
         z-index: 10
@@ -123,8 +125,15 @@ html.ytr-ratings-preview-mode-3
     .ytr-ratings-previewer[ranking='2']>div
         background: #2ab31d !important
 
+//special
+html.ytr-ratings-preview-mode-2, html.ytr-ratings-preview-mode-3
+    .ytp-suggestion-link .ytr-ratings-previewer
+        transform: scaleY(.65)
+html.ytr-ratings-preview-mode-1
+    .ytp-suggestion-link .ytr-ratings-previewer
+        transform-origin: bottom left
+        transform: scale(.65)
 
-// show entire youtube video title #video-title  max-height: fit-content !important
 
 
 /* Center searchbar and improve the way it looks */
@@ -149,14 +158,14 @@ html.ytr-ratings-preview-mode-3
         margin-left: 8px
 
 
+
 /* Hide Restore old youtube button */
-ytd-account-settings>paper-item:last-of-type
+ytd-account-settings > paper-item:last-of-type
     display: none !important
 
 
+
 /* Hide dark theme toggle button */
-//ytd-toggle-theme-compact-link-renderer
-//   display: none !important
 ytd-toggle-theme-compact-link-renderer
     pointer-events: none
     user-select: none
@@ -170,12 +179,14 @@ ytd-toggle-theme-compact-link-renderer
         color:      var(--yt-compact-link-color, var(--yt-primary-color))
 
 
-//make likes/dislikes bar wider and more visible under video
+
+/* make likes/dislikes bar wider and more visible under video */
 ytd-sentiment-bar-renderer
     width: 100% !important
 
 
-//basic notification like the one used to warn user ytr won't work with the old youtube
+
+/* basic notification like the one used to warn user ytr won't work with the old youtube */
 #ytr-basic-notification
     background: white
     color: #666
@@ -206,7 +217,8 @@ ytd-sentiment-bar-renderer
         right: 2px
 
 
-//update notification iframe
+
+/* update notification iframe */
 #ytr-update-notification
     position: fixed
     top: 0
@@ -216,12 +228,12 @@ ytd-sentiment-bar-renderer
     background: rgba(0, 0, 0, 0.2)
     z-index: 1000000
     & > iframe
-        //background: white
-        //box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4)
         position: absolute
         top: 50%
         left: 50%
         transform: translate(-50%, -50%)
+        border: none
+        outline: none
         width: 800px
         height: 550px
         max-height: 90%
@@ -231,4 +243,236 @@ html.ytr-blur-no-scroll
         overflow-y: hidden !important
     ytd-app
         filter: blur(8px)
-    
+
+
+
+/* hide video, blur video thumbnail, remove video thumbnail */
+.ytr-hide
+    display: none !important
+
+.ytr-blur-thumbnail
+    yt-img-shadow
+        background: #797979 !important
+        & > img
+            pointer-events: none //prevent hoverzoom from working on blurred thumbnails 
+            transform: scale(1.18)
+            filter: blur(8px)
+    .ytp-videowall-still-image
+        filter: blur(16px)
+        top: -16px !important
+        bottom: -16px !important
+        right: -16px !important
+        left: -16px !important
+
+.ytr-remove-thumbnail
+    yt-img-shadow
+        &:before
+            content: "Removed"
+            display: flex
+            align-items: center
+            justify-content: center
+            width: 100%
+            height: 100%
+            top: 0
+            position: absolute
+            font-size: 14px
+            // color and background color for this with themes is determined by default variable applier
+            color: rgba(136, 136, 136, 0.8)
+            background: rgb(238, 238, 238)
+        & > img
+            visibility: hidden
+    .ytp-videowall-still-image:before
+        content: "Removed"
+        display: flex
+        align-items: center
+        justify-content: center
+        width: 100%
+        height: 100%
+        top: 0
+        position: absolute
+        font-size: 30px
+        font-weight: bolder
+        letter-spacing: 1px
+        color: rgb(20, 20, 20)
+        background: rgb(8, 8, 8) !important
+
+
+//special
+.ytp-suggestion-link
+    &.ytr-remove-thumbnail
+        .ytp-suggestion-image
+            visibility: hidden
+        &:before
+            content: "Removed"
+            display: flex
+            align-items: center
+            justify-content: center
+            width: 100%
+            height: 100%
+            top: 0
+            position: absolute
+            font-size: 14px
+            // color and background color for this with themes is determined by default variable applier
+            color: rgba(136, 136, 136, 0.8)
+            background: #242424
+    &.ytr-blur-thumbnail
+        overflow: hidden
+        background: #3d3d3d
+        .ytp-suggestion-image
+            filter: blur(10px)
+
+
+/* blocked video menu */
+.ytr-blocked-video
+    .ytr-video-blocked-menu
+        display: block !important
+    #player, #player-container
+        position: relative
+        overflow: hidden
+        background: black
+    .html5-video-player video//blocked video blur
+        opacity: .5 !important
+        filter: blur(10px)
+        transform: scale(1.06, 1.12) !important
+    .html5-video-player > *:not(.html5-video-container)// hide video controls
+        display: none
+
+.ytr-video-blocked-menu
+    display: none
+    text-align: center
+    position: absolute
+    top: 0px
+    left: 0px
+    height: 100%
+    width: 100%
+    z-index: 100
+    font-size: 120%
+    background: rgba(0, 0, 0, .3)
+    box-shadow: inset 0px 0px 20px rgba(0, 0, 0, .3)//inset 0px 0px 4px rgba(0, 0, 0, .2)
+    .ytr-centered
+        width: fit-content
+        padding: .2em 5em
+        background: #111
+        color: #ddd
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+    h1, h2, h3, h4, h5
+        font-weight: 500
+        line-height: 1em
+        margin: .8em 0
+    button
+        font-size: 1em
+        padding: 0.6em 1.2em
+        background: #333
+        color: #dedede
+        border-radius: 2px
+        box-shadow: 1px 1px 2px rgba(190, 190, 190, .1)
+        cursor: pointer !important
+        outline: none
+        border: none
+        &:hover
+            background: #3c3c3c
+            color: #f8f8f8
+
+
+
+/* interaction menu */
+.ytr-interaction-menu
+    display: none
+    .ytr-important
+        pointer-events: none
+        font-weight: bold
+        color: #F12B24
+
+html.ytr-showing-interaction-menu
+    .ytr-interaction-menu
+        display: block
+    .ytr-interaction-button
+        display: none
+
+
+
+
+/* Styling of interaction button */
+.ytr-interaction-button
+    display: block
+    width: 24px
+    height: 24px
+    cursor: pointer
+    position: absolute
+    z-index: 100
+    top: 0
+    right: 0
+    visibility: hidden
+    path
+        fill: var(--yt-icon-color)
+    &:hover path
+        fill: var(--yt-icon-hover-color)
+
+
+
+//hover over video block to show button
+ytd-compact-video-renderer, ytd-playlist-panel-video-renderer,
+ytd-grid-video-renderer, ytd-newspaper-mini-video-renderer, ytd-newspaper-hero-video-renderer, ytd-video-renderer,
+.ytp-suggestion-link
+    &:hover .ytr-interaction-button
+        visibility: visible
+
+//video players
+ytd-video-primary-info-renderer > #container,
+ytd-channel-video-player-renderer > #content
+    position: relative
+    .ytr-interaction-button
+        visibility: visible
+
+//large video players like those on trending
+.text-wrapper.ytd-video-renderer
+    position: relative
+    .ytr-interaction-button
+        top: -4px
+        right: -16px
+
+ytd-grid-video-renderer, ytd-compact-video-renderer
+    .ytr-interaction-button
+        top: 28px
+
+
+
+/* Styling of interaction menu */
+.ytr-interaction-menu
+    display: none
+    background: var(--paper-menu-background-color, #ffffff)
+    outline: none
+    overflow: visible
+    padding: 10px 0
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2)
+    z-index: 100000
+    position: absolute
+    li
+        cursor: pointer
+        display: block
+        font-size: 13px
+        line-height: 25px
+        margin: 0
+        padding: 0 15px
+        text-align: left
+        list-style-type: none
+        font-family: "YouTube Noto", Roboto, arial, sans-serif
+        color: var(--yt-primary-text-color)
+        &:hover
+            background: var(--yt-menu-hover-backgound-color, #eee)
+
+
+
+/* show elipsis when video title overflows */
+#video-title
+    text-overflow: ellipsis
+    display: -webkit-box
+    -webkit-line-clamp: 2
+    -webkit-box-orient: vertical
+
+
+
+// show entire youtube video title: #video-title  max-height: fit-content !important

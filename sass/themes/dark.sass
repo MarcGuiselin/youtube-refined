@@ -1,6 +1,6 @@
 //classic colors
-$red:                                   red
-$blue:                                  rgb(38, 147, 230)
+$accent-primary:                        red
+$accent-secondary:                      rgb(38, 147, 230)
 
 
 // general
@@ -11,27 +11,29 @@ $txt-color-2-hover:                     rgb(193, 193, 193)
 $txt-color-3:                           rgb(136, 136, 136)
 $txt-color-4:                           rgb(145, 145, 145)
 $primary-group-seperator-line-color:    rgb(46,  46,  46)
-$link-color:                            $blue
+$link-color:                            $accent-secondary
 $general-icon-color:                    $txt-color-3
 
 //yt icons
-$header-playbutton-logo-fill:           $red
+$header-playbutton-logo-fill:           $accent-primary
 $header-playbutton-logo-center-fill:    white
 $header-playbutton-txt:                 white
 
 // buttons
 $subscribe-btn-subbed:                  rgb(238, 238, 238)
-$subscribe-btn-unsubbed:                $red
-$unsubscribe-confirm-btn-txt:           $red
+$subscribe-btn-subbed-txt:              rgba(black, .7)
+$subscribe-btn-unsubbed:                $accent-primary
+$subscribe-btn-unsubbed-txt:            white
+$unsubscribe-confirm-btn-txt:           $accent-primary
 
 // header
 $header-bg:                             rgb(32,32,32)
 $header-icons-color:                    white
-$header-sign-in-txt:                    $red
+$header-sign-in-txt:                    $accent-primary
 
 // searchbox
 $searchbox-bg:                          rgb(17, 17, 17)
-$searchbox-hover-outline-color:         $blue
+$searchbox-hover-outline-color:         $accent-secondary
 $searchbox-txt-color:                   rgb(205, 205, 205)
 $searchbox-placeholder-txt-color:       $txt-color-3
 $searchbox-submit-icon-color:           white
@@ -68,14 +70,35 @@ $ad-badge-bg:                           hsl(46.8, 79.3%, 52.7%)
 $live-now-badge:                        hsl(3, 81.8%, 49.6%)
 $new-video-badge-bg:                    rgb(36,  36,  36)
 $new-video-badge-txt:                   rgb(167, 167, 167)
-$yt-red-exclusive-txt:                  $red
+$yt-red-exclusive-txt:                  $accent-primary
+
+//live chat
+$live-bg: #191919
+$live-icon-active: white
+$live-scrollbar-bg: black
+$live-scrollbar-handle-bg: #333
+$live-sub-panel-bg: #3e3e3e
+
+$emoji-picker-search-bg: #444
+$emoji-picker-search-color: white
+
+//YT Chat/Messages window
+$chat-bubble-other-border-color:        rgba(255, 255, 255, .2)
+$chat-bubble-other-bg-color:            transparent
+$chat-bubble-self-border-color:         rgba(255, 255, 255, .2)
+$chat-bubble-self-bg-color:             #282828
+
+// ytd-rich-metadata-renderer text box things under description.  https://i.imgur.com/d6PU7zd.png  https://www.youtube.com/watch?v=PsaWKVO-gS4
+$spec-feed-bg: rgb(10, 10, 10)
+$spec-feed-primary: white
+$spec-feed-secondary: rgb(170, 170, 170)
 
 //misc
 $paper-spinner-rgba:                    rgb(136, 136, 136)
 
-$paper-toggle-checked:                  $blue
+$paper-toggle-checked:                  $accent-secondary
 
-$sentiment-bar-likes:                   $blue
+$sentiment-bar-likes:                   $accent-secondary
 $sentiment-bar-dislikes:                rgb(64,  64,  64)
 
 $paper-tooltip-bg:                      rgb(89,  89,  89)
@@ -94,9 +117,18 @@ $transcript-title-txt:                  $txt-color-1
 
 $playlist-edit-page-left-sidebar-bg:    rgb(28,  28,  28)   //https://www.youtube.com/playlist
 
-$page-load-progress:                    $red
+$page-load-progress:                    $accent-primary
 $page-load-progress-bg:                 $header-bg
 
+$share-video-url-textbox-bg:            rgb(28, 28, 28)
 
+$paper-checkbox-color:                  rgb(136, 136, 136)
+
+.ytr-ratings-previewer
+    border-color: $bg !important
+
+ytd-thumbnail-overlay-resume-playback-renderer
+    height: 3px !important
+    border-top: 1px solid $bg
 
 @import 'default variable applier'

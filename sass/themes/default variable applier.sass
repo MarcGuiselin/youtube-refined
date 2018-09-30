@@ -1,3 +1,16 @@
+//List of theme testing steps:
+//check watch page:
+//  comments, description, video suggestions, video itself, click subscribe, unsubscribe, click show more videos
+//check live video
+//  open/close chat.  scroll up slightly in chat so arrow pops up, start typing, click emoji button, click dollar button
+
+
+
+
+
+
+
+
 //----------------------------------------------------
 //----File that applies variables to style youtube----
 //----------------------------------------------------
@@ -17,6 +30,9 @@
 //Text next to toggle. can be found on dark theme toggle menu
 //promoted ad video desc text
 //youtube movie but ad desc text
+//details text on channel about page
+//Embed options text in "share video" -> "embed" menu
+//Your notifications live here (text shown when user has no notifications)
 .caption.ytd-account-settings,
 paper-item.ytd-account-settings,
 #title.ytd-metadata-row-renderer,
@@ -31,8 +47,41 @@ yt-icon.ytd-pinned-comment-badge-renderer,
 #expand-ad.ytd-video-masthead-ad-renderer,
 #caption.ytd-toggle-item-renderer,
 #description-text.ytd-promoted-video-renderer,
-#description-text.ytd-movie-renderer, .movie-metadata-list.ytd-movie-renderer
+#description-text.ytd-movie-renderer, .movie-metadata-list.ytd-movie-renderer,
+#details-container.ytd-channel-about-metadata-renderer table.ytd-channel-about-metadata-renderer,
+#embed-options-label.yt-sharing-embed-renderer,
+.promo-message.ytd-background-promo-renderer
     color: $txt-color-3 !important
+
+// ytd-rich-metadata-renderer text box things under description.  https://i.imgur.com/d6PU7zd.png  https://www.youtube.com/watch?v=PsaWKVO-gS4
+ytd-rich-metadata-renderer
+    yt-icon, .yt-icon-container.yt-icon
+        fill: $spec-feed-secondary
+
+a.yt-simple-endpoint.ytd-toggle-button-renderer
+    color: $txt-color-4 !important
+
+// Color checkboxes correctly.  like those found on the "share video" -> "embed" menu
+paper-checkbox
+    --paper-checkbox-checked-color: rgba($paper-checkbox-color, 1) !important
+    --paper-checkbox-unchecked-color: rgba($paper-checkbox-color, 1) !important
+
+// YT chat widget
+ytd-conversation-section-renderer
+    background: $paper-dropdown-bg !important
+    border: none !important
+    textarea::placeholder
+        color: $txt-color-3 !important
+
+
+//pinned comment pin icon
+yt-icon.ytd-pinned-comment-badge-renderer
+    fill: $txt-color-3 !important
+
+//author comment background color. also add padding, cuz otherwise it looks bad
+ytd-author-comment-badge-renderer
+    background: rgba($txt-color-3, alpha($txt-color-3) * .7)
+    padding: 0 5px
 
 //title above a promoted playlist on a home channel
 #title.ytd-channel-featured-content-renderer
@@ -76,7 +125,7 @@ ytd-guide-entry-renderer #img[src*="add_channel_guide"]
 
 //playlist editing page left-side menu
 ytd-playlist-sidebar-renderer
-    --yt-sidebar-background:            $playlist-edit-page-left-sidebar-bg
+    --yt-sidebar-background: $playlist-edit-page-left-sidebar-bg !important
 
 //dropdowns in create new playlist submenu (find by clicking "add to" under video and click create new playlist)
 paper-input-container
@@ -111,11 +160,26 @@ ytd-playlist-panel-video-renderer[selected] #index.ytd-playlist-panel-video-rend
     border: 1px solid $live-now-badge !important
 
 //subscribe buttons
-paper-button[subscribed].ytd-subscribe-button-renderer
-    background-color:   $subscribe-btn-subbed !important
-ytd-subscribe-button-renderer:not([button-style]) paper-button:not([subscribed])
-    background-color:   $subscribe-btn-unsubbed !important
+paper-button.ytd-subscribe-button-renderer
+    &[subscribed]
+        background: $subscribe-btn-subbed !important
+        yt-formatted-string
+            color: $subscribe-btn-subbed-txt !important
+        .deemphasize
+            color: rgba($subscribe-btn-subbed-txt, alpha($subscribe-btn-subbed-txt) * .85) !important
+    &:not([subscribed])
+        background-color:   $subscribe-btn-unsubbed !important
+        yt-formatted-string
+            color: $subscribe-btn-unsubbed-txt !important
+        .deemphasize
+            color: rgba($subscribe-btn-unsubbed-txt, alpha($subscribe-btn-unsubbed-txt) * .85) !important
 
+//Set reminder button like on https://www.youtube.com/gaming   same colors as subbed button
+ytd-toggle-button-renderer
+    &.style-compact-gray[is-paper-button]
+        background: $subscribe-btn-subbed !important
+    #button.ytd-toggle-button-renderer
+        color: $subscribe-btn-subbed-txt !important
 
 //youtube playbutton logo in top-left
 #logo-icon-container
@@ -140,46 +204,47 @@ ytd-subscribe-button-renderer:not([button-style]) paper-button:not([subscribed])
 
     --yt-searchbox-background:                          $searchbox-bg !important
     --yt-searchbox-text-color:                          $searchbox-txt-color !important
-    //--ytd-searchbox-legacy-border-shadow-color:         $searchbox-inner-shadow !important
-    //--ytd-searchbox-legacy-border-color:                $searchbox-primary-outline !important
-    //--ytd-searchbox-legacy-button-border-color:         $searchbox-primary-outline !important
-    //--ytd-searchbox-legacy-button-color:                $searchbox-primary-outline !important
+    //--ytd-searchbox-legacy-border-shadow-color:         $searchbox-inner-shadow
+    //--ytd-searchbox-legacy-border-color:                $searchbox-primary-outline
+    //--ytd-searchbox-legacy-button-border-color:         $searchbox-primary-outline
+    //--ytd-searchbox-legacy-button-color:                $searchbox-primary-outline
     --ytd-searchbox-legacy-button-icon-color:           $searchbox-submit-icon-color !important
-    //--ytd-searchbox-legacy-button-focus-color:          $searchbox-submit-hover-bg-color !important
-    //--ytd-searchbox-legacy-button-hover-color:          $searchbox-submit-hover-bg-color !important
-    //--ytd-searchbox-legacy-button-hover-border-color:   $searchbox-submit-hover-border-color !important
+    //--ytd-searchbox-legacy-button-focus-color:          $searchbox-submit-hover-bg-color
+    //--ytd-searchbox-legacy-button-hover-color:          $searchbox-submit-hover-bg-color
+    //--ytd-searchbox-legacy-button-hover-border-color:   $searchbox-submit-hover-border-color
 
     ytd-searchbox #container.ytd-searchbox
-        border: 1px solid transparent !important
+        border: 1px solid transparent
 
     ytd-searchbox[has-focus] #container.ytd-searchbox
-        border: 1px solid $searchbox-hover-outline-color !important
+        border: 1px solid $searchbox-hover-outline-color
 
     ytd-button-renderer.style-brand #text
-        color: $header-sign-in-txt !important
+        color: $header-sign-in-txt
 
     #search-icon-legacy svg
-        fill: $searchbox-submit-icon-color !important
+        fill: $searchbox-submit-icon-color
 
-//searchbar "Search" text color
-#search::-webkit-input-placeholder
-    color: $searchbox-placeholder-txt-color !important
+    //searchbar "Search" text color
+    #search::-webkit-input-placeholder
+        color: $searchbox-placeholder-txt-color !important
 
 //paper spinner is grey by default.  set the loader segments to be solid color, and then give the whole spinners a bit of opacity
 paper-spinner
     opacity: alpha($paper-spinner-rgba)
-    .paper-spinner 
-        border-color: rgb(red($paper-spinner-rgba), green($paper-spinner-rgba), blue($paper-spinner-rgba)) !important
+    .paper-spinner
+        &, &:after, &:before
+            border-color: rgba($paper-spinner-rgba, 1) !important
 
 //links in the description and comments
 .description.ytd-video-secondary-info-renderer yt-formatted-string.ytd-video-secondary-info-renderer,
 #content-text.ytd-comment-renderer
-    --yt-endpoint-color: $link-color !important
+    --yt-endpoint-color: $link-color
 
 //show more videos button
 yt-next-continuation.ytd-watch-next-secondary-results-renderer
-    --paper-button_-_background-color:  $show-more-videos-btn-bg !important
-    --paper-button_-_color:             $show-more-videos-btn-txt !important
+    --paper-button_-_background-color:  $show-more-videos-btn-bg
+    --paper-button_-_color:             $show-more-videos-btn-txt
 
 // ?
 app-drawer #footer .ytd-guide-renderer > a
@@ -187,9 +252,15 @@ app-drawer #footer .ytd-guide-renderer > a
 
 //ratings preview bar under video
 ytd-sentiment-bar-renderer #container
-    background: $sentiment-bar-dislikes !important
+    background: $sentiment-bar-dislikes
     #like-bar
-        background: $sentiment-bar-likes !important
+        background: $sentiment-bar-likes
+
+// Like/dislike button pressed under video
+.ytd-video-primary-info-renderer #button.ytd-toggle-button-renderer[aria-pressed=true]
+    color: $sentiment-bar-likes !important
+    yt-icon
+        fill: $sentiment-bar-likes !important
 
 //paper tooltips
 #tooltip
@@ -214,121 +285,313 @@ ytd-menu-navigation-item-renderer:hover
 //gold ad badge next to video
 #ad-badge.ytd-compact-promoted-video-renderer,
 .badge-style-type-ad.ytd-badge-supported-renderer
-    background: $ad-badge-bg !important
+    background: $ad-badge-bg
+
+//:visited links should not change color to default youtube theme
+yt-formatted-string
+    --yt-endpoint-visited-color: var(--yt-endpoint-color, $txt-color-3)
+
+
 
 //everything else
 html *:not([style-scope]):not(.style-scope)
-    --yt-primary-color:                         $txt-color-1 !important
-    --yt-primary-text-color:                    $txt-color-1 !important
-    --yt-secondary-text-color:                  $txt-color-2 !important
-    --yt-hovered-text-color:                    $txt-color-2-hover !important
+    --yt-primary-color:                         $txt-color-1
+    --yt-primary-text-color:                    $txt-color-1
+    --yt-secondary-text-color:                  $txt-color-2
+    --yt-hovered-text-color:                    $txt-color-2-hover
 
-    --yt-placeholder-text-color:                $txt-color-2 !important
+    --yt-placeholder-text-color:                $txt-color-2
+    
+    --yt-tertiary-text-color:                   $txt-color-2
 
-    --yt-metadata-color:                        $txt-color-3 !important
-    --yt-featured-channel-title-text-color:     $txt-color-3 !important
+    --yt-metadata-color:                        $txt-color-3
+    --yt-featured-channel-title-text-color:     $txt-color-3
+    --yt-formatted-string-deemphasize-color:    $txt-color-3
 
-    --yt-app-background:                        $bg !important
-    --yt-main-app-background:                   $bg !important
-    --yt-main-app-background-tmp:               $bg !important
-    --ytd-ad-badge-text-color:                  $bg !important
+    --yt-app-background:                        $bg
+    --yt-main-app-background:                   $bg
+    --yt-main-app-background-tmp:               $bg
+    --ytd-ad-badge-text-color:                  $bg
 
-    --yt-dialog-background:                     $alt-menu-bg !important
+    --yt-button-color:                          $accent-secondary
 
-    --yt-border-color:                          $primary-group-seperator-line-color !important
-    --yt-paper-button-ink-color:                $unsubscribe-confirm-btn-txt !important
-    --yt-brand-paper-button-color:              $unsubscribe-confirm-btn-txt !important
-    --yt-icon-color:                            $txt-color-3 !important
-    --yt-expand-color:                          $expand-desc-btn-txt-color !important
-    --yt-channel-owner:                         $channel-owner-name-txt-color !important
-    --yt-endpoint-color:                        $txt-color-3 !important
-    --yt-icon-hover-color:                      $txt-color-1 !important
-    --yt-button-text-color:                     $txt-color-4 !important
-    --ytd-comment-text-color:                   $comment-txt !important
-    --ytd-comment-metadata-text-color:          $comment-time-ago-txt !important
-    --yt-endpoint-hover-color:                  $comment-time-ago-txt-hover !important
-    --paper-menu-background-color:              $paper-dropdown-bg !important
-    --yt-menu-hover-background-color:           $paper-dropdown-option-hover-bg !important
-    --yt-menu-hover-backgound-color:            $paper-dropdown-option-hover-bg !important//miss spelling by yt developer
+    --yt-dialog-background:                     $alt-menu-bg
+    --paper-listbox-background-color:           $alt-menu-bg
 
-    --ytd-video-publish-date-color:             $video-publish-date-txt !important
+    --yt-border-color:                          $primary-group-seperator-line-color
+    --yt-paper-button-ink-color:                $unsubscribe-confirm-btn-txt
+    --yt-brand-paper-button-color:              $unsubscribe-confirm-btn-txt
+    --yt-icon-color:                            $txt-color-3
+    --yt-expand-color:                          $expand-desc-btn-txt-color
+    --yt-channel-owner:                         $channel-owner-name-txt-color
+    --yt-endpoint-color:                        $txt-color-3
+    --yt-icon-hover-color:                      $txt-color-1
+    --yt-button-text-color:                     $txt-color-4
+    --ytd-comment-text-color:                   $comment-txt
+    --ytd-comment-metadata-text-color:          $comment-time-ago-txt
+    --yt-endpoint-hover-color:                  $comment-time-ago-txt-hover
+    --paper-menu-background-color:              $paper-dropdown-bg
+    --yt-menu-hover-background-color:           $paper-dropdown-option-hover-bg
+    --yt-menu-hover-backgound-color:            $paper-dropdown-option-hover-bg//miss spelling by yt developer
 
-    --yt-guide-entry-hover-background-color:    $app-drawer-button-hover-bg !important
-    --yt-brand-color:                           $txt-color-1 !important
-    --yt-copyright-text:                        $app-drawer-footer-txt !important
-    --yt-guide-background:                      $app-drawer-bg !important
-    --iron-icon-fill-color:                     $general-icon-color !important
-    --yt-swatch-text:                           $general-icon-color !important
-    --yt-icon-active-color:                     $general-icon-color !important
+    --ytd-video-publish-date-color:             $video-publish-date-txt
 
-    --ytd-badge-icon-color:                     $channel-verified-icon !important
-    --ytd-badge-background:                     $new-video-badge-bg !important
-    --ytd-simple-badge-color:                   $new-video-badge-txt !important
+    --yt-guide-entry-hover-background-color:    $app-drawer-button-hover-bg
+    --yt-brand-color:                           $txt-color-1
+    --yt-copyright-text:                        $app-drawer-footer-txt
+    --yt-guide-background:                      $app-drawer-bg
+    --iron-icon-fill-color:                     $general-icon-color
+    --yt-swatch-text:                           $general-icon-color
+    --yt-icon-active-color:                     $general-icon-color
 
-    --yt-channel-header-background:             $channel-header-color !important
+    --ytd-badge-icon-color:                     $channel-verified-icon
+    --ytd-badge-background:                     $new-video-badge-bg
+    --ytd-simple-badge-color:                   $new-video-badge-txt
 
-    --paper-dialog-background-color:            $alt-menu-bg !important//bg color of promotional popups like the "Try YouTube TV for free"
+    --yt-channel-header-background:             $channel-header-color
 
-    --yt-simple-menu-header-background:         $simple-menu-header-bg !important//color of header of menu that opens when you click on account icon in top-right
+    --paper-dialog-background-color:            $alt-menu-bg//bg color of promotional popups like the "Try YouTube TV for free"
 
-    --yt-playlist-background-header:            $playlist-header-bg !important
-    --yt-playlist-background-item:              $playlist-bg !important
-    --yt-playlist-title-text:                   $txt-color-1 !important
-    --yt-playlist-message-text:                 $txt-color-1 !important
-    --ytd-collection-badge-color:               $txt-color-1 !important
+    --yt-simple-menu-header-background:         $simple-menu-header-bg//color of header of menu that opens when you click on account icon in top-right
 
-    --yt-transcript-background:                     $transcript-bg !important
-    --ytd-transcript-toolbar-background-color:      $transcript-header-bg !important
-    --ytd-transcript-cue-hover-background-color:    $transcript-header-bg !important
-    --ytd-transcript-toolbar-text:                  $transcript-title-txt !important
+    --yt-playlist-background-header:            $playlist-header-bg
+    --yt-playlist-background-item:              $playlist-bg
+    --yt-playlist-title-text:                   $txt-color-1
+    --yt-playlist-message-text:                 $txt-color-1
+    --ytd-collection-badge-color:               $txt-color-1
 
-    --ytd-shopping-product-info:                $txt-color-1 !important
-    --yt-shopping-product-info:                 $txt-color-1 !important
+    --yt-transcript-background:                     $transcript-bg
+    --ytd-transcript-toolbar-background-color:      $transcript-header-bg
+    --ytd-transcript-cue-hover-background-color:    $transcript-header-bg
+    --ytd-transcript-toolbar-text:                  $transcript-title-txt
 
-    --yt-menu-focus-background-color:           $paper-dropdown-option-hover-bg !important
+    --ytd-shopping-product-info:                $txt-color-1
+    --yt-shopping-product-info:                 $txt-color-1
 
-    --ytd-toggle-color:                         $paper-toggle-checked !important
+    --yt-menu-focus-background-color:           $paper-dropdown-option-hover-bg
+
+    --ytd-toggle-color:                         $paper-toggle-checked
+
+    --paper-toggle-button-checked-button-color: $accent-secondary
+    --yt-spec-brand-button-background:          $subscribe-btn-unsubbed
+
+    --ytd-offer-background-color:               $show-more-videos-btn-bg //on yt buy movie page fix background of description box.  example here: https://www.youtube.com/watch?v=ySeWWTwtC3k
+
+    // YT chat
+    --yt-chat-bubble-other-border-color:        $chat-bubble-other-border-color//rgba(255, 255, 255, 0.20)
+    --yt-chat-bubble-other-background-color:    $chat-bubble-other-bg-color//transparent
+    --yt-chat-bubble-self-border-color:         $chat-bubble-self-border-color//rgba(255, 255, 255, 0.20)
+    --yt-chat-bubble-self-background-color:     $chat-bubble-self-bg-color//#282828
+
+    // ytd-rich-metadata-renderer text box things under description.  https://i.imgur.com/d6PU7zd.png  https://www.youtube.com/watch?v=PsaWKVO-gS4
+    --yt-spec-feed-background-b: $spec-feed-bg
+    --yt-spec-text-primary: $spec-feed-primary
+    --yt-spec-text-secondary: $spec-feed-secondary
 
 
-    //--yt-disabled-text-color: green !important
-    //--yt-commentbox-border-inactive: green !important
-    //--yt-commentbox-border-active: green !important
-    //--yt-primary-disabled-button-text-color: green !important
-    //--yt-paper-radio-button-checked-color: green !important
-    //--yt-icon-disabled-color: green !important
-    //--yt-comment-metadata-text-color: green !important
-    //--yt-backstage-metadata-text-color: green !important
-    //--yt-backstage-video-link-background-color: green !important
-    //--yt-backstage-image-alert-color: green !important
-    //--yt-backstage-cancel-background-color: green !important
-    //--yt-backstage-cancel-color: green !important
-    //--yt-offer-background-color: green !important
-    //--yt-moderation-panel-background: green !important
-    //--yt-moderation-panel-hover: green !important
-    //--yt-moderation-panel-comment-text: green !important
-    //--yt-moderation-panel-comment-metadata-text: green !important
-    //--yt-moderation-icon-color: green !important
-    //--yt-moderation-icon-hover-color: green !important
-    //--yt-moderation-panel-likely-spam-divider: green !important
+    //--yt-disabled-text-color: green
+    //--yt-commentbox-border-inactive: green
+    //--yt-commentbox-border-active: green
+    //--yt-primary-disabled-button-text-color: green
+    //--yt-paper-radio-button-checked-color: green
+    //--yt-icon-disabled-color: green
+    //--yt-comment-metadata-text-color: green
+    //--yt-backstage-metadata-text-color: green
+    //--yt-backstage-video-link-background-color: green
+    //--yt-backstage-image-alert-color: green
+    //--yt-backstage-cancel-background-color: green
+    //--yt-backstage-cancel-color: green
+    //--yt-offer-background-color: green
+    //--yt-moderation-panel-background: green
+    //--yt-moderation-panel-hover: green
+    //--yt-moderation-panel-comment-text: green
+    //--yt-moderation-panel-comment-metadata-text: green
+    //--yt-moderation-icon-color: green
+    //--yt-moderation-icon-hover-color: green
+    //--yt-moderation-panel-likely-spam-divider: green
 
     /* display */
-    //--yt-button-payment-text-color: green !important
-    //--yt-video-publish-date-color: green !important
-    //--yt-vat-notice-text: green !important
-    //--yt-survey-button-color: green !important
+    //--yt-button-payment-text-color: green
+    //--yt-video-publish-date-color: green
+    //--yt-vat-notice-text: green
+    //--yt-survey-button-color: green
 
-    //--yt-thumbnail-placeholder-color: green !important
-    //--yt-formatted-string-deemphasize-color: green !important
-    //--yt-badge-background: green !important
-    //--yt-badge-disabled-color: green !important
-    //--yt-collection-badge-color: green !important
-    //--yt-owner-badge-color: green !important
-    //--yt-simple-badge-color: green !important
-    //--yt-ad-badge-text-color: green !important
+    //--yt-thumbnail-placeholder-color: green
+    //--yt-formatted-string-deemphasize-color: green
+    //--yt-badge-background: green
+    //--yt-badge-disabled-color: green
+    //--yt-collection-badge-color: green
+    //--yt-owner-badge-color: green
+    //--yt-simple-badge-color: green
+    //--yt-ad-badge-text-color: green
 
-    //--yt-item-section-header-color: green !important
-    //--yt-watch-card-secondary-text-color: green !important
-    //--yt-watch-card-album-header-background: green !important
-    //--yt-comment-text-color: green !important
+    //--yt-item-section-header-color: green
+    //--yt-watch-card-secondary-text-color: green
+    //--yt-watch-card-album-header-background: green
+    //--yt-comment-text-color: green
 
-    //--yt-playlist-sidebar-background: green !important
+    //--yt-playlist-sidebar-background: green
+
+
+$live-header-footer-bg: $show-more-videos-btn-bg//#282828
+$live-icon: rgba($live-icon-active, .54)//rgba(white, 0.54)
+$live-icon-hover: rgba($live-icon-active, .75)//rgba(white, .74)
+$emoji-picker-search-placeholder-color: rgba($emoji-picker-search-color, .7)//#999
+
+// live yt chat
+html:not([style-scope]):not(.style-scope)
+    --yt-live-chat-background-color:                            transparent !important
+
+    --yt-live-chat-action-panel-background-color:               $live-header-footer-bg !important
+    --yt-live-chat-action-panel-background-color-transparent:   rgba($live-header-footer-bg, alpha($live-header-footer-bg) * .8) !important
+
+    
+    --yt-live-chat-primary-text-color:                          rgba($txt-color-1, .7) !important//white !important
+
+    //placeholder in say something text
+    --yt-live-chat-secondary-text-color:                        $txt-color-1 !important//rgba(white, 0.7) !important
+
+    //icons
+    --yt-live-chat-tertiary-text-color:                         $live-icon !important//rgba(white, 0.54) !important
+    --yt-live-chat-picker-button-active-color:                  $live-icon-active !important//white !important
+    --yt-live-chat-picker-button-hover-color:                   $live-icon-hover !important//rgba(white, .74) !important
+
+    //input underline
+    --yt-live-chat-text-input-field-inactive-underline-color:   $primary-group-seperator-line-color !important
+    --yt-live-chat-text-input-field-active-underline-color:     $accent-secondary !important
+
+    //emoji picker
+    --yt-emoji-picker-search-background-color:                  $emoji-picker-search-bg !important//#444 !important
+    --yt-emoji-picker-search-color:                             $emoji-picker-search-color !important//white !important
+    --yt-emoji-picker-search-placeholder-color:                 $emoji-picker-search-placeholder-color !important//#999 !important
+
+    //misc
+    --yt-live-chat-moderator-color:                             $link-color !important//#5e84f1 !important
+    --yt-live-chat-deleted-message-color:                       rgba($txt-color-1, 0.5) !important//rgba(white, 0.5) !important
+    --yt-live-chat-enabled-send-button-color:                   rgba($live-icon-active, 1) !important//white !important
+    --yt-live-chat-disabled-icon-button-color:                  rgba($live-icon-active, 0.3) !important//rgba(white, 0.3) !important
+
+    --yt-live-chat-sub-panel-background-color:                  $live-sub-panel-bg !important//#3e3e3e !important
+    --yt-live-chat-sub-panel-background-color-transparent:      rgba($live-sub-panel-bg, .7) !important//rgba(#3e3e3e, .7) !important
+
+    --yt-live-chat-slider-active-color:         $accent-secondary !important//#2196f3 !important
+
+
+    //unknown
+    //--yt-live-chat-toast-text-color:                            green !important//white !important
+    //--yt-live-chat-toast-background-color:                      green !important//#323232 !important
+    //--yt-live-chat-mode-change-background-color:                green !important//#333 !important
+    //--yt-live-chat-text-input-field-placeholder-color:          green !important//#666 !important
+    //--yt-live-chat-mention-background-color:                    green !important//#ff5722 !important
+    //--yt-live-chat-mention-text-color:                          green !important//white !important
+    //--yt-live-chat-deleted-message-bar-color:                   green !important//rgba(white, 0.5) !important
+    //--yt-live-chat-error-message-color:                         green !important//#e62117 !important
+    //--yt-live-chat-reconnect-message-color:                     green !important//white !important
+    //--yt-live-chat-disabled-button-background-color:            green !important//#444 !important
+    //--yt-live-chat-owner-color:                                 green !important//#ffd600 !important
+    //--yt-live-chat-sponsor-color:                               green !important//#2ba640 !important
+    //--yt-live-chat-overlay-color:                               green !important//rgba(black, .5) !important
+    //--yt-live-chat-dialog-background-color:                     green !important//#424242 !important
+    //--yt-live-chat-dialog-text-color:                           green !important//white !important
+    //--yt-live-chat-button-default-text-color:                   green !important//white !important
+    //--yt-live-chat-button-default-background-color:             green !important//rgba(white, .2) !important
+    //--yt-live-chat-button-dark-text-color:                      green !important//white !important
+    //--yt-live-chat-button-dark-background-color:                green !important//rgba(white, .2) !important
+    //--yt-live-chat-moderation-mode-hover-background-color:      green !important//rgba(black, 0.3) !important
+    //--yt-live-chat-additional-inline-action-button-color:       green !important//#222 !important
+    //--yt-live-chat-additional-inline-action-button-background-color:        green !important//rgba(#eee, .8) !important
+    //--yt-live-chat-additional-inline-action-button-background-color-hover:  green !important//#eee !important
+    //--yt-live-chat-text-input-field-suggestion-background-color:            green !important//#3e3e3e !important
+    //--yt-live-chat-text-input-field-suggestion-background-color-hover:      green !important//#343434 !important
+    //--yt-live-chat-text-input-field-suggestion-text-color:                  green !important//white !important
+    //--yt-live-chat-text-input-field-suggestion-text-color-hover:            green !important//white !important
+    //--yt-live-chat-slider-container-color:                      green !important//#515151 !important
+    //--yt-live-chat-slider-markers-color:                        green !important//white !important
+    //--yt-live-chat-automod-button-background-color:             green !important//rgba(#888, .4) !important
+    //--yt-live-chat-automod-button-background-color-hover:       green !important//rgba(white, 0.5) !important
+    //--yt-live-chat-automod-button-explanation-color:            green !important//rgba(white, 0.7) !important
+    //--yt-live-chat-shimmer-background-color:                    green !important//rgba(#111, 0.4) !important
+    //--yt-live-chat-shimmer-linear-gradient:                     green !important//linear-gradient(0deg, rgba(black, .1) 40%, rgba(#646464, .3) 50%, rgba(white, .1) 60%) !important
+    //--yt-live-chat-vem-background-color:                        green !important//#3e3e3e !important
+    //--yt-live-chat-product-picker-icon-color:                   green !important//rgba(white, 0.5) !important
+    //--yt-live-chat-product-picker-sponsors-icon-color:          green !important//#2ba640 !important
+    //--yt-live-chat-product-picker-super-chat-icon-color:        green !important//#4285f4 !important
+    //--yt-live-chat-product-picker-disabled-icon-color:          green !important//rgba(white, 0.3)
+
+    --yt-live-chat-icon-button-color:                           var(--yt-live-chat-primary-text-color) !important
+    --yt-live-chat-picker-button-color:                         var(--yt-live-chat-tertiary-text-color) !important
+    --yt-live-chat-picker-button-disabled-color:                var(--yt-live-chat-disabled-icon-button-color) !important
+    --yt-live-chat-disabled-button-text-color:                  var(--yt-live-chat-secondary-text-color) !important
+    --yt-live-chat-header-background-color:                     var(--yt-live-chat-action-panel-background-color) !important
+    --yt-live-chat-header-button-color:                         var(--yt-live-chat-secondary-text-color) !important
+    --yt-live-chat-text-input-field-placeholder-color:          var(--yt-live-chat-secondary-text-color) !important
+    --yt-live-chat-ticker-arrow-background:                     var(--yt-live-chat-action-panel-background-color) !important
+    --yt-emoji-picker-category-background-color:                var(--yt-live-chat-action-panel-background-color-transparent) !important
+    --yt-emoji-picker-category-color:                           var(--yt-live-chat-secondary-text-color) !important
+    --yt-emoji-picker-category-button-color:                    var(--yt-live-chat-picker-button-color) !important
+
+yt-live-chat-renderer
+    #chat
+        background: $live-bg
+    #item-scroller, yt-emoji-picker-renderer #categories
+        &::-webkit-scrollbar-track, &::-webkit-scrollbar
+            background-color: $live-scrollbar-bg
+        &::-webkit-scrollbar-thumb
+            background-color: $live-scrollbar-handle-bg
+            border-color: $live-scrollbar-bg
+
+
+//line above hide chat button
+ytd-live-chat-frame:not([collapsed]) #show-hide-button.ytd-live-chat-frame > ytd-toggle-button-renderer.ytd-live-chat-frame::before
+    background: $primary-group-seperator-line-color
+
+//background should be shaded color if this is a non-iframed live chat
+html.ytr-is-not-iframed-live-chat 
+    background: $bg
+
+//fix grey verified badges in live chat
+yt-live-chat-author-badge-renderer[type='verified']
+    color: var(--yt-live-chat-author-name-color, var(--yt-live-chat-secondary-text-color, var(--yt-secondary-text-color)))
+    opacity: .85
+
+//arrow that points down when you scroll up in live chat
+yt-icon-button.yt-live-chat-item-list-renderer
+    background-color: $accent-secondary
+
+//fix changed title color on menu that opens when you click the question mark in the send superchat menu in the live yt chat
+#live-chat-dialog-title.yt-live-chat-dialog-renderer
+    color: rgb(17, 17, 17)
+
+
+#progress.ytd-thumbnail-overlay-resume-playback-renderer
+    background: $accent-primary
+
+//override secondary colors
+yt-button-renderer.style-primary[is-paper-button],
+#button.yt-live-chat-message-buy-flow-renderer
+    background-color: $accent-secondary
+.content.ytd-metadata-row-renderer
+    --yt-endpoint-color: $accent-secondary !important
+
+//change color of video bar to match theme
+.ytp-play-progress.ytp-swatch-background-color
+    background: $accent-primary !important
+    &.ad-interrupting
+        background: $ad-badge-bg !important
+.ytp-scrubber-button
+    background: $accent-primary !important
+.ytp-live-badge[disabled]:before
+    background: $accent-primary !important
+
+// Share video url textbox
+#bar.ytd-copy-link-renderer
+    border: none !important
+    background-color: $share-video-url-textbox-bg !important
+
+
+//custom ytr stuff
+
+//color thumbnail removed text and background
+.ytr-remove-thumbnail yt-img-shadow:before
+    background: $show-more-videos-btn-bg !important
+    color:      $show-more-videos-btn-txt !important

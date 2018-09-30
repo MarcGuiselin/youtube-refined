@@ -31,9 +31,14 @@ Stats
         Comments deleted
         Comments liked
 
-data = {
-    todayTimes: [],
-    channels: 
-}
+
+
+todo:
+    catch up pewdiepie
+
+todo:
+    finalize block menu
+    add filter editor
+    add advanced mode
 
 

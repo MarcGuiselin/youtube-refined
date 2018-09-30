@@ -1,0 +1,1212 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:300|Nunito+Sans:400,300')
+
+body, input:not([type='checkbox']), select, tr
+    font-family: 'Nunito Sans', sans-serif
+
+body, html
+    margin: 0
+    padding: 0
+    width: 100%
+    height: 100%
+    font-size: 100%
+    color: #222
+
+/* Page layout */
+$bg-1: #F1A8A8
+$bg-2: #F29D9D
+$bg-3: #F39393
+$bg-4: #F48989
+$bg-5: #F58080
+$title-bar-bg: #DB4343
+
+$title-bar-height: 80px
+
+
+@media screen and (max-width: 1200px)
+    body
+        padding: 70px 0 0 0 !important
+    #title-bar
+        padding: 0 1em !important
+
+@media screen and (max-width: 800px)
+    #title-bar
+        width: 100% !important
+        padding: 0 !important
+
+body
+    background: linear-gradient(to right, hsla(0, 72%, 85%, 1), hsla(0, 72%, 75%, 1))//#F1A8A8//linear-gradient(to bottom, $bg-1 20%, $bg-2 20.01%, $bg-2 40%, $bg-3 40.01%, $bg-3 60%, $bg-4 60.01%, $bg-4 80%, $bg-5 80.01%)
+    box-sizing: border-box
+    padding: 70px 80px 0 80px
+    overflow-y: auto
+    overflow-x: hidden
+    min-width: 800px
+    &.no-scroll
+        overflow-y: hidden
+
+.header
+    color: white
+    font: 1.5em 'Nunito', sans-serif
+    text-shadow: 1px 1px 1px rgba(black, 0.2)
+    position: absolute
+    top: .5em
+    &.left
+        left: .5em
+    &.right
+        right: .5em
+#menu
+    display: flex
+    position: relative
+    background: white
+    margin-bottom: 20px
+    margin-top: $title-bar-height/2
+    padding-top: $title-bar-height/2
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.1)
+
+    visibility: hidden
+    transform: translateY(-10000px)
+    animation: fly-down-menu .4s ease
+    animation-delay: .4s
+    animation-fill-mode: forwards
+@keyframes fly-down-menu 
+    0%
+        transform: translateY(-80px)
+        visibility: visible
+        opacity: 0
+    100%
+        transform: none
+        visibility: visible
+        opacity: 1
+@keyframes marker-moving 
+    0%, 100%
+        height: 1.25em
+    50%
+        height: 2em
+#title-bar
+    z-index: 10
+    position: absolute
+    top: -$title-bar-height/2
+    left: 50%
+    transform: translate(-50%, 0)
+    text-align: center
+    height: $title-bar-height
+    line-height: $title-bar-height
+    width: fit-content
+    overflow: hidden
+    text-overflow: ellipsis
+    max-width: 100%
+    padding: 0 3em
+    background: $title-bar-bg
+    color: white
+    font-family: 'Nunito', sans-serif
+    text-shadow: 1px 1px 1px rgba(black, 0.3)
+    font-size: 3em
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.15)
+    img
+        height: 1.5em
+        vertical-align: middle
+        transform: translateY(-.1em)
+        filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.3))
+#navigation
+    position: sticky
+    align-self: flex-start
+    flex-shrink: 0
+    flex-grow: 0
+    top: 0
+    padding: 0 2em
+    margin: 0
+    padding-top: 20px
+    font-size: 1.2em
+    float: left
+    display: inline-block
+    #marker
+        position: absolute
+        width: 5px
+        height: 1.25em
+        left: 1.4em
+        background: #7d1c1c
+        transition: top .3s cubic-bezier(0.000, 0.000, 0.380, 1.005)
+        transform: translateY(-50%)
+        &.moving
+            animation: marker-moving .3s cubic-bezier(0.000, 0.000, 0.380, 1.005)
+    a
+        display: block
+        padding: .2em 0
+        &.selected
+            color: #7d1c1c
+            text-decoration: underline
+        &.pad
+            padding-left: 1em
+#separator
+    width: 1px
+    background: rgba(0, 0, 0, 0.2)
+    margin: 14px 0
+#content
+    padding: 20px 2em 8em 2em
+    min-height: 600px
+    position: relative
+    width: 100%
+    
+    transform: translateY(-10000px)
+    animation: fly-down-content .2s ease
+    animation-fill-mode: forwards
+    & > *:first-child
+        margin-top: 0
+@keyframes fly-down-content
+    0%
+        transform: translateY(-20px)
+        opacity: 0
+    100%
+        transform: none
+        opacity: 1
+
+
+/* generic, re-usable stylings */
+p, div.new-line
+    font-size: 16px
+    padding-left: 24px
+    margin: .3em 0
+
+a
+    color: inherit
+    text-decoration: none
+    &[href]
+        color: #F1A8A8
+        &:hover
+            text-decoration: underline
+
+code
+    padding: .15em .4em
+    margin: 0 .15em
+    border-radius: 3px
+    white-space: nowrap
+    font-family: monospace
+    background-color: rgba(0, 0, 0, 0.05)
+
+.gap
+    margin-top: 1.5em
+
+.float-right
+    float: right
+
+.centered
+    text-align: center
+
+.arrow-down
+    display: inline-block
+    border: 14px solid transparent
+    border-top-color: #f47f7f
+    border-bottom-width: 0
+    transform: scaleX(.8)
+    margin: .5em
+
+.arrow-left
+    display: inline-block
+    vertical-align: middle
+    border: 10px solid transparent
+    border-left-color: #f47f7f
+    border-right-width: 0
+    transform: scaleY(.8)
+
+.remove-row-x
+    font-size: 1.75em
+    line-height: 1em
+    color: #f47f7f
+    display: inline-block
+    vertical-align: middle
+    cursor: pointer
+    &.hide
+        visibility: hidden
+
+.no-select
+    user-select: none
+
+textarea
+    width: 100%
+    resize: vertical
+    min-height: 2em
+    max-height: 10em
+
+table
+    font-family: arial, sans-serif
+    text-align: left
+    border-collapse: collapse
+    width: 100%
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, .15)
+    td
+        padding: .2em 1em
+        color: #333
+        &:first-child
+            width: 1em
+    th
+        text-align: left
+        background: #F1A8A8 !important
+        color: white
+        font-weight: bold
+        padding: .4em 1em
+    & > tr:last-child, & > *:last-child > tr:last-child
+        border-bottom: 2px solid #F1A8A8
+    tr:nth-child(odd)
+        background: #f7f7f7
+a.show-more-or-less
+    display: block
+    width: 100%
+    text-align: center
+    color: #F1A8A8
+    cursor: pointer
+    padding: .3em 0
+    &:hover, &focus
+        text-decoration: underline
+.empty-table-overlay
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translateX(-50%) translateY(-50%)
+    font-size: 300%
+    width: fit-content
+    font-weight: bold
+    color: #c1c1c1
+
+
+div.new-line > img, .youtube-video-suggestion-preview, .preview-box
+    margin: .4em 0 .8em 0
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2)
+    user-select: none
+    -webkit-user-drag: none
+
+.preview-box
+    padding: .6em
+    width: fit-content
+    & > *:first-child
+        margin-top: 0
+    & > *:last-child
+        margin-bottom: 0
+
+.youtube-video-suggestion-preview
+    width: fit-content
+    background: white
+    padding: 3px
+    min-width: 350px
+    .highlighted
+        color: #F47F7F !important
+    ._thumbnail
+        display: inline-block
+        float: left
+        background: #F0F0F0
+        width: 128px
+        height: 80px
+        position: relative
+        overflow: hidden
+        box-sizing: border-box
+        border: 2px solid #E8E8E8
+        transition: .3s
+        &.blured
+            border-color: #F47F7F
+            &:before, &:after
+                filter: blur(2.5px)
+        &.blocked
+            border-color: #F47F7F
+            background: #EEE
+            &:before
+                content: 'Removed'
+                font-size: 14px
+                color: rgba(136, 136, 136, 0.8)
+            &:after
+                display: none
+        &:before
+            content: 'Thumbnail'
+            display: block
+            position: relative
+            font-weight: bold
+            font-size: 20px
+            color: #C9C9C9
+            width: 100%
+            text-align: center
+            line-height: 80px
+            z-index: 2
+        &:after
+            content: ''
+            display: block
+            position: absolute
+            width: 120%
+            height: 70%
+            top: 50%
+            left: -10%
+            background: #E8E8E8
+            transform: rotate(-8deg)
+    ._meta
+        padding: 0 .5em
+        height: 80px
+        overflow: hidden
+    ._title
+        font-size: 16px
+        color: #707070
+        transition: color 0.3s
+        max-width: 200px
+        max-height: 2.9em
+        overflow: hidden
+    ._channel, ._views
+        font-size: 13px
+        color: #BBB
+        transition: color 0.3s
+        max-width: 200px
+        overflow: hidden
+        text-overflow: ellipsis
+    ._video-removed
+        line-height: 80px
+        color: #F47F7F
+        text-align: center
+    & > ._subgroup:not(:last-child)
+        margin-bottom: 3px
+
+//fill image with grey if image isn't loaded
+img
+    position: relative
+    &:before
+        content: ""
+        display: block
+        position: absolute
+        top: 0
+        left: 0
+        height: 100%
+        width: 100%
+        background: #f2f2f2
+    &.float-left
+        float: left
+        margin-right: 1em !important
+
+
+/* prompt message box */
+#prompt-user
+    position: fixed
+    display: flex
+    justify-content: center
+    align-items: center
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background: rgba(0, 0, 0, 0.6)
+    z-index: 10000
+    user-select: none
+    .modal
+        background: #f1f1f1
+        //border-radius: 5px
+        //overflow: hidden
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .2)
+        width: 40rem
+        .title
+            background: white
+            color: #f47f7f
+            padding: .75rem 1.5rem
+            font-size: 1.25rem
+        .content
+            padding: 1.5rem
+            .text
+                margin: 0
+                line-height: 1.8
+                font-size: 1rem
+                color: #666
+            .actions
+                padding-top: 2rem
+                text-align: right
+
+
+
+/* General Settings page */
+.ratings-preview-mode-previewer
+    display: none
+    position: absolute
+    z-index: 3
+    cursor: help
+    &[type="1"]
+        display: block
+        color: white
+        bottom: 4px
+        left: 4px
+        font-size: 12px
+        &:before
+            content: ''
+            animation: infinite ratings-preview-mode-1 4s linear
+            padding: 2px
+            border-radius: 3px
+            display: block
+    &[type="2"], &[type="3"]
+        display: block
+        background: rgb(204, 204, 204)
+        top: 0
+        width: 100%
+        height: 3px
+        border-bottom: 1px solid white
+        &:before
+            content: ''
+            display: block
+            position: absolute
+            height: 100%
+            left: 0
+            top: 0
+            background: rgb(38, 147, 230)
+            animation: infinite ratings-preview-mode-2 4s linear
+    &[type="3"]:before
+        animation: infinite ratings-preview-mode-3 4s linear
+
+@keyframes ratings-preview-mode-1
+    100%, 0%, 30%
+        background: #b31d1d
+        content: '43%'
+    33%, 63%
+        background: #b39a1d
+        content: '75%'
+    66%, 97%
+        background: #2ab31d
+        content: '92%'
+@keyframes ratings-preview-mode-2
+    100%, 0%, 30%
+        width: 43%
+    33%, 63%
+        width: 75%
+    66%, 97%
+        width: 92%
+@keyframes ratings-preview-mode-3
+    100%, 0%, 30%
+        background: #b31d1d
+        width: 43%
+    33%, 63%
+        background: #b39a1d
+        width: 75%
+    66%, 97%
+        background: #2ab31d
+        width: 92%
+
+
+
+/* Stats page */
+#global-stats-pie-chart
+    float: left
+    display: inline-block !important
+    margin-right: .5em
+    filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, .15))
+
+$hover-color: #fffad3
+#global-stats-table-container
+    width: auto
+    overflow: hidden
+    position: relative
+    padding: 8px
+    tr.hovered
+        background: $hover-color !important
+        outline: 2px solid $hover-color
+        filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, .15))
+    .hovered-other
+        filter: drop-shadow(1px 1px 4px rgba(0, 0, 0, .15))
+        tr
+            background: $hover-color !important
+            outline: 2px solid $hover-color
+    .can-sort-by
+        cursor: pointer
+    .sorting-by:after
+        content: ' \25BE'
+
+tr > td:first-child
+    padding-left: .6em
+    &:before
+        content: '\25CF'
+        color: transparent
+        padding-right: .3em
+
+//color dots next to table entries coresponding to a color on the table
+$graphColors: hsl(0, 68%, 56%), hsl(32.72, 68%, 56%), hsl(65.45, 68%, 56%), hsl(98.18, 68%, 56%), hsl(130.90, 68%, 56%), hsl(163.63, 68%, 56%), hsl(196.36, 68%, 56%), hsl(229.09, 68%, 56%), hsl(261.81, 68%, 56%), hsl(294.54, 68%, 56%)
+@for $i from 1 through length($graphColors)
+    #global-stats-table-container .firstTenChannels > tr:nth-child(#{$i}) > td:first-child:not(:empty):before
+        color: nth($graphColors, $i)
+
+ 
+#daily-stats-canvas-container
+    position: relative
+    overflow-x: auto
+    overflow-y: hidden
+    width: 100%
+    height: 400px
+    padding: 0 30px
+    box-sizing: border-box
+    canvas
+        position: absolute
+        top: 0
+    .arrow
+        position: absolute
+        overflow: hidden
+        top: 0
+        width: 30px
+        height: 100%
+        cursor: pointer
+        &.left
+            left: 0
+            transform: rotate(180deg)
+        &.right
+            right: 0
+        &:hover
+            background: #f3f3f3
+        &:before
+            content: ''
+            display: block
+            position: absolute
+            top: 50%
+            left: 8px
+            width: 0
+            height: 0
+            margin-top: -14px
+            border: 14px solid transparent
+            border-left-color: #CCCCCC
+            transform: scaleY(1.5)
+
+.stats-summary
+    display: flex
+    width: 100%
+    font-size: .8em
+    //max-width: 1200px
+    .under-title
+        font-weight: normal
+        color: #454545
+    .time-period
+        margin: .4em 0 .1em 0
+        color: #BABABA
+    .separator
+        height: 1px
+        width: 100%
+        background: rgba(black, .15)
+    .time, .views
+        flex: 1
+        padding: 0 1em
+    .main
+        font-weight: normal
+        margin: .2em 0
+    .sub, .subsub
+        font-weight: normal
+        font-style: italic
+        margin: .2em 0
+        padding-left: 2em
+    .subsub
+        font-size: 80%
+    .sub
+        &.negativeStat
+            color: #69e273
+        &.positiveStat
+            color: #E26969
+    .summary-group
+        display: flex
+        width: 100%
+    .avg, .recent
+        flex: 10
+        padding: 0 .5em
+    .avg
+        flex: 10
+        color: #E26969
+    .views .avg
+        color: #697EE2
+    .chart
+        width: 100%
+    svg
+        stroke-linecap: round
+        stroke-width: 2px
+        stroke: currentColor
+        circle
+            fill: white
+        path.plot
+            fill: none
+        path.fill
+            stroke: none
+        stop
+            stop-color: currentColor
+
+@media screen and (max-width: 1400px)
+    .stats-summary
+        display: block
+
+@media screen and (max-width: 1700px)
+    #global-stats
+        text-align: center
+    #global-stats-pie-chart
+        float: none
+        margin-right: 0em
+
+/* Updates page */
+#update-notes
+    width: fit-content
+    max-width: 600px
+    display: inline-block
+    text-align: left
+    font-size: 20px
+    h2, h3, h5
+        font-weight: 300
+    h2
+        text-align: center
+        margin: 0.4em 0
+    h3
+        line-height: 1.5em
+        margin: 0
+    h5
+        color: #757575
+        margin: 0
+    ul
+        list-style: none
+        margin: 0
+        padding: 0
+        li
+            margin: .5em 0
+            display: flex
+    ul:not(:last-child)
+        padding-bottom: 1.4em
+        &:after
+            content: ""
+            display: block
+            background: black
+            height: 1px
+            width: 50%
+            position: relative
+            top: .7em
+            transform: translateX(50%)
+    .icon
+        width: 1.75em
+        user-select: none
+        text-align: center
+
+
+
+/* Edit Filters page */
+$filter-box-primary: #F1A8A8
+$filter-box-secondary: #DDD
+$filter-box-hover: #F1F1F1
+
+#filter-container
+    position: relative
+    &.dragging-file-over
+        &:after
+            content: ''
+            display: block
+            position: absolute
+            top: 0
+            left: 0
+            width: 100%
+            height: 100%
+            z-index: 1000
+            background: white
+            box-sizing: border-box
+            border: 4px dashed $filter-box-primary
+        &:before
+            content: 'Drop .ytrf file here'
+            display: block
+            position: sticky
+            top: 50%
+            z-index: 1001
+            text-align: center
+            font-size: 60px
+            color: $filter-box-primary
+            transform: translateY(-40px)
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, .1)
+    &.dragging
+        .filter > *
+            pointer-events: none !important
+        #dragging-filter-animate
+            display: block
+            transition: top 200ms ease-in-out
+            position: absolute
+    .dragging-filter-placeholder
+        min-height: 20px
+        margin-bottom: 2em
+    #dragging-filter-animate
+        display: none
+        left: 0
+        width: 100%
+        background: $filter-box-hover
+        z-index: 49
+    .filter
+        display: flex
+        min-height: 20px
+        background: white
+        margin-bottom: 2em
+        &.dragging
+            cursor: ns-resize
+            top: 0px
+            box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2) !important
+            opacity: .5
+            z-index: 50
+            position: absolute
+            width: 100%
+        & > .content
+            width: 100%
+            padding: 1em
+            & > h3
+                margin: .3em 0
+                &:first-of-type
+                    margin-top: 0
+        & > .separator
+            background: $filter-box-secondary
+            width: 4px
+            margin: .5em 0
+        & > .handlebar
+            width: 28px
+            padding: .25em
+            margin: .25em
+            pointer-events: none
+        &.highlight
+            animation: filter-highlight 2s ease-out
+        &.draggable
+            box-shadow: .5px .5px 3px rgba(0, 0, 0, 0.2)
+            & > .separator
+                background: $filter-box-primary
+            & > .handlebar
+                cursor: ns-resize
+                pointer-events: auto
+                display: flex
+                flex-direction: column
+                justify-content: center
+                align-items: center
+                &:hover
+                    background: $filter-box-hover
+                &:before, &:after
+                    display: block
+                    content: ''
+                    transform: scaleX(.8)
+                    width: 0
+                    border: 6px solid transparent
+                &:before
+                    border-bottom-color: $filter-box-primary
+                    border-top-width: 0
+                &:after
+                    border-top-color: $filter-box-primary
+                    border-bottom-width: 0
+                div
+                    width: 100%
+                    height: 2px
+                    background: $filter-box-primary
+                    box-shadow: 0px 6px 0px $filter-box-primary, 0px -6px 0px $filter-box-primary
+                    text-align: center
+                    margin: 10px 0
+    .title-line
+        .pretty-input
+            margin-right: 4em
+            input
+                font-weight: bold
+                font-size: 26px
+                height: 32px
+                &:not(:focus):not(:hover)
+                    color: black !important
+        span.title
+            display: inline-block
+            vertical-align: bottom
+            height: 32px
+            font-weight: bold
+            font-size: 26px
+            margin-right: 4em
+    
+    .filter-warnings
+        padding: .5em
+        list-style-type: none
+        background: #f6f6f6
+        margin: 1.2em 0
+        overflow-y: auto
+        max-height: 155px
+        h4
+            margin: 0 0 .5em 0
+            color: #DB4444
+        li
+            a
+                color: black
+                text-decoration: none !important
+            &:not(:last-child)
+                margin-bottom: .5em
+            svg
+                width: 1.5em
+                color: #DB4444
+                display: inline-block
+                vertical-align: middle
+@keyframes filter-highlight
+    0%, 100%
+        background: rgba(252, 245, 189, 0)
+    5%, 30%
+        background: rgba(252, 245, 189, 1)
+
+//tag editor component
+$tag-editor-margining: 4px
+$tag-editor-error-color: #bf7d7d//red
+$tag-editor-ch-color: #7da9bf//blue
+$tag-editor-vi-color: #bfae7d//yellow
+$tag-editor-sg-color: #b27dbf//purple
+$tag-editor-group-color: #7dbf83//green
+
+.tag
+    display: inline-block
+    color: white
+    background: $tag-editor-error-color
+    margin: 0px 0px $tag-editor-margining $tag-editor-margining
+    padding: $tag-editor-margining
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2)
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2)
+    &:not(.group):before
+        content: " "
+        width: .8em
+        height: .8em
+        transform: translateY(0.1em)
+        display: inline-block
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))
+    &.er
+        background: $tag-editor-error-color
+        border: 1px solid $tag-editor-error-color
+        &:before
+            background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTUwNCAyNTZjMCAxMzYuOTk3LTExMS4wNDMgMjQ4LTI0OCAyNDhTOCAzOTIuOTk3IDggMjU2QzggMTE5LjA4MyAxMTkuMDQzIDggMjU2IDhzMjQ4IDExMS4wODMgMjQ4IDI0OHptLTI0OCA1MGMtMjUuNDA1IDAtNDYgMjAuNTk1LTQ2IDQ2czIwLjU5NSA0NiA0NiA0NiA0Ni0yMC41OTUgNDYtNDYtMjAuNTk1LTQ2LTQ2LTQ2em0tNDMuNjczLTE2NS4zNDZsNy40MTggMTM2Yy4zNDcgNi4zNjQgNS42MDkgMTEuMzQ2IDExLjk4MiAxMS4zNDZoNDguNTQ2YzYuMzczIDAgMTEuNjM1LTQuOTgyIDExLjk4Mi0xMS4zNDZsNy40MTgtMTM2Yy4zNzUtNi44NzQtNS4wOTgtMTIuNjU0LTExLjk4Mi0xMi42NTRoLTYzLjM4M2MtNi44ODQgMC0xMi4zNTYgNS43OC0xMS45ODEgMTIuNjU0eiIvPjwvc3ZnPg==) no-repeat
+    &.ch
+        background: $tag-editor-ch-color
+        border: 1px solid $tag-editor-ch-color
+        &:before
+            background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTk2IDE2MEM5NiA3MS42MzQgMTY3LjYzNSAwIDI1NiAwczE2MCA3MS42MzQgMTYwIDE2MC03MS42MzUgMTYwLTE2MCAxNjBTOTYgMjQ4LjM2NiA5NiAxNjB6bTMwNCAxOTJoLTI4LjU1NmMtNzEuMDA2IDQyLjcxMy0xNTkuOTEyIDQyLjY5NS0yMzAuODg4IDBIMTEyQzUwLjE0NCAzNTIgMCA0MDIuMTQ0IDAgNDY0djI0YzAgMTMuMjU1IDEwLjc0NSAyNCAyNCAyNGg0NjRjMTMuMjU1IDAgMjQtMTAuNzQ1IDI0LTI0di0yNGMwLTYxLjg1Ni01MC4xNDQtMTEyLTExMi0xMTJ6Ij48L3BhdGg+PC9zdmc+) no-repeat
+    &.vi
+        background: $tag-editor-vi-color
+        border: 1px solid $tag-editor-vi-color
+        &:before
+            width: 1em
+            height: 1em
+            transform: translateY(0.25em)
+            background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1NzYgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTU0OS42NTUgMTI0LjA4M2MtNi4yODEtMjMuNjUtMjQuNzg3LTQyLjI3Ni00OC4yODQtNDguNTk3QzQ1OC43ODEgNjQgMjg4IDY0IDI4OCA2NFMxMTcuMjIgNjQgNzQuNjI5IDc1LjQ4NmMtMjMuNDk3IDYuMzIyLTQyLjAwMyAyNC45NDctNDguMjg0IDQ4LjU5Ny0xMS40MTIgNDIuODY3LTExLjQxMiAxMzIuMzA1LTExLjQxMiAxMzIuMzA1czAgODkuNDM4IDExLjQxMiAxMzIuMzA1YzYuMjgxIDIzLjY1IDI0Ljc4NyA0MS41IDQ4LjI4NCA0Ny44MjFDMTE3LjIyIDQ0OCAyODggNDQ4IDI4OCA0NDhzMTcwLjc4IDAgMjEzLjM3MS0xMS40ODZjMjMuNDk3LTYuMzIxIDQyLjAwMy0yNC4xNzEgNDguMjg0LTQ3LjgyMSAxMS40MTItNDIuODY3IDExLjQxMi0xMzIuMzA1IDExLjQxMi0xMzIuMzA1czAtODkuNDM4LTExLjQxMi0xMzIuMzA1em0tMzE3LjUxIDIxMy41MDhWMTc1LjE4NWwxNDIuNzM5IDgxLjIwNS0xNDIuNzM5IDgxLjIwMXoiPjwvcGF0aD48L3N2Zz4=) no-repeat
+    &.sg
+        background: $tag-editor-sg-color
+        border: 1px solid $tag-editor-sg-color
+        &:before
+            background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTUwNSA0NDIuN0w0MDUuMyAzNDNjLTQuNS00LjUtMTAuNi03LTE3LTdIMzcyYzI3LjYtMzUuMyA0NC03OS43IDQ0LTEyOEM0MTYgOTMuMSAzMjIuOSAwIDIwOCAwUzAgOTMuMSAwIDIwOHM5My4xIDIwOCAyMDggMjA4YzQ4LjMgMCA5Mi43LTE2LjQgMTI4LTQ0djE2LjNjMCA2LjQgMi41IDEyLjUgNyAxN2w5OS43IDk5LjdjOS40IDkuNCAyNC42IDkuNCAzMy45IDBsMjguMy0yOC4zYzkuNC05LjQgOS40LTI0LjYuMS0zNHpNMjA4IDMzNmMtNzAuNyAwLTEyOC01Ny4yLTEyOC0xMjggMC03MC43IDU3LjItMTI4IDEyOC0xMjggNzAuNyAwIDEyOCA1Ny4yIDEyOCAxMjggMCA3MC43LTU3LjIgMTI4LTEyOCAxMjh6Ij48L3BhdGg+PC9zdmc+) no-repeat
+        &:not(.editing) .comparator
+            font-size: .8em
+            margin: 0px $tag-editor-margining
+            display: inline-block
+            transform: translateY(-.1em)
+            font-weight: bold
+    &.group
+        background: rgba($tag-editor-group-color, .25)
+        color: $tag-editor-group-color
+        border: 1px solid $tag-editor-group-color
+        padding: $tag-editor-margining $tag-editor-margining 0px 0px
+        &>.and
+            font-size: .7em
+            margin-left: $tag-editor-margining
+            display: inline-block
+            transform: translateY(-.15em)
+            font-weight: bold
+        &>.plus
+            font-size: 1em
+            margin: $tag-editor-margining 0px $tag-editor-margining $tag-editor-margining
+            display: inline-block
+            transform: translateY(-0.15em)
+            font-weight: bold
+        &>.tag:last-of-type + .and
+            display: none
+
+.tag-editor
+    outline: 1px solid rgba(black, .4)
+    position: relative
+    user-select: none
+    margin: .2em 0 1em
+    padding: $tag-editor-margining 0 0 0
+    cursor: pointer
+    &.editing
+        z-index: 110
+        outline: 1px solid rgba(black, .8)
+        cursor: auto
+    &:not(.editing)
+        &>*
+            pointer-events: none
+        &>.tag
+            opacity: .8
+        &:hover
+            outline: 1px solid rgba(black, .6)
+            &>.tag
+                opacity: 1
+        .x, .add-new-tag:not(.empty), .add-group-button
+            display: none !important
+    &:not(.advanced-edit-mode)
+        .add-group-button
+            display: none !important
+        .tag.group
+            filter: grayscale(1)
+            opacity: .8
+            cursor: not-allowed
+            .tag
+                pointer-events: none
+            .x, .add-new-tag
+                display: none !important
+    .tag
+        cursor: pointer
+        &.editing
+            background: white !important
+            position: relative
+            .auto-width
+                color: transparent
+                text-shadow: none
+                position: relative
+                white-space: pre
+                &.type input
+                    padding-left: 1em
+                    &:not(:focus)
+                        font-style: italic
+                &.comparator input:not(:focus)
+                    font-weight: bold
+            input
+                position: absolute
+                background: rgba(black, 0)
+                z-index: 1
+                right: 0
+                top: - $tag-editor-margining
+                width: 100%
+                height: 100%
+                padding: $tag-editor-margining 0
+                border: none
+                outline: none
+                font-size: inherit
+                font-family: inherit
+                box-sizing: content-box
+                color: black
+                &:not(:focus)
+                    color: #969696
+                &:hover:not(:focus)
+                    cursor: pointer
+                    background: rgba(black, .1)
+        &.notice-me
+            animation: notice-tag .35s ease-in-out 5 alternate
+        &.er.editing
+            box-shadow: 0 0 10px $tag-editor-error-color
+            &:before
+                background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYmY3ZDdkIiBkPSJNNTA0IDI1NmMwIDEzNi45OTctMTExLjA0MyAyNDgtMjQ4IDI0OFM4IDM5Mi45OTcgOCAyNTZDOCAxMTkuMDgzIDExOS4wNDMgOCAyNTYgOHMyNDggMTExLjA4MyAyNDggMjQ4em0tMjQ4IDUwYy0yNS40MDUgMC00NiAyMC41OTUtNDYgNDZzMjAuNTk1IDQ2IDQ2IDQ2IDQ2LTIwLjU5NSA0Ni00Ni0yMC41OTUtNDYtNDYtNDZ6bS00My42NzMtMTY1LjM0Nmw3LjQxOCAxMzZjLjM0NyA2LjM2NCA1LjYwOSAxMS4zNDYgMTEuOTgyIDExLjM0Nmg0OC41NDZjNi4zNzMgMCAxMS42MzUtNC45ODIgMTEuOTgyLTExLjM0Nmw3LjQxOC0xMzZjLjM3NS02Ljg3NC01LjA5OC0xMi42NTQtMTEuOTgyLTEyLjY1NGgtNjMuMzgzYy02Ljg4NCAwLTEyLjM1NiA1Ljc4LTExLjk4MSAxMi42NTR6Ii8+PC9zdmc+) no-repeat
+        &.ch.editing
+            box-shadow: 0 0 10px $tag-editor-ch-color
+            &:before
+                background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjN2RhOWJmIiBkPSJNOTYgMTYwQzk2IDcxLjYzNCAxNjcuNjM1IDAgMjU2IDBzMTYwIDcxLjYzNCAxNjAgMTYwLTcxLjYzNSAxNjAtMTYwIDE2MFM5NiAyNDguMzY2IDk2IDE2MHptMzA0IDE5MmgtMjguNTU2Yy03MS4wMDYgNDIuNzEzLTE1OS45MTIgNDIuNjk1LTIzMC44ODggMEgxMTJDNTAuMTQ0IDM1MiAwIDQwMi4xNDQgMCA0NjR2MjRjMCAxMy4yNTUgMTAuNzQ1IDI0IDI0IDI0aDQ2NGMxMy4yNTUgMCAyNC0xMC43NDUgMjQtMjR2LTI0YzAtNjEuODU2LTUwLjE0NC0xMTItMTEyLTExMnoiLz48L3N2Zz4=) no-repeat
+        &.vi.editing
+            box-shadow: 0 0 10px $tag-editor-vi-color
+            &:before
+                background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1NzYgNTEyIj48cGF0aCBmaWxsPSIjYmZhZTdkIiBkPSJNNTQ5LjY1NSAxMjQuMDgzYy02LjI4MS0yMy42NS0yNC43ODctNDIuMjc2LTQ4LjI4NC00OC41OTdDNDU4Ljc4MSA2NCAyODggNjQgMjg4IDY0UzExNy4yMiA2NCA3NC42MjkgNzUuNDg2Yy0yMy40OTcgNi4zMjItNDIuMDAzIDI0Ljk0Ny00OC4yODQgNDguNTk3LTExLjQxMiA0Mi44NjctMTEuNDEyIDEzMi4zMDUtMTEuNDEyIDEzMi4zMDVzMCA4OS40MzggMTEuNDEyIDEzMi4zMDVjNi4yODEgMjMuNjUgMjQuNzg3IDQxLjUgNDguMjg0IDQ3LjgyMUMxMTcuMjIgNDQ4IDI4OCA0NDggMjg4IDQ0OHMxNzAuNzggMCAyMTMuMzcxLTExLjQ4NmMyMy40OTctNi4zMjEgNDIuMDAzLTI0LjE3MSA0OC4yODQtNDcuODIxIDExLjQxMi00Mi44NjcgMTEuNDEyLTEzMi4zMDUgMTEuNDEyLTEzMi4zMDVzMC04OS40MzgtMTEuNDEyLTEzMi4zMDV6bS0zMTcuNTEgMjEzLjUwOFYxNzUuMTg1bDE0Mi43MzkgODEuMjA1LTE0Mi43MzkgODEuMjAxeiIvPjwvc3ZnPg==) no-repeat
+        &.sg.editing
+            box-shadow: 0 0 10px $tag-editor-sg-color
+            &:before
+                background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYjI3ZGJmIiBkPSJNNTA1IDQ0Mi43TDQwNS4zIDM0M2MtNC41LTQuNS0xMC42LTctMTctN0gzNzJjMjcuNi0zNS4zIDQ0LTc5LjcgNDQtMTI4QzQxNiA5My4xIDMyMi45IDAgMjA4IDBTMCA5My4xIDAgMjA4czkzLjEgMjA4IDIwOCAyMDhjNDguMyAwIDkyLjctMTYuNCAxMjgtNDR2MTYuM2MwIDYuNCAyLjUgMTIuNSA3IDE3bDk5LjcgOTkuN2M5LjQgOS40IDI0LjYgOS40IDMzLjkgMGwyOC4zLTI4LjNjOS40LTkuNCA5LjQtMjQuNi4xLTM0ek0yMDggMzM2Yy03MC43IDAtMTI4LTU3LjItMTI4LTEyOCAwLTcwLjcgNTcuMi0xMjggMTI4LTEyOCA3MC43IDAgMTI4IDU3LjIgMTI4IDEyOCAwIDcwLjctNTcuMiAxMjgtMTI4IDEyOHoiLz48L3N2Zz4=) no-repeat
+        &>.x
+            cursor: pointer
+            padding-left: $tag-editor-margining
+            &:before
+                content: '\2A2F'
+            &:hover
+                opacity: .6
+        &.group>.add-new-tag
+            cursor: pointer
+            padding: $tag-editor-margining 0px $tag-editor-margining $tag-editor-margining
+            margin-bottom: $tag-editor-margining
+            display: inline-block
+            &:before
+                content: '+'
+                font-weight: bold
+            &:hover
+                opacity: .6
+    &>.add-new-tag, .preview-other-tags-text
+        display: inline-block
+        font-weight: bold
+        color: rgba(0, 0, 0, 0.6)
+        font-size: .8em
+        margin: $tag-editor-margining 0 2*$tag-editor-margining $tag-editor-margining
+        cursor: pointer
+        height: 1.25em
+        padding: $tag-editor-margining 0
+    &>.add-new-tag:hover
+        color: rgba(0, 0, 0, 0.8)
+    .hintbox
+        position: absolute
+        top: 100%
+        left: 0px
+        background: white
+        min-width: 250px
+        min-height: 40px
+        z-index: 200
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2)
+        white-space: nowrap
+        .loading
+            position: absolute
+            top: 50%
+            left: 50%
+            border-radius: 50%
+            width: 28px
+            height: 28px
+            border: 3px solid rgba(#333, 0.2)
+            border-top-color: #333
+            animation: hintbox-loader-spin 1.2s infinite cubic-bezier(0.445, 0.050, 0.550, 0.950)
+        .suggest-text
+            color: #444
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2)
+            padding: $tag-editor-margining
+            cursor: pointer
+            &:hover, &.selected
+                background: rgba(black, 0.1)
+            div.image
+                display: inline-block
+                height: 36px
+                background-position: center
+                background-size: 100%
+                background-color: #e2e2e2
+                box-shadow: 0 1px 2px rgba(0,0,0,0.2)
+                vertical-align: middle
+                &.thumbnail
+                    border-radius: 100%
+                    width: 36px
+                &.avatar
+                    width: 63.5294118px
+            b
+                color: black
+@keyframes notice-tag
+    0%
+        opacity: 0.4
+    100%
+        opacity: 1
+@keyframes hintbox-loader-spin
+    0%
+        transform: translate(-50%, -50%) rotate(0deg)
+    100%
+        transform: translate(-50%, -50%) rotate(720deg)
+
+
+
+
+
+// design and code modified from catalin.red/css3-ordered-list-styles
+.rounded-list
+    margin: 1em 2.6em
+    list-style: none
+    padding: 0
+    max-width: fit-content
+    li
+        position: relative
+        display: block
+        padding: .4em 2em .4em 1.5em
+        margin: .3em 0
+        background: #F1F1F1
+        text-decoration: none
+    span
+        display: block
+        position: absolute
+        left: -1.2em
+        top: 50%
+        margin-top: -1.2em
+        background: #f1a8a8
+        color: white
+        height: 2em
+        width: 2em
+        border: .2em solid #fff
+        border-radius: 100%
+        &:before
+            content: ''
+            position: absolute
+            top: 0.4em
+            left: 0.2em
+            border-right: 0.12em * 1.5 solid transparent
+            border-bottom: 0.12em * 1.5 solid transparent
+            transform-origin: 0% 100%
+            width: .2em * 1.5
+            height: .5em * 1.5
+            border-color: white
+            transform: translate(0.3em, -0.3em) rotate(45deg)
+
+
+.share-list
+    margin: 1em 2.6em
+    list-style: none
+    padding: 0
+    max-width: fit-content
+    span
+        display: block
+        position: absolute
+        left: -1.2em
+        top: 50%
+        margin-top: -1.2em
+        background: #f1a8a8
+        color: white
+        height: 2em
+        width: 2em
+        border: .2em solid #fff
+        border-radius: 100%
+    .checking
+        display: none
+    li
+        position: relative
+        display: block
+        padding: .4em 2em .4em 1.5em
+        margin: .3em 0
+        background: white//#F1F1F1
+        text-decoration: none
+        &:not(.unlocking):not(.unlocked) span
+            &:before, &:after 
+                content: ''
+                position: absolute
+                top: 50%
+                left: 50%
+                width: .2em
+                height: 1.2em
+                background: white
+                transform-origin: center
+                transform: translate(-50%, -50%) rotate(45deg)
+            &:after
+                transform: translate(-50%, -50%) rotate(-45deg)
+        &.unlocking
+            span:before
+                content: ''
+                position: absolute
+                top: 50%
+                left: 50%
+                border: 0.12em * 1.5 solid rgba(white, 0.9)
+                border-top-color: transparent
+                border-radius: 100%
+                width: .8em
+                height: .8em
+                animation: hintbox-loader-spin 1.2s infinite cubic-bezier(0.42, 0.19, 0.6, 0.83)
+            .checking
+                display: initial
+        &.unlocked span
+            background: #a8f1b8
+            &:before
+                content: ''
+                position: absolute
+                top: 0.4em
+                left: 0.2em
+                border-right: 0.12em * 1.5 solid transparent
+                border-bottom: 0.12em * 1.5 solid transparent
+                transform-origin: 0% 100%
+                width: .2em * 1.5
+                height: .5em * 1.5
+                border-color: white
+                transform: translate(0.3em, -0.3em) rotate(45deg)
+
+@keyframes share-list-loader-spin
+    0%
+        transform: translate(-50%, -50%) rotate(0deg)
+    100%
+        transform: translate(-50%, -50%) rotate(720deg)
+
+
+// Gif Player
+.gif-player
+    position: relative
+    display: inline-block
+    overflow: hidden
+    background: white
+    box-shadow: 1px 1px 4px rgba(black, 0.2)
+    user-select: none
+    -webkit-user-drag: none
+    &.loading-gif
+        cursor: progress
+    .text
+        position: absolute
+        display: flex
+        align-items: center
+        justify-content: center
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        background: rgba(white, 0.4)
+        z-index: 2
+        color: rgba(black, 0.8)
+        font-size: 5em
+        font-weight: 700
+    &:hover .text
+        display: none

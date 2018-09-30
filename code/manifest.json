@@ -1,22 +1,21 @@
 {
     "name": "YouTube™ Refined",
-    "version": "0.1.9",
-    "version_name": "1.9 Beta",
+    "version": "0.2.1",
+    "version_name": "2.1 Beta",
     "author": "Marc Guiselin",
     "manifest_version": 2,
-    "offline_enabled": true,
     "description": "Refine your Youtube experience!  Block ads, fix clickbaity video titles, show accurate video views, and more with Youtube™ Refined!",
+    "options_page": "options.html",
     "browser_action": {
         "default_icon": {
             "19": "icons/19.png",
             "38": "icons/38.png"
-        },
-        "default_popup": "popup.html",
-        "default_title": "Youtube™ Refined"
+        }
     },
     "background": {
         "scripts": [
             "scripts/common/update-notes.js",
+            "scripts/common/tags.js",
             "scripts/background.js"
         ]
     },
@@ -32,25 +31,33 @@
         "128": "icons/128.png"
     },
     "content_scripts": [{
-        "all_frames": false,
         "js": [
-            "scripts/common/utils.js",
             "scripts/common/title-caps.js",
-            "scripts/content.js"
+            "scripts/content/youtube.js"
         ],
-        "matches": ["*://www.youtube.com/*"],
         "css": ["css/content.css"],
+        "all_frames": true,
+        "matches": ["*://www.youtube.com/*"],
+        "exclude_matches": ["*://www.youtube.com/ad_companion*"],
+        "run_at": "document_start"
+    },{
+        "js": ["scripts/content/website.js"],
+        "matches": ["*://youtuberefined.com/*"],
         "run_at": "document_start"
     }],
     "permissions": [
         "*://www.youtube.com/*",
+        "*://youtuberefined.com/*",
         "unlimitedStorage",
         "storage",
         "webRequest",
-        "webRequestBlocking"
+        "webRequestBlocking",
+        "identity",
+        "identity.email"
     ],
+    "optional_permissions": [ "*://twitter.com/intent/tweet/*", "*://www.facebook.com/sharer/*", "*://www.linkedin.com/*" ],
     "minimum_chrome_version": "50",
     "incognito": "spanning",
-    "web_accessible_resources": ["images/*.png", "css/themes/*.css", "update-notification.html"],
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+    "web_accessible_resources": ["images/*.png", "css/themes/*.css", "update-notification.html", "options.html"],
+    "content_security_policy": "script-src 'self' https://www.google-analytics.com 'unsafe-eval'; object-src 'self'"
 }

@@ -1,36 +1,38 @@
 //classic colors
-$red:                                   red
-$blue:                                  rgb(38, 147, 230)
+$accent-primary:                        #f04167
+$accent-secondary:                      #5b7bdb
 
 
 // general
 $bg:                                    linear-gradient(to right, rgb(254, 203, 111) 0%, rgb(252, 155, 112) 15%, rgb(237, 106, 111) 30%, rgb(203, 78, 108) 48%, rgb(140, 65, 104) 65%, rgb(81, 60, 99) 82%, rgb(57, 59, 98) 100%)
-$txt-color-1:                           rgba(255, 255, 255, 1)
-$txt-color-2:                           rgba(255, 255, 255, 0.8)
-$txt-color-2-hover:                     rgba(255, 255, 255, 0.9)
-$txt-color-3:                           rgba(255, 255, 255, 0.7)
-$txt-color-4:                           rgba(255, 255, 255, 0.6)
-$primary-group-seperator-line-color:    rgba(255, 255, 255, 0.4)
-$link-color:                            #5b7bdb
+$txt-color-1:                           rgba(white, 1)
+$txt-color-2:                           rgba(white, 0.8)
+$txt-color-2-hover:                     rgba(white, 0.9)
+$txt-color-3:                           rgba(white, 0.7)
+$txt-color-4:                           rgba(white, 0.6)
+$primary-group-seperator-line-color:    rgba(white, 0.4)
+$link-color:                            $accent-secondary
 $general-icon-color:                    $txt-color-3
 
 //yt icons
-$header-playbutton-logo-fill:           rgba(0, 0, 0, 0.2)
+$header-playbutton-logo-fill:           rgba(black, 0.2)
 $header-playbutton-logo-center-fill:    white
 $header-playbutton-txt:                 white
 
 // buttons
-$subscribe-btn-subbed:                  rgb(238, 238, 238)
-$subscribe-btn-unsubbed:                $red
-$unsubscribe-confirm-btn-txt:           $red
+$subscribe-btn-subbed:                  rgba(white, .1)
+$subscribe-btn-subbed-txt:              rgba(white, .7)
+$subscribe-btn-unsubbed:                $accent-primary
+$subscribe-btn-unsubbed-txt:            white
+$unsubscribe-confirm-btn-txt:           $accent-primary
 
 // header
 $header-bg:                             linear-gradient(to right, rgb(203, 162, 89) 0%, rgb(202, 124, 90) 15%, rgb(190, 85, 89) 30%, rgb(162, 62, 86) 48%, rgb(112, 52, 83) 65%, rgb(65, 48, 79) 82%, rgb(46, 47, 78) 100%)
 $header-icons-color:                    white
-$header-sign-in-txt:                    $red
+$header-sign-in-txt:                    $accent-primary
 
 // searchbox
-$searchbox-bg:                          rgba(255, 255, 255, 0.15)
+$searchbox-bg:                          rgba(white, 0.15)
 $searchbox-hover-outline-color:         white
 $searchbox-txt-color:                   white
 $searchbox-placeholder-txt-color:       $txt-color-3
@@ -47,31 +49,52 @@ $comment-time-ago-txt:                  $txt-color-3
 $comment-time-ago-txt-hover:            $comment-time-ago-txt
 
 // video suggestions on side
-$show-more-videos-btn-bg:               rgba(0, 0, 0, .2)
-$show-more-videos-btn-txt:              rgba(255, 255, 255, .9)
+$show-more-videos-btn-bg:               rgba(black, .2)
+$show-more-videos-btn-txt:              rgba(white, .9)
 $channel-verified-icon:                 $txt-color-2
 
 // side popout menu (app-drawer)
-$app-drawer-bg:                         rgba(0, 0, 0, .2)
-$app-drawer-button-hover-bg:            rgba(255, 255, 255, .2)
+$app-drawer-bg:                         rgba(black, .2)
+$app-drawer-button-hover-bg:            rgba(white, .2)
 $app-drawer-footer-txt:                 $txt-color-3
 
 //paper dropdown (click on 3-dot button next to "add to" button under video)
 $paper-dropdown-bg:                     linear-gradient(to right, rgb(63, 48, 79) 0%, rgb(50, 46, 76) 100%)
-$paper-dropdown-option-hover-bg:        rgba(255, 255, 255, .2)
+$paper-dropdown-option-hover-bg:        rgba(white, .2)
 
 //channel page
 $channel-header-color:                  $header-bg
 
 //video badges
-$ad-badge-bg:                           #f88f6f
-$live-now-badge:                        rgba(255, 255, 255, 0.8)
+$ad-badge-bg:                           rgb(254, 202, 111)
+$live-now-badge:                        rgba(white, 0.8)
 $new-video-badge-bg:                    $show-more-videos-btn-bg
 $new-video-badge-txt:                   $show-more-videos-btn-txt
 $yt-red-exclusive-txt:                  $show-more-videos-btn-txt
 
+//live chat
+$live-bg: rgba(black, .1)
+$live-icon-active: white
+$live-scrollbar-bg: transparent
+$live-scrollbar-handle-bg: rgba(white, .2)
+$live-sub-panel-bg: rgba(black, .2)
+
+$emoji-picker-search-bg: rgba(white, .2)//#444
+$emoji-picker-search-color: white
+
+//YT Chat/Messages window
+$chat-bubble-other-border-color:        rgba(white, .2)
+$chat-bubble-other-bg-color:            transparent
+$chat-bubble-self-border-color:         rgba(white, .2)
+$chat-bubble-self-bg-color:             rgba(black, .1)
+
+// ytd-rich-metadata-renderer text box things under description.  https://i.imgur.com/d6PU7zd.png  https://www.youtube.com/watch?v=PsaWKVO-gS4
+$spec-feed-bg: rgba(black, .1)
+$spec-feed-primary: $txt-color-1
+$spec-feed-secondary: $txt-color-2
+
 //misc
-$paper-spinner-rgba:                    rgba(255, 255, 255, .6)
+$paper-spinner-rgba:                    rgba(white, .6)
 
 $paper-toggle-checked:                  $link-color
 
@@ -83,26 +106,30 @@ $paper-tooltip-txt:                     $txt-color-1
 
 $alt-menu-bg:                           $paper-dropdown-bg//alternate menus like the yt apps and settings menus (buttons to open these are next to upload button)
 
-$simple-menu-header-bg:                 rgba(0, 0, 0, .2)
+$simple-menu-header-bg:                 rgba(black, .2)
 
-$playlist-bg:                           rgba(0, 0, 0, .2)
-$playlist-header-bg:                    rgba(0, 0, 0, .2)
+$playlist-bg:                           rgba(black, .2)
+$playlist-header-bg:                    rgba(black, .2)
 
-$transcript-bg:                         rgba(0, 0, 0, .2)
-$transcript-header-bg:                  rgba(0, 0, 0, .2)
+$transcript-bg:                         rgba(black, .2)
+$transcript-header-bg:                  rgba(black, .2)
 $transcript-title-txt:                  $txt-color-1
 
-$playlist-edit-page-left-sidebar-bg:    rgba(0, 0, 0, .2)
+$playlist-edit-page-left-sidebar-bg:    rgba(black, .2)
 
 $page-load-progress:                    white
-$page-load-progress-bg:                 rgba(255, 255, 255, .2)
+$page-load-progress-bg:                 rgba(white, .2)
+
+$share-video-url-textbox-bg:            rgba(white, 0.1)
+
+$paper-checkbox-color:                  $accent-secondary
 
 
 //fix shadow on arrow buttons to scroll lists left/right
 .arrow.yt-horizontal-list-renderer,
 .arrow.ytd-merch-shelf-renderer
     box-shadow: 0 0 4px var(--yt-border-color), 0 0 8px var(--yt-border-color) !important
-    background: rgba(0, 0, 0, 0.2)
+    background: rgba(black, 0.2)
 
 //change color of modern ratings preview bar to match the theme
 html.ytr-ratings-preview-mode-2 .ytr-ratings-previewer div
@@ -118,6 +145,6 @@ ytd-app[is-watch-page] #guide-content.ytd-app
 
 //grey scrollbar looks bad on side menu, so change it to transparent white
 #guide-inner-content.ytd-app::-webkit-scrollbar-thumb
-    background: rgba(255, 255, 255, 0.2) !important
+    background: rgba(white, 0.2) !important
 
 @import 'default variable applier'

@@ -3,4 +3,5 @@
         "node_modules/": true,
         ".*/": true
     }
+    //"jshint.excludePath" : "code/scripts/third party/"
 }

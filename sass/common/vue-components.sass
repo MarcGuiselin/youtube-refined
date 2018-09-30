@@ -1,3 +1,9 @@
+$accent-color: #f47f7f
+$grey-accent-color: #b4b4b4//9E9E9E
+$hover-bg: #f2f2f2
+$border-color: #d8d8d8
+$vert-align: bottom
+
 /*----------------------------------------------------
  * Custom-made super pretty and awesome checkbox toggle switch by Marc Guiselin 2017 (jsfiddle.net/MarcGuiselin/66vgL2ne/)
  *      Modified version of Dylan Raga's beautiful css animated checkboxes codepen.io/dylanraga/pen/Qwqbab/?editors=1100
@@ -5,16 +11,21 @@
 .pretty-checkbox
     width: fit-content
     display: inline-block
+    padding: 3px
+    vertical-align: $vert-align
+    &:hover
+        background: $hover-bg
     &.disabled > input
         & + label > span
-            opacity: .7
-        &:checked + label > span
-            border: .5em solid #9E9E9E !important
-        &:not(:checked) + label > span
-            border: 1px solid #9E9E9E !important
+            opacity: .6
+            border-color: $grey-accent-color !important
+        //&:checked + label > span
+        //    border: .5em solid $grey-accent-color !important
+        //&:not(:checked) + label > span
+        //    border: 1px solid $grey-accent-color !important
     &.shake
         animation: checkbox-shake 0.82s cubic-bezier(.36,.07,.19,.97) both
-        transform: translate3d(0, 0, 0)
+        transform: translate(0, 0)
     &.enable-animation > input
         + label > span
             transition: all 250ms cubic-bezier(0.4, 0, 0.23, 1), background-size 100ms
@@ -38,16 +49,17 @@
                 margin-right: .5em
                 width: 1em
                 height: 1em
-                background: transparent
-                border: 2px solid #9E9E9E
+                background: white
+                border: 2px solid $grey-accent-color
                 border-radius: .2em
                 cursor: pointer
                 font: 1.4em sans-serif
                 animation: checkbox-shrink-bounce 0ms linear
+                user-select: none
             &:hover > span
-                border-color: #f47f7f
+                border-color: $accent-color
         &:checked + label > span
-            border: .5em solid #f47f7f
+            border: .5em solid $accent-color
             &:before
                 content: ''
                 position: absolute
@@ -74,28 +86,28 @@
         width: 0
         height: 0
         border-color: white
-        transform: translate3d(0, 0, 0) rotate(45deg)
+        transform: translate(0, 0) rotate(45deg)
 
     33%
         width: .2em
         height: 0
-        transform: translate3d(0, 0, 0) rotate(45deg)
+        transform: translate(0, 0) rotate(45deg)
 
     100%
         width: .2em
         height: .5em
         border-color: white
-        transform: translate3d(0, -0.5em, 0) rotate(45deg)
+        transform: translate(0, -0.5em) rotate(45deg)
 
 @keyframes checkbox-shake
     10%, 90%
-        transform: translate3d(-1px, 0, 0)
+        transform: translate(-1px, 0)
     20%, 80%
-        transform: translate3d(2px, 0, 0)
+        transform: translate(2px, 0)
     30%, 50%, 70%
-        transform: translate3d(-4px, 0, 0)
+        transform: translate(-4px, 0)
     40%, 60%
-        transform: translate3d(4px, 0, 0)
+        transform: translate(4px, 0)
 
 
 
@@ -109,15 +121,16 @@
     min-width: 120px
     color: #333
     height: 27px
-    font: 15px 'Lato', Arial, sans-serif
-
+    font-size: 15px
+    user-select: none
+    vertical-align: $vert-align
     .dropdown-text
         cursor: pointer
         position: relative
         width: 100%
         text-indent: 10px
         line-height: 26px
-        border-bottom: 1px solid #d8d8d8
+        border-bottom: 1px solid $border-color
         white-space: pre
         &:after
             position: absolute
@@ -129,7 +142,6 @@
             border-style: solid
             border-width: 5px 4px 0 4px
             border-color: #555 transparent transparent transparent
-
     .dropdown-input
         font-size: 0
         outline: none !important
@@ -145,13 +157,12 @@
         height: 28px
         width: 100%
         &:hover ~ .dropdown-text
-            background: #f2f2f2
+            background: $hover-bg
         &:focus ~ .dropdown-text
             z-index: 2
             &:after
                 border-width: 0 4px 5px 4px
                 border-color: transparent transparent #555 transparent
-
     ul
         transition: all .2s ease
         list-style-type: none
@@ -164,7 +175,7 @@
         text-indent: 10px
         line-height: 26px
         background: white
-        border: 1px solid #ccc
+        border: 1px solid $border-color
         box-sizing: border-box
         min-width: 70%
         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3)
@@ -176,10 +187,10 @@
             white-space: nowrap
             padding-right: 10px
             &:hover
-                background: #e8e8e8
+                background: $hover-bg
             &:after
                 content: ''
-                background: #f47f7f
+                background: $accent-color
                 position: absolute
                 width: 2px
                 height: auto
@@ -190,7 +201,6 @@
             &:hover:after, &.selected:after
                 top: 0
                 bottom: 0
-
     .dropdown-input:focus ~ ul
         opacity: 1
         visibility: visible
@@ -200,10 +210,9 @@
     .dropdown-input:hover ~ .dropdown-text:before
         animation: dropdown-flip .4s 1
         animation-fill-mode: forwards
-
     &.enable-animation .dropdown-text:before
         content: ''
-        background: #f47f7f
+        background: $accent-color
         position: absolute
         right: 100%
         left: 0
@@ -240,11 +249,11 @@
     font-weight: bold
     font-size: 110%
     text-align: center
-    color: #f47f7f
+    color: $accent-color
     background: none
     text-transform: uppercase
-    border: 1px solid #f47f7f
-    box-shadow: inset 1px 1px 0 #f47f7f, inset -1px -1px 0 #f47f7f, inset 1px -1px 0 #f47f7f, inset -1px 1px 0 #f47f7f, 0px 1px 2px rgba(0, 0, 0, 0.2)
+    border: 1px solid $accent-color
+    box-shadow: inset 1px 1px 0 $accent-color, inset -1px -1px 0 $accent-color, inset 1px -1px 0 $accent-color, inset -1px 1px 0 $accent-color, 0px 1px 2px rgba(0, 0, 0, 0.2)
     box-sizing: border-box
     transition: color 0.3s ease-in-out
     transition-delay: 0.05s
@@ -252,11 +261,12 @@
     cursor: pointer
     z-index: 0
     overflow: hidden
-    &:hover
-        color: white !important
+    user-select: none
+    vertical-align: $vert-align
+    min-width: 100px
     &:before
         content: ''
-        background: #f47f7f
+        background: $accent-color
         position: absolute
         width: 0
         height: 1000px
@@ -267,15 +277,22 @@
         transform-origin: 0 0
     &.enable-animation:before
         animation: button-flop .4s 1
-    &.enable-animation:hover:before
-        animation: button-flip .4s 1
-        animation-fill-mode: forwards
+    &.enable-animation:hover
+        color: white !important
+        &:before
+            animation: button-flip .4s 1
+            animation-fill-mode: forwards
     &.grey
-        color: #9E9E9E
-        border: 1px solid #9E9E9E
-        box-shadow: inset 1px 1px 0 #9E9E9E, inset -1px -1px 0 #9E9E9E, inset 1px -1px 0 #9E9E9E, inset -1px 1px 0 #9E9E9E
+        color: $grey-accent-color
+        border: 1px solid $grey-accent-color
+        box-shadow: inset 1px 1px 0 $grey-accent-color, inset -1px -1px 0 $grey-accent-color, inset 1px -1px 0 $grey-accent-color, inset -1px 1px 0 $grey-accent-color
     &.grey:before
-        background: #9E9E9E
+        background: $grey-accent-color
+    &.focused
+        color: white !important
+        &:before
+            animation: button-flip .4s 1 !important
+            animation-fill-mode: forwards !important
 
 @keyframes button-flip
     0%
@@ -293,3 +310,61 @@
         right: 0
         width: 0
         left: initial
+
+//having margin when the button is at the beginning or end of an element offsets it from the rest of the content
+* > .pretty-button
+    &:first-child
+        margin-left: 0
+    &:last-child
+        margin-right: 0
+
+/*----------------------------------------------------
+ * Custom-made super pretty and awesome text input by Marc Guiselin copyright 2017
+ *----------------------------------------------------*/
+.pretty-input
+    width: -webkit-fit-content
+    position: relative
+    display: inline-block
+    vertical-align: $vert-align
+    &>input
+        font: 1em "Lato", Arial, sans-serif
+        color: #333
+        box-sizing: border-box
+        letter-spacing: .5px
+        background: transparent
+        border: 0
+        padding: .3em .2em
+        border-bottom: 1px solid $border-color
+        outline: none
+        height: 27px
+        min-width: 5em
+        &:hover
+            background: $hover-bg
+        &:hover ~ .underline, &:focus ~ .underline
+            animation: input-flip .4s 1
+            animation-fill-mode: forwards
+        &::-webkit-input-placeholder
+            color: #aaa
+    &.enable-animation > .underline
+        position: absolute
+        bottom: 0
+        left: 0
+        right: 100%
+        width: auto
+        height: 2px
+        background: $accent-color
+        transition: 0.4s
+        animation: input-flop .4s 1
+
+@keyframes input-flip
+    0%
+        right: 100%
+    100%
+        right: 0
+@keyframes input-flop
+    0%
+        right: 0
+        left: 0
+    100%
+        right: 0
+        left: 100%
