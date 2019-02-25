@@ -998,7 +998,7 @@ chrome.storage.local.get(['options', 'stats', 'filterCache'], res => {
                         version,
                         bugsFixed: updateNote.bugsFixed || 0,
                         thanks: (updateNote.thanks || '').split(/\s*\|\s*/g).sort().join(', ').replace(/,\s(?=[^,]+$)/, ' and ').trim(),
-                        changes: updateNote.updates.map(u => u.split(/\s*\|\s*/g))
+                        changes: updateNote.updates && updateNote.updates.length ? updateNote.updates.map(u => u.split(/\s*\|\s*/g)) : []
                     });
                 }
             }
@@ -1243,7 +1243,7 @@ chrome.storage.local.get(['options', 'stats', 'filterCache'], res => {
         methods: {
             // #region General functions
             saveData(){
-                this.options.censoredTitle.wordReplace = this.wordReplace.filter(o => o.w.trim() && (!this.options.censoredTitle.wordReplaceUseRegex || isValidRegex(o.w))).map(o => [o.w, o.r]);
+                this.options.censoredTitle.wordReplace = this.wordReplace.filter(o => typeof o.w == 'string' && o.w.trim() && (!this.options.censoredTitle.wordReplaceUseRegex || isValidRegex(o.w))).map(o => [o.w, o.r]);
                 chrome.storage.local.set({options: this.options});
             },
             updateOpenMenu(firstRun){

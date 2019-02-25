@@ -471,21 +471,23 @@ chrome.runtime.onInstalled.addListener(function(details){
             options.promo.lastUpdateShowedNotification = ''; // On install this variable should be empty, triggering the update notification
             chrome.storage.local.set({options});
 
-            chrome.tabs.query({}, function(tabs){
-                // Insert scripts into every tab right on start
-                for (let tab of tabs) {
-                    if (tab.url && constants.regex.matchYoutubeUrl.test(tab.url)) {
-                        let id = tab.id;
-                        chrome.tabs.insertCSS(id, { file: 'css/content.css' });
-                        chrome.tabs.executeScript(id, { file: 'scripts/common/title-caps.js' }, () =>
-                            chrome.tabs.executeScript(id, { file: 'scripts/content/youtube.js' })
-                        );
+            setTimeout(() => {
+                chrome.tabs.query({}, function(tabs){
+                    // Insert scripts into every tab right on start
+                    for (let tab of tabs) {
+                        if (tab.url && constants.regex.matchYoutubeUrl.test(tab.url)) {
+                            let id = tab.id;
+                            chrome.tabs.insertCSS(id, { file: 'css/content.css' });
+                            chrome.tabs.executeScript(id, { file: 'scripts/common/title-caps.js' }, () =>
+                                chrome.tabs.executeScript(id, { file: 'scripts/content/youtube.js' })
+                            );
+                        }
                     }
-                }
 
-                // Open youtube homepage to show install message
-                chrome.tabs.create({ url: 'https://www.youtube.com/' });
-            });
+                    // Open youtube homepage to show install message
+                    chrome.tabs.create({ url: 'https://www.youtube.com/' });
+                });
+            }, 1000);
 
         }else if(details.reason == 'update'){
             // Only show update notification if there are new updates to show and if user didn't disable showing the notification
