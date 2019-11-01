@@ -1483,14 +1483,14 @@ chrome.storage.local.get(['options', 'stats', 'filterCache'], res => {
                             ...percentagesText(latestWeeksViews[0], avgV * 7, 'weekly average'),
                             ...percentagesText(latestWeeksViews[0], latestWeeksViews[1], 'last week')
                         ],
-                        thisMonthTPercentagesText = {
+                        thisMonthTPercentagesText = [
                             ...percentagesText(latestMonthsTime[0], avgT * 30, 'monthly average'),
                             ...percentagesText(latestMonthsTime[0], latestMonthsTime[1], 'last month')
-                        },
-                        thisMonthVPercentagesText = {
+                        ],
+                        thisMonthVPercentagesText = [
                             ...percentagesText(latestMonthsViews[0], avgV * 30, 'monthly average'),
                             ...percentagesText(latestMonthsViews[0], latestMonthsViews[1], 'last month')
-                        },
+                        ],
                     // Calculate plots
                         dailyTPlot = simpleStatsChart(latestDaysTime),
                         dailyVPlot = simpleStatsChart(latestDaysViews),

@@ -510,10 +510,17 @@ let options,
 
         grabData = () => {
             if (requestedVideoIds.length > 0) {
-                let xmlHttp = new XMLHttpRequest();
-                xmlHttp.open('GET', URL + requestedVideoIds.splice(0, 50).join(','));
-                xmlHttp.onreadystatechange = () => {
-                    if(xmlHttp.readyState == 4 && xmlHttp.status == 200 && xmlHttp.responseText){
+                fetch(URL + requestedVideoIds.splice(0, 50).join(','), {
+                    /*mode: 'cors', // no-cors, *cors, same-origin
+                    cache: 'no-cache',
+                    credentials: 'omit', // include, *same-origin, omit
+                    headers: {
+                        Origin: 'https://www.youtube.com',
+                        'Content-Type': 'application/json'
+                    }*/
+                })
+                    .then(response => response.json())
+                    .then(json => {
                         chrome.storage.local.get('videoLikeDislikeCache', res => {
                             let cache = res.videoLikeDislikeCache || {},
                                 now = Math.round(Date.now() / 1000 / 60); // In minutes
@@ -524,23 +531,23 @@ let options,
                                     delete cache[key];
 
                             // Add new data to cache
-                            for(let item of JSON.parse(xmlHttp.responseText).items){
-                                let ite = {
-                                    time: now,
-                                    id: item.id,
-                                    likes: item.statistics ? parseInt(item.statistics.likeCount) : -1,
-                                    dislikes: item.statistics ? parseInt(item.statistics.dislikeCount) : -1
-                                };
+                            for(let item of json.items || []){
+                                if(item.id && item.statistics){
+                                    let ite = {
+                                        time: now,
+                                        id: item.id,
+                                        likes: item.statistics ? parseInt(item.statistics.likeCount) : -1,
+                                        dislikes: item.statistics ? parseInt(item.statistics.dislikeCount) : -1
+                                    };
 
-                                cache[item.id] = ite;
-                                populateRatingsPreview(ite);
+                                    cache[item.id] = ite;
+                                    populateRatingsPreview(ite);
+                                }
                             }
 
                             chrome.storage.local.set({videoLikeDislikeCache: cache});
                         });
-                    }
-                };
-                xmlHttp.send();
+                    });
 
                 grabDataSoon();
             }

@@ -3,12 +3,12 @@
   "description": "A chrome extension to improve youtube.  #",
   "version": "0.0.1",
   "devDependencies": {
-    "grunt": "latest",
+    "grunt": "^1.0.4",
+    "grunt-contrib-clean": "latest",
+    "grunt-contrib-copy": "latest",
     "grunt-contrib-obfuscator": "^4.0.0",
     "grunt-contrib-sass": "latest",
     "grunt-contrib-watch": "latest",
-    "grunt-contrib-copy": "latest",
-    "grunt-contrib-clean": "latest",
     "javascript-obfuscator": "^0.18.1",
     "sass": "^1.3.2"
   }

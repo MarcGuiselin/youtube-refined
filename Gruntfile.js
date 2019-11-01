@@ -51,17 +51,20 @@ module.exports = function(grunt) {
         obfuscator: {
             options: {
                 banner: `// ============================\n// Copyright ${new Date().getFullYear()} Marc Guiselin\n// ============================\n\n`,
-                compact: true,
-                //identifierNamesGenerator: 'mangled',
-                rotateStringArray: true,
-                stringArray: true,
+                compact: false,
+                identifierNamesGenerator: 'mangled',
+                rotateStringArray: false,//true,
+                stringArray: false,//true,
                 target: 'browser',
 
-                renameGlobals: true
+                renameGlobals: false,//true,
+
+                reservedStrings: ["[\\S\\s]*"]
             },
             default: {
                 options: {
-                    stringArray: true
+                    compact: true,
+                    identifierNamesGenerator: 'mangled'
                 },
                 files: {
                     'build/scripts/background.js': 'code/scripts/background.js',
@@ -95,5 +98,5 @@ module.exports = function(grunt) {
 
     // Default task(s).
     grunt.registerTask('default', ['sass', 'watch']);
-    grunt.registerTask('build',   ['sass', 'clean', 'copy', 'obfuscator']);
+    grunt.registerTask('build',   ['sass', 'clean', 'copy']); //, 'obfuscator'
 };

@@ -38,5 +38,9 @@ const updateNotes = Object.freeze([
         version: '2.3 Beta',
         bugsFixed: 2,
         thanks: 'Austin W'
+    },{
+        version: '2.4 Beta',
+        bugsFixed: 1,
+        thanks: 'Megan B'
     }
 ]);
