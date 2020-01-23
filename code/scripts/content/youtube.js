@@ -725,27 +725,6 @@ chrome.storage.onChanged.addListener(function(changes) {
     }
 });
 
-// Try to disable youtube's dark theme if it is on
-setTimeout(function(){
-    if(html.hasAttribute('dark')){
-        // Open settings menu, click dark theme, click on toggle
-        let queries = ['body', '#button[aria-label="Settings"] .ytd-topbar-menu-button-renderer, #avatar-btn', 'ytd-toggle-theme-compact-link-renderer', '#submenu paper-toggle-button', 'body', 'body'];
-        for(let i in queries){
-            setTimeout(function(){
-                let el = document.querySelector(queries[i]);
-                if(el)
-                    el.click();
-            }, i * 150);
-        }
-
-        // Set ytr's theme to dark
-        if(options.youtubeTheme == ''){
-            options.youtubeTheme = 'dark';
-            chrome.storage.local.set({options:  options});
-        }
-    }
-}, 4000);
-
 // Notify user that ytr doesn't work on the old version of youtube
 setTimeout(function(){
     if(options && options.notifications.warnOldYoutube && document.querySelector('body#body')){
