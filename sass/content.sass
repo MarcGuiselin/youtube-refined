@@ -236,7 +236,7 @@ html.ytr-blur-no-scroll
     display: none !important
 
 .ytr-blur-thumbnail
-    yt-img-shadow
+    yt-img-shadow:not(#avatar)
         background: #797979 !important
         & > img
             pointer-events: none //prevent hoverzoom from working on blurred thumbnails 
@@ -250,7 +250,7 @@ html.ytr-blur-no-scroll
         left: -16px !important
 
 .ytr-remove-thumbnail
-    yt-img-shadow
+    yt-img-shadow:not(#avatar)
         &:before
             content: "Removed"
             display: flex

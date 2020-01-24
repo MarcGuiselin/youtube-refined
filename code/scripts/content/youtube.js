@@ -198,14 +198,14 @@ const groups = Object.freeze([
         interactionButton: {}
     },
 
-    // Video suggestions listed in a grid on channel home pages and videos page. check out https://www.youtube.com/channel/UC_ViSsVg_3JUDyLS3E2Un5g and https://www.youtube.com/
+    // Video suggestions listed in a grid on channel home pages and videos page. check out https://www.youtube.com/channel/UCEgdi0XIXXZ-qJOFPf4JSKw and https://www.youtube.com/
     // Special video suggestions that sometimes appear at the top of a channel home page.  reffered to as newspaper-renderers for some reason https://i.imgur.com/w4opVFo.png
     // Larger video suggestion that appears next to newspaper suggestions https://i.imgur.com/w4opVFo.png
     // Large vertically listed video suggestions on channel/user home pages, the trending page, and home page. check out https://i.imgur.com/XHTfpjY.png and https://www.youtube.com/channel/UC7A_dLnSAjl7uROCdoNyjzg
     { 
         matches: null,
 
-        query: 'ytd-grid-video-renderer, ytd-newspaper-mini-video-renderer, ytd-newspaper-hero-video-renderer, ytd-video-renderer',
+        query: 'ytd-grid-video-renderer, ytd-newspaper-mini-video-renderer, ytd-newspaper-hero-video-renderer, ytd-video-renderer, ytd-rich-item-renderer',
         thumbnailQuery: 'ytd-thumbnail',
         getChannelName: defaultGetChannelName,
         getVideoId: defaultGetVideoId,
