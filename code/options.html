@@ -200,7 +200,7 @@
                 <h1>General Settings</h1>
                 <div class="new-line">
                     Youtube Theme:
-                    <pretty-dropdown v-model="options.youtubeTheme" v-on:input="saveOptionChange('Youtube Theme', ['dark', 'fade'].indexOf(options.youtubeTheme) + 1)" data='{"Default White": "", "Vader Dark": "dark", "Sunset Fade (New!)": "fade"}'></pretty-dropdown>
+                    <pretty-dropdown v-model="options.youtubeTheme" v-on:input="saveOptionChange('Youtube Theme', ['dark', 'fade'].indexOf(options.youtubeTheme) + 1)" data='{"Default White": "", "Vader Dark": "dark", "Sunset Fade": "fade"}'></pretty-dropdown>
                 </div>
                 <div class="new-line">
                     <img v-bind:src="'images/' + (options.youtubeTheme || 'default') + ' theme preview.png'" height="100" width="197"/>

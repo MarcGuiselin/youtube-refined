@@ -395,6 +395,9 @@ html *:not([style-scope]):not(.style-scope)
     --yt-spec-text-primary: $spec-feed-primary
     --yt-spec-text-secondary: $spec-feed-secondary
 
+    // https://www.youtube.com/user/l0ky86 background under user banner
+    --yt-spec-general-background-b: $bg
+
 
     //--yt-disabled-text-color: green
     //--yt-commentbox-border-inactive: green
@@ -444,6 +447,10 @@ $live-header-footer-bg: $show-more-videos-btn-bg//#282828
 $live-icon: rgba($live-icon-active, .54)//rgba(white, 0.54)
 $live-icon-hover: rgba($live-icon-active, .75)//rgba(white, .74)
 $emoji-picker-search-placeholder-color: rgba($emoji-picker-search-color, .7)//#999
+
+ytd-popup-container
+    ytd-multi-page-menu-renderer, ytd-simple-menu-header-renderer
+        background: $paper-dropdown-bg !important
 
 // live yt chat
 html:not([style-scope]):not(.style-scope)
