@@ -42,5 +42,12 @@ const updateNotes = Object.freeze([
         version: '2.4 Beta',
         bugsFixed: 4,
         thanks: 'Megan B'
+    },{
+        version: '2.5 Final release',
+        updates: [
+            'Sorry, but this chrome extension is now unmaintained for the forseeable future',
+            'Use at your own risk!',
+            'You can uninstall it by going to chrome://extensions'
+        ],
     }
 ]);
