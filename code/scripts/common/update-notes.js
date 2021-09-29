@@ -40,7 +40,7 @@ const updateNotes = Object.freeze([
         thanks: 'Austin W'
     },{
         version: '2.4 Beta',
-        bugsFixed: 1,
+        bugsFixed: 4,
         thanks: 'Megan B'
     }
 ]);
