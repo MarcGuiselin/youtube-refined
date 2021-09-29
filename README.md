@@ -4,4 +4,4 @@
 
 Youtube refined was a chrome extension developed to help anyone filter and customize the content they saw on youtube. I once had big ambitions for this project, but this project was put aside several years ago to focus on other projects.
 
-Unfortunately I don't have the time to maintain the extension and add the features I promised. The extension will now automatically unlock pro features for all users as I'll be phasing out the website and its api. The unlisted extension will remain available on the chrome webstore: https://chrome.google.com/webstore/detail/youtube-refined/bhbammekghlcjhbiekoldhpfgelblcn
+Unfortunately I don't have the time to maintain the extension and add the features I promised. The extension will now automatically unlock pro features for all users as I'll be phasing out the website and its api. The unlisted extension will remain available on the chrome webstore: https://chrome.google.com/webstore/detail/youtube-refined/bhbammekghlcjhbiekoldhpfgelblcni?hl=en
