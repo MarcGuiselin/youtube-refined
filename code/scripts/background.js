@@ -6,9 +6,6 @@
 const constants = Object.freeze({
     regex: {
         matchYoutubeUrl: /^(https?:\/\/)?(www\.)?youtube\.com.+$/i
-    },
-    endpoint: {
-        unlocked: 'https://api.youtuberefined.com/donate/unlocked'
     }
 });
 
@@ -195,21 +192,15 @@ chrome.webRequest.onBeforeRequest.addListener(info => {
                 options.promo.email = email;
                 chrome.storage.local.set({options});
                 runCallbacks(true);
-            }else if(navigator.onLine){
-                // Since email is a new one, it needs to be checked if it's unlocked
-                fetch(constants.endpoint.unlocked + '?' + email)
-                    .then(response => response.status == 200 ? response.json() : {}, () => ({}))
-                    .then(json => {
-                        options.promo.email = email;
-                        if(json.unlocked){
-                            options.promo.proUnlocked = true;
-                            options.promo.freeUnlock = false;
-                        }
-                        chrome.storage.local.set({options});
-                        runCallbacks(!!json.unlocked);
-                    })
             }else{
-                runCallbacks(false);
+                // Just unlock it for free
+                options.promo.email = email;
+                if(json.unlocked){
+                    options.promo.proUnlocked = true;
+                    options.promo.freeUnlock = false;
+                }
+                chrome.storage.local.set({options});
+                runCallbacks(!!json.unlocked);
             }
         }
     };
@@ -393,7 +384,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 
     // #region Share
     else if(method === 'clicked-twitter-share'){
-        const text = 'Browsing a better #YouTube with the #YouTubeRefined #ChromeExtension https://youtuberefined.com';
+        const text = 'Browsing a better #YouTube with the #YouTubeRefined #ChromeExtension';
         const permission = {origins: ['*://twitter.com/intent/tweet/*']};
 
         clickedShared('leftTweet', 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text), permission, () => {
@@ -408,7 +399,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
             });
         });
     }else if(method === 'clicked-facebook-share'){
-        clickedShared('leftFacebookPost', 'https://www.facebook.com/sharer/sharer.php?u=https%3A//youtuberefined.com', '*://www.facebook.com/sharer/*', () => {
+        clickedShared('leftFacebookPost', 'https://www.facebook.com/sharer/sharer.php', '*://www.facebook.com/sharer/*', () => {
             // Try to run content script on opened facebook page
             facebookShareInjectJsInterval = setInterval(() => {
                 chrome.tabs.query({}, tabs => {
@@ -422,7 +413,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
             setTimeout(() => clearInterval(facebookShareInjectJsInterval), 10 * 60 * 1000);
         });
     }else if(method === 'clicked-linkedin-share'){
-        clickedShared('leftLinkedinPost', 'http://www.linkedin.com/shareArticle?mini=true&url=https%3A//youtuberefined.com', '*://www.linkedin.com/*', () => {
+        clickedShared('leftLinkedinPost', 'http://www.linkedin.com/shareArticle?mini=true', '*://www.linkedin.com/*', () => {
             // Try to run content script on opened facebook page
             linkedinShareInjectJsInterval = setInterval(() => {
                 chrome.tabs.query({}, tabs => {

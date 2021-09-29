@@ -40,14 +40,9 @@
         "matches": ["*://www.youtube.com/*"],
         "exclude_matches": ["*://www.youtube.com/ad_companion*"],
         "run_at": "document_start"
-    },{
-        "js": ["scripts/content/website.js"],
-        "matches": ["*://youtuberefined.com/*"],
-        "run_at": "document_start"
     }],
     "permissions": [
         "*://www.youtube.com/*",
-        "*://youtuberefined.com/*",
         "unlimitedStorage",
         "storage",
         "webRequest",

@@ -2,7 +2,7 @@
 // Copyright 2018 Marc Guiselin
 // ============================
 
-if(!window.ranonce && location.href.includes('youtuberefined.com')){
+if(!window.ranonce){
     window.ranonce = true;
     location.hash = '#ytr';
 

@@ -750,15 +750,15 @@
                 <h2>Unlock Additional Features</h2>
                 <template v-if="options.promo.proUnlocked">
                     <div v-if="options.promo.freeUnlock" class="new-line">
-                        Thanks for sharing the extension! &#x1F601; The extra features are unlocked for you. You can <a href="https://youtuberefined.com/donate" v-on:click="gevent('Donate Again Click')">donate</a> to unlock other emails.
+                        Thanks for sharing the extension! &#x1F601; The extra features are unlocked for you. You can <a href="#" v-on:click="gevent('Donate Again Click')">donate</a> to unlock other emails.
                     </div>
                     <div v-else class="new-line">
-                        Thanks for donating! &#x1F601; The extra features are unlocked for you. You can <a href="https://youtuberefined.com/donate" v-on:click="gevent('Donate Again Click')">donate</a> again and unlock other emails if you'd like.
+                        Thanks for donating! &#x1F601; The extra features are unlocked for you. You can <a href="#" v-on:click="gevent('Donate Again Click')">donate</a> again and unlock other emails if you'd like.
                     </div>
                 </template>
                 <template v-else>
                     <div class="new-line">
-                        <a href="https://youtuberefined.com/donate" v-on:click="gevent('Donate Click')"><pretty-button>Donate and unlock additional features</pretty-button></a>
+                        <a href="#" v-on:click="gevent('Donate Click')"><pretty-button>Donate and unlock additional features</pretty-button></a>
                     </div>
                     <div class="new-line">
                         <a href="#share">I can't donate but I still want to get these additional features</a>
@@ -772,10 +772,10 @@
                 <h2>Parent? School?</h2>
                 <p>Youtube refined gives you the tools as a school or a parent to tailor and gain insight into what your students or kids see on YouTube.</p>
                 <div class="new-line">
-                    <a href="https://youtuberefined.com/family" v-on:click="gevent('YTR for Family Click')">&#x1F46A; Youtube Refined for Family</a>
+                    <a href="#" v-on:click="gevent('YTR for Family Click')">&#x1F46A; Youtube Refined for Family</a>
                 </div>
                 <div class="new-line">
-                    <a href="https://youtuberefined.com/education" v-on:click="gevent('YTR for Education Click')">&#x1F3EB; Youtube Refined for Education</a>
+                    <a href="#" v-on:click="gevent('YTR for Education Click')">&#x1F3EB; Youtube Refined for Education</a>
                 </div>
             </template>
 <!-- Share -->
